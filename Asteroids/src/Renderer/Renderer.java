@@ -2,7 +2,10 @@ package Renderer;
 
 //Graphis specific imports
 import javax.media.opengl.GL;
+import javax.media.opengl.GL3;
 import javax.media.opengl.GLAutoDrawable;
+import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.GLEventListener;
 
@@ -22,11 +25,12 @@ public class Renderer implements GLEventListener
 	ArrayList<ObjectRenderer> renderVector;
 	
 	
-	static String windowName = "Asteroids";
+	String windowName = "";
 	
 	public void init(GLAutoDrawable drawable) 
 	{	
-		GL gl = drawable.getGL();
+		
+		GL3 gl = drawable.getGL().getGL3();
 		
 		//Neat grey background
         gl.glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
@@ -49,7 +53,7 @@ public class Renderer implements GLEventListener
 	}
 
 	public void display(GLAutoDrawable drawable) {
-	    GL gl = drawable.getGL();
+		GL3 gl = drawable.getGL().getGL3();
 	    
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		
@@ -66,7 +70,9 @@ public class Renderer implements GLEventListener
 	public boolean CreateWindow()
 	{
 		Frame frame = new Frame(windowName);
-		GLCanvas canvas = new GLCanvas();
+		GLProfile glp = GLProfile.get(GLProfile.GL3);
+	    GLCapabilities caps = new GLCapabilities(glp);
+		GLCanvas canvas = new GLCanvas(caps);
 		canvas.addGLEventListener(this);
 		frame.add(canvas);
 		frame.setSize(300, 300);
