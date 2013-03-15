@@ -81,7 +81,12 @@ public class Renderer implements GLEventListener
 	{
 		GL2 gl = drawable.getGL().getGL2();
 
-
+		gl.glMatrixMode(GL2.GL_PROJECTION);
+		gl.glLoadIdentity();
+		gl.glOrtho(-screenSize.x/2, screenSize.x/2, screenSize.y/2, - screenSize.y/2, 1, 1);
+		gl.glMatrixMode(GL2.GL_MODELVIEW);
+		
+		gl.glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 
 		mainGame.init();
 	}
@@ -98,15 +103,9 @@ public class Renderer implements GLEventListener
 
 	private void render(GLAutoDrawable drawable) 
 	{
-
 		GL2 gl = drawable.getGL().getGL2();
-
-		gl.glMatrixMode(GL2.GL_PROJECTION);
-		gl.glLoadIdentity();
-		gl.glOrtho(-screenSize.x/2, screenSize.x/2, screenSize.y/2, - screenSize.y/2, 1, 1);
-		gl.glMatrixMode(GL2.GL_MODELVIEW);
-
-		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+		
+		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
 		for(int i =0; i<renderVector.size();i++)
 		{

@@ -1,5 +1,13 @@
 package Maths;
 
+/**
+ * 
+ * @author Vingt-2
+ *
+ *	A Matrix3 Class that implements Matrix 3x3 stuff.
+ *
+ */
+
 public class Matrix3 
 {
 	public float[][] array;

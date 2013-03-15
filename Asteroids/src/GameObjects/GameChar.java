@@ -3,7 +3,6 @@ package GameObjects;
 import GameComponents.ObjectRenderer;
 import GameComponents.RigidBody;
 import GameComponents.Transform;
-import Renderer.*;
 
 public class GameChar extends GameObject 
 {

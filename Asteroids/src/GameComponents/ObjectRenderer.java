@@ -1,7 +1,6 @@
 package GameComponents;
 
 import GameObjects.GameChar;
-import GameObjects.GameObject;
 import Maths.*;
 
 import javax.media.opengl.GL2;

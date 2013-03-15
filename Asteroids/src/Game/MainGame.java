@@ -1,10 +1,7 @@
 package Game;
 
-import java.awt.Frame;
 import java.util.ArrayList;
-
 import GameObjects.GameChar;
-import GameObjects.GameObject;
 import Maths.*;
 import Renderer.*;
 
@@ -19,7 +16,8 @@ public class MainGame
 		MainGame game = new MainGame();
 		game.render = new Renderer("Asteroids");
 		game.render.mainGame = game;
-		Frame frame = game.render.CreateWindow(new Vector2(640,480));
+		
+		game.render.CreateWindow(new Vector2(640,480));// Create a new Frame object and returns its reference
 	}
 	
 	public void init()

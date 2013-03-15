@@ -68,6 +68,11 @@ public class Vector3
 			return vec1.x * vec2.x + vec1.y*vec2.y + vec1.z*vec2.z ;
 		}
 		
+		public static Vector3 Scale(Vector3 vec1, float scalar)
+		{
+			return new Vector3(scalar * vec1.x, scalar * vec1.y, scalar * vec1.z);
+		}
+		
 		public Vector2 GetVec2()
 		{
 			return new Vector2(this.x,this.y);

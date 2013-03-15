@@ -70,6 +70,11 @@ public class Vector2
 		{
 			return (vec1.x * vec2.x + vec1.y*vec2.y);
 		}
+		
+		public static Vector2 Scale(Vector2 vec1, float scalar)
+		{
+			return new Vector2(scalar * vec1.x, scalar * vec1.y);
+		}
 
 }
 
