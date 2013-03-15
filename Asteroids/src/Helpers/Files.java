@@ -9,7 +9,7 @@ public class Files
 	public final static int EOF = -1;
 	public final static String BROKEN_STRING = "BROKEN_STRING";
 	
-	public static String ReadFile(String pathToFile)
+	public static String ReadTXTFile(String pathToFile)
 	{
 		String outputString = "";
 
