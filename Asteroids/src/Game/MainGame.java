@@ -13,7 +13,7 @@ public class MainGame
 {
 	Renderer render;
 	ArrayList<GameChar> objectVector;
-	GameChar player;
+	GameChar object_1, object_2;
 	Debug debug;
 	
 	float test = 0;
@@ -32,12 +32,18 @@ public class MainGame
 	
 	public void init()
 	{
-		player = new GameChar();
 		Vector2[] vert = { new Vector2(-0.5f,-0.5f), new Vector2(0.5f,-0.5f),
-			new Vector2(0.5f,0.5f), new Vector2(-0.5f,0.5f) };
-		player.objectRenderer.objectVertices = vert;
-		render.renderVector.add(player.objectRenderer);
-		player.transform.size= new Vector2(0.2f);
+				new Vector2(0.5f,0.5f), new Vector2(-0.5f,0.5f) };
+		
+		object_1 = new GameChar();
+		object_1.objectRenderer.objectVertices = vert;
+		render.renderVector.add(object_1.objectRenderer);
+		object_1.transform.size= new Vector2(0.2f);
+		
+		object_2 = new GameChar();
+		object_2.objectRenderer.objectVertices = vert;
+		render.renderVector.add(object_2.objectRenderer);
+		object_2.transform.size= new Vector2(0.2f);
 	}
 	
 	public void Update(GL2 gl)
@@ -47,14 +53,40 @@ public class MainGame
 		
 		
 		// PUT GamePlay here !
-		// Exemple of basic control over objects TEST :)
-		test += 0.01f;
-		player.transform.rotation 	= (float) Math.cos(test);
-		player.transform.position.x = 0.5f * (float) Math.cos(test);
-		player.transform.position.y = 0.5f * (float) Math.sin(test);
-		debug.DrawRay(Vector2.zero, player.transform.position,Color.Green);
 		
-		//Update player transform, physics, rendering etc...
-		player.Update();
+		
+		// Exemple of basic control over objects TEST :)
+		
+		// test is a variable that keeps incrementing in time
+		// we blocked our framerate at 60 frame/s, thus each second test = test + 0.60f.
+		// This will 
+		test += 0.01f;
+		
+		//Draw object 1 on a circular pattern (x,y) = (a*cost,a*sint)
+		
+			// the position depends on t test which varies in time, thus MOVEMENT !
+		
+		object_1.transform.rotation   = (float) Math.cos(test);
+		object_1.transform.position.x = 0.5f * (float) Math.cos(test);
+		object_1.transform.position.y = 0.5f * (float) Math.sin(test);
+		debug.DrawRay(Vector2.zero, object_1.transform.position,Color.Green);
+		
+		//Draw object 2 on a circular pattern (x,y) = (a*cost,a*sint)
+		
+			// the position depends on t test which varies in time, thus MOVEMENT !
+		
+		object_2.transform.rotation   = (float) Math.cos(test);
+		object_2.transform.position.x = -0.7f * (float) Math.sin(test);
+		object_2.transform.position.y = -0.7f * (float) Math.cos(test);
+		
+		// debug Rays will be USEFUL(!) to show vectors to our puny human eyes.
+		debug.DrawRay(Vector2.zero, object_2.transform.position,Color.Blue);
+		
+		// Draw the line between object1 and object2
+		debug.DrawRay(object_1.transform.position, object_2.transform.position,Color.Red);
+		
+		//Update object_1 transform, physics, rendering etc...
+		object_1.Update();
+		object_2.Update();
 	}
 }
