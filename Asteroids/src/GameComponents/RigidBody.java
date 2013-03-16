@@ -13,6 +13,7 @@ public class RigidBody
 	
 	public float mass = 1f;
 	public float frictionCoefficient = 0.1f;
+	
 	public Vector2 velocity = Vector2.zero(); 
 	public Vector2 acceleration = Vector2.zero();
 	

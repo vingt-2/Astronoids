@@ -3,6 +3,7 @@ package Game;
 import java.util.ArrayList;
 import javax.media.opengl.GL2;
 
+import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import GameObjects.GameChar;
 import Helpers.Color;
@@ -33,18 +34,13 @@ public class MainGame
 	
 	public void init()
 	{
-		Vector2[] vert = { new Vector2(-0.5f,-0.5f), new Vector2(0.5f,-0.5f),
-				new Vector2(0.5f,0.5f), new Vector2(-0.5f,0.5f) };
-		
 		object_1 = new GameChar();
-		object_1.objectRenderer.objectVertices = vert;
+		object_1.objectRenderer.shape= Shape.Square;
 		render.renderVector.add(object_1.objectRenderer);
-		object_1.transform.size= new Vector2(0.2f);
 		
 		object_2 = new GameChar();
-		object_2.objectRenderer.objectVertices = vert;
+		object_2.objectRenderer.shape = Shape.Square;
 		render.renderVector.add(object_2.objectRenderer);
-		object_2.transform.size= new Vector2(0.2f);
 	}
 	
 	public void Update(GL2 gl)
@@ -55,15 +51,15 @@ public class MainGame
 		object_1.rigidBody.DrawAcceleration(debug,Color.White);
 		
 		// PUT GamePlay here !
-
+		
 		ObjectDemo();
 		
 		//Update object_1 transform, physics, rendering etc...
 		object_1.Update();
 		object_2.Update();
 		
-		System.out.println("OBJECT_1 velocity: " + object_1.rigidBody.velocity);
-		
+		//System.out.println("OBJECT_1 velocity: " + object_1.rigidBody.velocity);
+		System.out.println(object_1.transform.position);
 	}
 	
 	public void ObjectDemo()
@@ -75,8 +71,8 @@ public class MainGame
 			// the position depends on t test which varies in time, thus MOVEMENT !
 
 		object_1.transform.rotation   = (float) Math.cos(test);
-		object_1.transform.position.x = 0.5f * (float) Math.cos(test);
-		object_1.transform.position.y = 0.5f * (float) Math.sin(test);
+		object_1.transform.position.x = 100f * (float) Math.cos(test);
+		object_1.transform.position.y = 100f * (float) Math.sin(test);
 		debug.DrawRay(Vector2.zero(), object_1.transform.position,Color.Green);
 
 		//Draw object 2 on a circular pattern (x,y) = (a*cost,a*sint)
@@ -84,8 +80,8 @@ public class MainGame
 			// the position depends on t test which varies in time, thus MOVEMENT !
 
 		object_2.transform.rotation   = (float) Math.cos(test);
-		object_2.transform.position.x = -0.7f * (float) Math.sin(test);
-		object_2.transform.position.y = -0.7f * (float) Math.cos(test);
+		object_2.transform.position.x = -140f * (float) Math.sin(test);
+		object_2.transform.position.y = -140f * (float) Math.cos(test);
 
 		// debug Rays will be USEFUL(!) to show vectors to our puny human eyes.
 		debug.DrawRay(Vector2.zero(), object_2.transform.position,Color.Blue);
