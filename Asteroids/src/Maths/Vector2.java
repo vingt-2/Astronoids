@@ -4,8 +4,6 @@ public class Vector2
 {
 		public float x;
 		public float y;
-		
-		public final static Vector2 zero = new Vector2(0);
 
 		
 		public Vector2(float x, float y)
@@ -18,6 +16,12 @@ public class Vector2
 		{
 			x=entries;
 			y=entries;
+		}
+		
+		public Vector2(Vector2 vector)
+		{
+			this.x = vector.x;
+			this.y = vector.y;
 		}
 		
 		public float GetLength()
@@ -81,6 +85,11 @@ public class Vector2
 		public static Vector2 Scale(Vector2 vec1, float scalar)
 		{
 			return new Vector2(scalar * vec1.x, scalar * vec1.y);
+		}
+		
+		public static Vector2 zero() 
+		{
+			return new Vector2(0);
 		}
 
 }

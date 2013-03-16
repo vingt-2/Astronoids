@@ -20,7 +20,7 @@ public class GameChar extends GameObject
 	public void Update()
 	{
 		transform.UpdateTransform();
-		rigidBody.UpdateState();
+		rigidBody.Update();
 	}
 	
 }

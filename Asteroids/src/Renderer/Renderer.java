@@ -83,7 +83,7 @@ public class Renderer implements GLEventListener
 
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		gl.glOrtho(-screenSize.x/2, screenSize.x/2, screenSize.y/2, - screenSize.y/2, 1, 1);
+		gl.glOrthof(-screenSize.x/2, screenSize.x/2, screenSize.y/2, - screenSize.y/2, 1, 1);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		
 		gl.glClearColor(0.1f, 0.1f, 0.1f, 0.0f);

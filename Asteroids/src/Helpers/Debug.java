@@ -10,8 +10,6 @@ public class Debug
 	public void DrawRay(Vector2 origin,Vector2 direction)
 	{
 		gl.glColor3f(1f,0,0);
-		float a = direction.x - origin.x;
-		float b = direction.y - origin.y;
 		
 		gl.glBegin(GL2.GL_LINES);
 			gl.glVertex2f(origin.x, origin.y);
@@ -22,8 +20,6 @@ public class Debug
 	public void DrawRay(Vector2 origin,Vector2 direction,Color color)
 	{
 		gl.glColor3f(color.r,color.g,color.b);
-		float a = direction.x;
-		float b = direction.y;;
 		
 		gl.glBegin(GL2.GL_LINES);
 			gl.glVertex2f(origin.x, origin.y);
