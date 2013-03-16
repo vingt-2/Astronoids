@@ -26,7 +26,7 @@ public class Renderer implements GLEventListener
 	String windowName = "";
 	Vector2 screenSize;
 	FPSAnimator animator;
-	GL2 openGLContext;
+	public GL2 openGLContext;
 
 	public MainGame mainGame;
 
@@ -68,7 +68,7 @@ public class Renderer implements GLEventListener
 	public void display(GLAutoDrawable drawable) 
 	{
 		render(drawable);
-		Update();
+		Update(drawable);
 	}
 
 	@Override
@@ -96,9 +96,10 @@ public class Renderer implements GLEventListener
 	{
 	}
 
-	public void Update()
+	public void Update(GLAutoDrawable drawable)
 	{
-		mainGame.Update();
+		GL2 gl = drawable.getGL().getGL2();
+		mainGame.Update(gl);
 	}
 
 	private void render(GLAutoDrawable drawable) 

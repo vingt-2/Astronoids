@@ -21,7 +21,7 @@ public class Transform
 	public void UpdateTransform()
 	{
 		Matrix3 translationMatrix = new Matrix3(0);
-		float[] thirdEntrie ={ position.x, position.y, 1};
+		float[] thirdEntrie = { position.x, position.y, 1};
 		translationMatrix.array[2] = thirdEntrie;
 		
 		Matrix3 rotationMatrix = 
@@ -33,11 +33,14 @@ public class Transform
 							{	0f						, 0f,								1f	}
 						});
 		
-		Matrix3 sizeMatrix = new Matrix3(
-				new Vector3(size.x,0,0),
-				new Vector3(0,size.y,0),
-				new Vector3(0,0,1)
-				);
+		Matrix3 sizeMatrix =
+				new Matrix3
+					(
+						new Vector3(size.x,	0,		0),
+						new Vector3(0,		size.y,	0),
+						new Vector3(0,		0,		1)
+					);
+		
 		Matrix3 rotationTsize = Matrix3.Multiply(rotationMatrix, sizeMatrix);
 		transformMatrix = Matrix3.Add(translationMatrix,rotationTsize);
 	}
@@ -51,7 +54,7 @@ public class Transform
 	
 	public Vector2 LocalPositionToWorld(Vector2 vector)
 	{
-		// Homogeneous coordinate to 0 so that it's affected by the translation (Position)
+		// Homogeneous coordinate to 1 so that it's affected by the translation (Position)
 		Vector3 homogeneous = new Vector3(vector,1f);
 		return Matrix3.Multiply(transformMatrix,homogeneous).GetVec2();
 	}

@@ -4,6 +4,8 @@ public class Vector2
 {
 		public float x;
 		public float y;
+		
+		public final static Vector2 zero = new Vector2(0);
 
 		
 		public Vector2(float x, float y)
@@ -59,6 +61,11 @@ public class Vector2
 			this.x = this.x/length;
 			this.y = this.y/length;
 			return true;
+		}
+		
+		public Vector2 negate()
+		{
+			return new Vector2(-x,-y);
 		}
 		
 		public static Vector2 Add(Vector2 vec1, Vector2 vec2)

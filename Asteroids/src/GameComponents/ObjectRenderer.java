@@ -25,7 +25,6 @@ public class ObjectRenderer
 		for(int i = 0; i<objectVertices.length; i++)
 		{
 			Vector2 vertexToDraw = Matrix3.Multiply(parent.transform.transformMatrix,new Vector3(objectVertices[i],1f)).GetVec2();
-			//gl.glColor3f(objectVertices[i].x,objectVertices[i].y,1);
 			gl.glColor3f(vertexToDraw.x,vertexToDraw.y,1);
 			gl.glVertex2f(vertexToDraw.x,vertexToDraw.y);
 		}

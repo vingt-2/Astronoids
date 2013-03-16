@@ -12,14 +12,15 @@ public class GameChar extends GameObject
 	
 	public GameChar()
 	{
-		transform = new Transform();
-		objectRenderer = new ObjectRenderer(this);
-		rigidBody = new RigidBody(this);
+		transform 		= new Transform();
+		objectRenderer 	= new ObjectRenderer(this);
+		rigidBody 		= new RigidBody(this);
 	}
 	
 	public void Update()
 	{
 		transform.UpdateTransform();
+		rigidBody.UpdateState();
 	}
 	
 }
