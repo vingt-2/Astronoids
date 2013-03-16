@@ -19,9 +19,11 @@ Asteroids repository for Team4
 
     - So go to File->New->Project select "Java Project" and type "JOGL" as project name, then Finish (say yes if some warning shows up). You should now have a bunch of .zip and .jars in JOGL.
 
-    - Right-click on JOGL project, go to Properties->Java Build Path->Libraries and remove all the "natives" files, you should only have 2 jars left.
+    - Right-click on JOGL project, go to Properties->Java Build Path , "Libraries" tab and remove all the "natives" files, you should only have 2 .jars left.
 
-    - The for each jar, extends the properties, double click "sources attachment" and select the corresponding src.zip.
+    - Then for each jar, extends the properties, double click "sources attachment" and select the corresponding src .zip file.
+
+    - Now get into the "Order and Export" tab, check both jars, and OK.
 
     - That's it, JOGL's setup for good in your workspace.
 
@@ -32,7 +34,7 @@ Asteroids repository for Team4
 
     - You should now have all the sources hierarchie, with some red cross indicating it won't compile ! We need to specify where JOGL is.
 
-    - Right Click on Asteroids Project go to Properties->Java Build Path->Projects and select JOGL !
+    - Right Click on Asteroids Project go to Properties->Java Build Path, "Projects" tab and select JOGL !
 
 
 4) Launch the main method, and enjoy the little demo written in 10 lines of code ! :).
