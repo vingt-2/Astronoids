@@ -9,6 +9,7 @@ import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.GLEventListener;
 
+import Game.Controls;
 import Game.MainGame;
 import GameComponents.ObjectRenderer;
 import Maths.*;
@@ -17,6 +18,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 // Util imports
 import java.awt.Frame;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 ////
 
@@ -42,7 +44,7 @@ public class Renderer implements GLEventListener
 
 
 
-	public Frame CreateWindow(Vector2 size)
+	public Frame CreateWindow(Vector2 size, Controls controls)
 	{
 		Frame frame = new Frame(windowName);
 		GLProfile glp = GLProfile.get(GLProfile.GL2);
@@ -57,6 +59,8 @@ public class Renderer implements GLEventListener
 
 		screenSize = size;
 
+		canvas.addKeyListener(controls);
+		
 		frame.add(canvas);
 		frame.setSize((int)size.x, (int)size.y);
 		frame.setVisible(true);
@@ -89,7 +93,7 @@ public class Renderer implements GLEventListener
 		
 		gl.glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 
-		mainGame.init();
+		mainGame.init(gl);
 	}
 
 	@Override

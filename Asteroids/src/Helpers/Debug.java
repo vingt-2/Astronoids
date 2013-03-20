@@ -7,27 +7,27 @@ public class Debug
 {
 	public GL2 gl;
 	
-	public void DrawRay(Vector2 origin,Vector2 direction)
+	public void DrawRay(Vector2 origin,Vector2 end)
 	{
 		gl.glColor3f(1f,0,0);
 		
 		gl.glBegin(GL2.GL_LINES);
 			gl.glVertex2f(origin.x, origin.y);
-			gl.glVertex2f(direction.x,direction.y);
+			gl.glVertex2f(end.x,end.y);
 		gl.glEnd();
 	}
 	
-	public void DrawRay(Vector2 origin,Vector2 direction,Color color)
+	public void DrawRay(Vector2 origin,Vector2 end,Color color)
 	{
 		gl.glColor3f(color.r,color.g,color.b);
 		
 		gl.glBegin(GL2.GL_LINES);
 			gl.glVertex2f(origin.x, origin.y);
-			gl.glVertex2f(direction.x,direction.y);
+			gl.glVertex2f(end.x,end.y);
 		gl.glEnd();
 	}
 
-	public void DrawRay(Vector2 origin,Vector2 direction,float length)
+	public void DrawLine(Vector2 origin,Vector2 direction,float length)
 	{
 		gl.glColor3f(1f,0,0);
 		float a = origin.x + length*direction.x;
@@ -39,7 +39,7 @@ public class Debug
 		gl.glEnd();
 	}
 	
-	public void DrawRay(Vector2 origin,Vector2 direction,float length,Color color)
+	public void DrawLine(Vector2 origin,Vector2 direction,float length,Color color)
 	{
 		gl.glColor3f(color.r,color.g,color.b);
 		float a = origin.x + length*direction.x;
