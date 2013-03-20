@@ -2,25 +2,24 @@ package Game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 
 public class Controls implements KeyListener
 {
 
-	public int keyPressed = 0;
+	boolean[] keyPressed = new boolean[KeyEvent.KEY_LAST];
 	
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) 
 	{
-		keyPressed = arg0.getKeyCode();
+		keyPressed[arg0.getKeyCode()] = true;
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) 
 	{
-		keyPressed = 0;
+		keyPressed[arg0.getKeyCode()] = false;
 	}
 
 	@Override
@@ -30,8 +29,8 @@ public class Controls implements KeyListener
 	}
 	
 	public boolean isPressed(int keyCode)
-	{
-		return keyPressed == keyCode;
+	{	
+		return keyPressed[keyCode];
 	}
 
 }

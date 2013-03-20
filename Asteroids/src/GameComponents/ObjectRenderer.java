@@ -43,6 +43,8 @@ public class ObjectRenderer
 		{
 			gl.glEnable( GL.GL_TEXTURE_2D );
 			gl.glBindTexture( GL.GL_TEXTURE_2D, textureID.get(0) );
+			gl.glEnable( GL2.GL_BLEND );
+			gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
 		}
 		gl.glBegin(GL2.GL_QUADS);
 		for(int i = 0; i<shape.vertices.length; i++)
@@ -132,8 +134,8 @@ public class ObjectRenderer
 		gl.glPixelStorei(GL2.GL_UNPACK_ALIGNMENT, 1);
 		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL2.GL_CLAMP);
 		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL2.GL_CLAMP);
-		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);
-		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR);
+		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL2.GL_NEAREST);
+		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL2.GL_NEAREST);
 		gl.glTexEnvf(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_REPLACE);
 		gl.glTexImage2D (GL2.GL_TEXTURE_2D, 0, GL2.GL_RGBA, w, h, 0, GL2.GL_RGBA, 
 				GL.GL_UNSIGNED_BYTE, bb);
