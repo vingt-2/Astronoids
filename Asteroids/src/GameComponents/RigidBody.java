@@ -43,12 +43,20 @@ public class RigidBody
 		this.mass = mass;
 	}
 	
+	/**
+	 * Calls all Updates in the right order
+	 */
+	
 	public void Update()
 	{
 		UpdateVelocity();
 		UpdateAcceleration();
 		UpdateTransform();
 	}
+	
+	/**
+	 * Calculate Acceleration dP^2 and angular Acceleration (around "depth" axis) dw^2
+	 */
 	
 	private void UpdateAcceleration()
 	{
@@ -80,6 +88,9 @@ public class RigidBody
 		
 	}
 	
+	/**
+	 * Calculate velocity dP and angular velocity dw of the RigidBody 
+	 */
 	private void UpdateVelocity()
 	{
 		Vector2 currentPosition = new Vector2(parent.transform.position);
@@ -93,6 +104,10 @@ public class RigidBody
 		velocity = newVelocity;
 	}
 	
+	/**
+	 * Update the Transform associated to the RigidBody
+	 * According to sir Newton's laws of physics.
+	 */
 	private void UpdateTransform()
 	{	
 		Transform transform = parent.transform;
@@ -107,6 +122,14 @@ public class RigidBody
 		
 	}
 	
+	/**
+	 * Applies a force to the rigidBody.
+	 * A force is a Vector2, currently in Pixel/s^2
+	 * 
+	 * 
+	 * @param force
+	 * @param mode
+	 */
 	public void PushForce(Vector2 force,ForceMode mode)
 	{
 		boolean isThere = false;
@@ -122,6 +145,14 @@ public class RigidBody
 		}
 	}
 	
+	/**
+	 * Applies a torque to the RigidBody around the "depth" axis 
+	 * 
+	 * A torque force is in Rad/s^2.
+	 * 
+	 * @param torqueValue
+	 * @param mode
+	 */
 	public void PushTorque(float torqueValue,ForceMode mode)
 	{
 		boolean isThere = false;
@@ -137,6 +168,11 @@ public class RigidBody
 		}
 	}
 	
+	/**
+	 * Removes a force from the force list.
+	 * 
+	 * @param force
+	 */
 	public void RemoveForce(Forces force)
 	{
 		for(int i=0; i<forcesList.size();i++)
@@ -148,6 +184,12 @@ public class RigidBody
 		}
 	}
 	
+	/**
+	 * Removes torque a force from the torque forces list.
+	 * 
+	 * @param torque
+	 */
+	
 	public void RemoveTorque(Torque torque)
 	{
 		for(int i=0; i<torqueList.size();i++)
@@ -157,6 +199,20 @@ public class RigidBody
 				torqueList.remove(i);
 			}
 		}
+	}
+	
+	/**
+	 * Sets Position keeping rigidBody's velocity
+	 * 
+	 * @param position
+	 */
+	
+	public void SetPosition(Vector2 position)
+	{
+		Transform transform = parent.transform;
+		transform.position = position;
+		// Dont loose your dP!
+		previousPosition = Vector2.Add(position,velocity.negate());
 	}
 	
 	public enum ForceMode

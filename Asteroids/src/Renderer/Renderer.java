@@ -91,6 +91,11 @@ public class Renderer implements GLEventListener
 		gl.glOrthof(0, screenSize.x, screenSize.y,0 , 1, 1);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		
+		if (gl.isExtensionAvailable("GL_ARB_multisample"))
+		{
+		   gl.glEnable(GL2.GL_MULTISAMPLE);
+		}
+		
 		gl.glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 
 		mainGame.init(gl);
