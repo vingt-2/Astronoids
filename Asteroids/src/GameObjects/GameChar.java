@@ -51,7 +51,7 @@ public class GameChar extends GameObject
 		if(transform.position.y < -MainGame.Screen_Size.y/2)
 		{
 			rigidBody.SetPosition(new Vector2(transform.position.x,MainGame.Screen_Size.y/2));
-		}			
+		}
 	}
 	
 }

@@ -55,6 +55,8 @@ public class MainGame
 		render.renderVector.add(object_2.objectRenderer);
 
 		player.transform.size = new Vector2(3,3);
+		
+		player.rigidBody.frictionCoefficient = 0.01f;
 	}
 
 	public void Update(GL2 gl)
