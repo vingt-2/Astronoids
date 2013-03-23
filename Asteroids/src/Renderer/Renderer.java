@@ -140,7 +140,7 @@ public class Renderer implements GLEventListener
 
 	}
 	
-	public IntBuffer CreateTexture(String filePath)
+	public int CreateTexture(String filePath)
 	{
 		IntBuffer textureID = Buffers.newDirectIntBuffer(1);
 		
@@ -163,7 +163,7 @@ public class Renderer implements GLEventListener
 		{
 
 			System.out.println("FUCK I CANT READ YOUR TEXTURE FILE: " + filePath);
-			return null;
+			return 0;
 
 		}
 		//Creating a writable raster on which we write BufferedImage
@@ -214,7 +214,7 @@ public class Renderer implements GLEventListener
 		gl.glTexImage2D (GL2.GL_TEXTURE_2D, 0, GL2.GL_RGBA, w, h, 0, GL2.GL_RGBA, 
 				GL.GL_UNSIGNED_BYTE, bb);
 		
-		return textureID;
+		return textureID.get(0);
 		
 	}
 

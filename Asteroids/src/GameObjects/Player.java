@@ -11,12 +11,14 @@ public class Player extends GameChar
 {
 	
 	ParticleEffects effect = new ParticleEffects(transform,20);
+	long lastTime = 0;
+	final static long effectTimeThreshold = 1000; // wait 000ms to toggle effect
 	
 	public Player()
 	{
 		super();
 		objectRenderer.shape= Shape.Square;
-		objectRenderer.SetTexture("./resources/textures/rocket_ship.png");
+		objectRenderer.SetTexture("rocket_ship");
 	}
 	
 	public void Update()
@@ -47,17 +49,27 @@ public class Player extends GameChar
 		{
 			Vector2 objectFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1));
 			rigidBody.PushForce(Vector2.Scale(1000, objectFrontInWorldCoordinates),ForceMode.Impulse);
+			effect.TurnOn();
+		}
+		else
+		{
+			effect.TurnOff();
 		}
 		
 		if(MainGame.controls.isPressed(KeyEvent.VK_SPACE))
 		{
-			if(!effect.isTurnedOn)
+			long time = System.currentTimeMillis();
+			if( time - lastTime >  effectTimeThreshold)
 			{
-				effect.TurnOn();
-			}
-			else				
-			{
-				effect.TurnOff();
+				if(!effect.isTurnedOn)
+				{
+					effect.TurnOn();
+				}
+				else				
+				{
+					effect.TurnOff();
+				}
+				lastTime = time;
 			}
 		}
 	}

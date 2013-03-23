@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.media.opengl.GL2;
 
-import GameComponents.ObjectRenderer.Shape;
+import Game.SharedRessources.RessourceType;
 import GameObjects.GameChar;
 import GameObjects.Player;
 import Helpers.Debug;
@@ -20,9 +20,10 @@ public class MainGame
 	
 	
 	// Game singletons
-	public static final Renderer render 	= new Renderer(Window_Name);
-	public static final Controls controls 	= new Controls();
-	public static final Debug debug 		= new Debug();
+	public static final SharedRessources sharedRessources	= new SharedRessources();
+	public static final Renderer render 					= new Renderer(Window_Name);
+	public static final Controls controls 					= new Controls();
+	public static final Debug debug 						= new Debug();
 
 	
 	ArrayList<GameChar> objectVector;
@@ -30,6 +31,13 @@ public class MainGame
 
 	public void init(GL2 gl)
 	{
+		sharedRessources.LoadRessources
+		(new Ressource[]
+			{
+				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture)
+			}
+		);
+		
 		player = new Player();
 
 		player.transform.size = new Vector2(3,3);		

@@ -1,7 +1,5 @@
 package GameComponents;
 
-import java.nio.IntBuffer;
-
 import Game.MainGame;
 import GameObjects.GameChar;
 import Maths.*;
@@ -17,7 +15,7 @@ public class ObjectRenderer
 
 	private GameChar parent;
 	private boolean textureSet = false;
-	private IntBuffer textureID;
+	private int textureID;
 
 	public ObjectRenderer(GameChar parent)
 	{
@@ -31,7 +29,7 @@ public class ObjectRenderer
 		if(textureSet)
 		{
 			gl.glEnable( GL.GL_TEXTURE_2D );
-			gl.glBindTexture( GL.GL_TEXTURE_2D, textureID.get(0) );
+			gl.glBindTexture( GL.GL_TEXTURE_2D, textureID );
 			gl.glEnable( GL2.GL_BLEND );
 			gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
 		}
@@ -59,10 +57,11 @@ public class ObjectRenderer
 		return true;
 	}
 
-	public void SetTexture(String filePath)
+	public void SetTexture(String name)
 	{
-		textureID = MainGame.render.CreateTexture(filePath);
-		textureSet = true;
+		int texID = MainGame.sharedRessources.GetTexture(name);
+		textureSet = (texID != 0);
+		textureID = texID;
 	}
 
 	public enum Shape

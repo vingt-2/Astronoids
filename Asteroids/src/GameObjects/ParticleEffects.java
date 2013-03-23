@@ -27,15 +27,16 @@ public class ParticleEffects extends GameObject
 		Vector2 back = transform.LocalDirectionToWorld(new Vector2(0,-1)).Normalized();
 		for(int i = 0; i < particleArray.length; i++)
 		{
-			if(particleArray[i] == null)
+			if( particleArray[i] == null )
 			{
-				if(isTurnedOn)
+				if( isTurnedOn )
 				{	
 					particleArray[i] = new Particles(ran.nextInt(1500)+1000,new Vector2(transform.position.x,transform.position.y));
 					particleArray[i].objectRenderer.shape= Shape.Square;
-					particleArray[i].objectRenderer.SetTexture("./resources/textures/rocket_ship.png");
+					particleArray[i].objectRenderer.SetTexture("rocket_ship");
 					particleArray[i].rigidBody.frictionCoefficient = 0.01f;
 					particleArray[i].rigidBody.PushForce(new Vector2((ran.nextInt(20))*300*back.x,(ran.nextInt(20))*1000*back.y),ForceMode.Impulse);
+					particleArray[i].transform.size = new Vector2(ran.nextInt(3));
 					particleArray[i].rigidBody.PushTorque((ran.nextInt(20) -10) * 10, ForceMode.Impulse);
 				}
 			}
