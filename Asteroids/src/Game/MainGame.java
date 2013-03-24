@@ -10,6 +10,7 @@ import jogamp.graph.math.MathFloat;
 
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
+import GameObjects.Alien;
 import GameObjects.GameChar;
 import GameObjects.Player;
 import Helpers.Color;
@@ -27,10 +28,11 @@ public class MainGame
 	public static Vector2 Screen_Size = new Vector2(1024,780);
 	
 	ArrayList<GameChar> objectVector;
-	Player player;
+	public static Player player;
 	GameChar object_2;
-	
+	Alien alien;
 
+	
 	float test = 0;
 
 	public static void main(String[] args)
@@ -41,6 +43,7 @@ public class MainGame
 		game.render.mainGame = game;
 
 		game.render.CreateWindow(new Vector2(1024,780),controls);// Create a new Frame object and returns its reference
+		
 	}
 
 	public void init(GL2 gl)
@@ -55,6 +58,12 @@ public class MainGame
 		render.renderVector.add(object_2.objectRenderer);
 
 		player.transform.size = new Vector2(3,3);
+		
+		alien = new Alien();
+		alien.objectRenderer.shape=Shape.Square;
+		alien.objectRenderer.SetTexture(gl, "./resources/textures/Alien.png");
+		render.renderVector.add(alien.objectRenderer);
+	
 	}
 
 	public void Update(GL2 gl)
@@ -72,6 +81,7 @@ public class MainGame
 		//Update object_1 transform, physics, rendering etc...
 		player.Update();
 		object_2.Update();
+		alien.Update();
 	}
 
 	public void ObjectDemo()
@@ -94,14 +104,23 @@ public class MainGame
 			object_2.transform.rotation   = (float) Math.cos(test);
 			object_2.transform.position.x = -140f * (float) Math.sin(test);
 			object_2.transform.position.y = -140f * (float) Math.cos(test);
+			
+			
+			
 		}
 
 		// debug Rays will be USEFUL(!) to show vectors to our puny human eyes.
 		debug.DrawRay(Vector2.zero(), player.transform.position,Color.Green);
 		debug.DrawRay(Vector2.zero(), object_2.transform.position,Color.Blue);
+		debug.DrawRay(Vector2.zero(), alien.transform.position, Color.Red);
+		
 
 		// Draw the line between object1 and object2
 		debug.DrawRay(player.transform.position, object_2.transform.position,Color.Red);
 	}
+	
+    
+   
+    
 
 }
