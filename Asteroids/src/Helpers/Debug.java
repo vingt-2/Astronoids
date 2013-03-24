@@ -39,9 +39,12 @@ public class Debug
 	{
 		GL2 gl = MainGame.render.externDrawable.getGL().getGL2();
 		
-		gl.glColor3f(1f,0,0);
-		float a = origin.x + length*direction.x;
-		float b = origin.y + length*direction.y;
+		gl.glColor3f(1f,0,0);;
+		
+		Vector2 normalDir = direction.Normalized();
+		
+		float a = origin.x + length*normalDir.x;
+		float b = origin.y + length*normalDir.y;
 		
 		gl.glBegin(GL2.GL_LINES);
 			gl.glVertex2f(origin.x, origin.y);
@@ -54,8 +57,12 @@ public class Debug
 		GL2 gl = MainGame.render.externDrawable.getGL().getGL2();
 		
 		gl.glColor3f(color.r,color.g,color.b);
-		float a = origin.x + length*direction.x;
-		float b = origin.y + length*direction.y;
+		
+		
+		Vector2 normalDir = direction.Normalized();
+		
+		float a = origin.x + length*normalDir.x;
+		float b = origin.y + length*normalDir.y;
 		
 		gl.glBegin(GL2.GL_LINES);
 			gl.glVertex2f(origin.x, origin.y);
