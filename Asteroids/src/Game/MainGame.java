@@ -21,6 +21,8 @@ public class MainGame
 {
 	Renderer render;
 	public static final Controls controls = new Controls();
+	public final Menu menu = new Menu();
+	public static boolean inMenu = true;
 	
 	// Game singletons
 	public static final Debug debug = new Debug();
@@ -29,6 +31,8 @@ public class MainGame
 	ArrayList<GameChar> objectVector;
 	Player player;
 	GameChar object_2;
+	//GameChar object_3;
+	//GameChar playButton;
 	
 
 	float test = 0;
@@ -36,15 +40,22 @@ public class MainGame
 	public static void main(String[] args)
 	{
 		MainGame game = new MainGame();
-
+		
 		game.render = new Renderer("Asteroids");
 		game.render.mainGame = game;
 
 		game.render.CreateWindow(new Vector2(1024,780),controls);// Create a new Frame object and returns its reference
 	}
+	/*public void initMenu () {
+		Menu menu = new Menu();
+		menu.initMenu();
+	} */
 
 	public void init(GL2 gl)
 	{
+		menu.startGameButton.objectRenderer.shape = Shape.Square;
+		render.renderVector.add(menu.startGameButton.objectRenderer);
+
 		player = new Player();
 		player.objectRenderer.shape= Shape.Square;
 		player.objectRenderer.SetTexture(gl, "./resources/textures/rocket_ship.png");
@@ -55,6 +66,23 @@ public class MainGame
 		render.renderVector.add(object_2.objectRenderer);
 
 		player.transform.size = new Vector2(3,3);
+		
+		
+		/*
+		object_3 = new GameChar(); 
+		object_3.objectRenderer.shape = Shape.Square;
+		
+		render.renderVector.add(object_3.objectRenderer);
+		object_3.transform.size = new Vector2 (3,3);
+		object_3.transform.position = new Vector2 (5,10); */
+		/*int x = 0;
+		while (x ){ 
+			/*playButton = new GameChar();
+			playButton.objectRenderer.shape = Shape.Square;
+			render.renderVector.add(playButton.objectRenderer); 
+			System.out.println("hello");
+		} */
+	
 	}
 
 	public void Update(GL2 gl)
@@ -70,8 +98,19 @@ public class MainGame
 		}
 
 		//Update object_1 transform, physics, rendering etc...
-		player.Update();
-		object_2.Update();
+		//player.Update();
+		//object_2.Update();
+		
+		if (inMenu)
+		{
+			menu.Update();
+			System.out.println("hello");
+		} else {
+			System.out.println("update");
+			player.Update();
+			object_2.Update();
+		}
+		
 	}
 
 	public void ObjectDemo()
