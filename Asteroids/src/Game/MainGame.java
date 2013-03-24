@@ -66,6 +66,15 @@ public class MainGame
 		//Update object_1 transform, physics, rendering etc...
 		player.Update();
 		alien.Update();
+
+		//if (inMenu)
+		//{
+		//	menu.Update();
+		//	System.out.println("hello");
+		//} else {
+		//	System.out.println("update");
+		//	player.Update();
+		//	object_2.Update();
 	}
 
 	public static void main(String[] args)

@@ -18,7 +18,7 @@ public class Controls implements KeyListener
 			keyPressed[arg0.getKeyCode()] = true;
 		}
 	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent arg0) 
 	{

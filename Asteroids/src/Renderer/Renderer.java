@@ -12,6 +12,7 @@ import javax.media.opengl.GLEventListener;
 
 import Game.Controls;
 import Game.MainGame;
+import Game.Menu;
 import GameComponents.ObjectRenderer;
 import Maths.*;
 
@@ -46,7 +47,7 @@ public class Renderer implements GLEventListener
 	public GLAutoDrawable externDrawable;
 
 	public MainGame mainGame;
-
+	public Menu menu;
 
 	public ArrayList<ObjectRenderer> renderVector;
 
