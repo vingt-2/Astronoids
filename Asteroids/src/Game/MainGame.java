@@ -51,9 +51,7 @@ public class MainGame
 		alien = new Alien();
 		alien.transform.size=new Vector2(2,2);
 		alien.rigidBody.frictionCoefficient= 0.1f;
-		//alien.objectRenderer.shape=Shape.Square;
-		//render.renderVector.add(alien.objectRenderer);
-
+		
 	}
 
 	public void Update(GL2 gl)
@@ -80,53 +78,5 @@ public class MainGame
 		
 	}
 	
-//	// Main Method. DO NOT touch this. If you do. YOU WILL DIE.
-//	public static void main(String[] args)
-//	{
-//
-//		test += 0.01f;
-//
-//		if(test < 2){
-//			//Draw object 1 on a circular pattern (x,y) = (a*cost,a*sint)
-//
-//			// the position depends on t test which varies in time, thus MOVEMENT !
-//
-//			player.transform.rotation   = (float) Math.cos(test);
-//			player.transform.position.x = 100f * (float) Math.cos(test);
-//			player.transform.position.y = 100f * (float) Math.sin(test);
-//
-//			//Draw object 2 on a circular pattern (x,y) = (a*cost,a*sint)
-//
-//			// the position depends on t test which varies in time, thus MOVEMENT !
-//
-//			object_2.transform.rotation   = (float) Math.cos(test);
-//			object_2.transform.position.x = -140f * (float) Math.sin(test);
-//			object_2.transform.position.y = -140f * (float) Math.cos(test);
-//			
-//			
-//			
-//		}
-//
-//		// debug Rays will be USEFUL(!) to show vectors to our puny human eyes.
-//		debug.DrawRay(Vector2.zero(), player.transform.position,Color.Green);
-//		debug.DrawRay(Vector2.zero(), object_2.transform.position,Color.Blue);
-//		debug.DrawRay(Vector2.zero(), alien.transform.position, Color.Red);
-//		
-//
-//		// Draw the line between object1 and object2
-//		debug.DrawRay(player.transform.position, object_2.transform.position,Color.Red);
-//	}
-//	
-//    
-//   
-//    
-//
-//
-//		MainGame game = new MainGame();							// Initiating a new Game.
-//		
-//		render.mainGame = game;									// Associate this Game to the renderer.
-//		render.CreateWindow(new Vector2(1024,780),controls);	// Create a new Frame object and returns its reference.
-//	}
-//	
 
 }
