@@ -27,19 +27,19 @@ public class MainGame
 
 	
 	ArrayList<GameChar> objectVector;
-	Player player;
+	public static Player player	;
 
 	public void init(GL2 gl)
 	{
 		sharedRessources.LoadRessources
 		(new Ressource[]
 			{
-				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture)
+				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture),
+				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture)
 			}
 		);
-		
-		player = new Player();
 
+		player = new Player();
 		player.transform.size = new Vector2(3,3);		
 	}
 

@@ -29,15 +29,19 @@ public class ParticleEffects extends GameObject
 		{
 			if( particleArray[i] == null )
 			{
-				if( isTurnedOn )
-				{	
-					particleArray[i] = new Particles(ran.nextInt(1500)+1000,new Vector2(transform.position.x,transform.position.y));
-					particleArray[i].objectRenderer.shape= Shape.Square;
-					particleArray[i].objectRenderer.SetTexture("rocket_ship");
-					particleArray[i].rigidBody.frictionCoefficient = 0.01f;
-					particleArray[i].rigidBody.PushForce(new Vector2((ran.nextInt(20))*300*back.x,(ran.nextInt(20))*1000*back.y),ForceMode.Impulse);
-					particleArray[i].transform.size = new Vector2(ran.nextInt(3));
-					particleArray[i].rigidBody.PushTorque((ran.nextInt(20) -10) * 10, ForceMode.Impulse);
+				if(ran.nextInt(1000) % 27 == 0 )
+				{
+					if( isTurnedOn )
+					{	
+						particleArray[i] = new Particles(ran.nextInt(1500)+5000,new Vector2(transform.position.x,transform.position.y));
+						particleArray[i].objectRenderer.shape= Shape.Square;
+						particleArray[i].objectRenderer.SetTexture("smoke");
+						particleArray[i].rigidBody.frictionCoefficient = 0.01f;
+						particleArray[i].rigidBody.PushForce(new Vector2((ran.nextInt(20))*15*back.x,(ran.nextInt(20))*50*back.y),ForceMode.Impulse);
+						particleArray[i].transform.size = new Vector2((1+ran.nextInt(2)) - 0.075f*ran.nextInt(50));
+						particleArray[i].rigidBody.PushTorque((ran.nextInt(20) -10) * 10, ForceMode.Impulse);
+						particleArray[i].objectRenderer.opacity = 0.8f;
+					}
 				}
 			}
 			else
@@ -54,7 +58,7 @@ public class ParticleEffects extends GameObject
 			}
 		}
 	}
-	
+
 	public void TurnOn()
 	{
 		if( !isTurnedOn )
@@ -62,7 +66,7 @@ public class ParticleEffects extends GameObject
 			isTurnedOn = true;
 		}
 	}
-	
+
 	public void TurnOff()
 	{
 		if( isTurnedOn )
@@ -70,6 +74,6 @@ public class ParticleEffects extends GameObject
 			isTurnedOn = false;
 		}
 	}
-	
-	
+
+
 }

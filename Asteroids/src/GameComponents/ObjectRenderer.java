@@ -16,6 +16,8 @@ public class ObjectRenderer
 	private GameChar parent;
 	private boolean textureSet = false;
 	private int textureID;
+	
+	public float opacity = 1;
 
 	public ObjectRenderer(GameChar parent)
 	{
@@ -32,6 +34,9 @@ public class ObjectRenderer
 			gl.glBindTexture( GL.GL_TEXTURE_2D, textureID );
 			gl.glEnable( GL2.GL_BLEND );
 			gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+			gl.glAlphaFunc(GL2.GL_GREATER,0.01f);
+			gl.glTexEnvf(GL2.GL_TEXTURE_ENV,GL2.GL_TEXTURE_ENV_MODE,GL2.GL_MODULATE);
+			gl.glColor4f(1,1,1,opacity);
 		}
 		gl.glBegin(GL2.GL_QUADS);
 		for(int i = 0; i<shape.vertices.length; i++)
