@@ -58,6 +58,11 @@ public class Vector2
 			
 			return new Vector2(newX,newY);
 		} 
+		
+		public Vector2 Scaled(float scalar)
+		{
+			return new Vector2(scalar * x, scalar * y);
+		}
 	
 		public boolean Normalize()
 		{

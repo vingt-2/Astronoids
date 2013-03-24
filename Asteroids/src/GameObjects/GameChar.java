@@ -4,7 +4,6 @@ import Game.MainGame;
 import GameComponents.ObjectRenderer;
 import GameComponents.RigidBody;
 import GameComponents.Transform;
-import Helpers.Color;
 import Maths.Vector2;
 
 public class GameChar extends GameObject 
@@ -20,17 +19,24 @@ public class GameChar extends GameObject
 		rigidBody 		= new RigidBody(this);
 	}
 	
+	public GameChar(Vector2 position)
+	{
+		transform 		= new Transform(position);
+		objectRenderer 	= new ObjectRenderer(this);
+		rigidBody 		= new RigidBody(this);
+	}
+	
 	public void Update()
 	{
-		//Update Components
-		transform.UpdateTransform();
-		rigidBody.Update();
+		if(!isDeleted)		// Makes sure we're not about trying to use smthign about to be garbage collected
+		{
+			//Update Components
+			transform.UpdateTransform();
+			rigidBody.Update();
 		
-		// Do shit
-		WrapPositionAroundScreen();
-		
-		Vector2 charFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
-		MainGame.debug.DrawLine(transform.position,charFrontInWorldCoordinates,100,Color.Blue);
+			// Do shit
+			WrapPositionAroundScreen();
+		}
 	}
 	
 	private void WrapPositionAroundScreen()
@@ -51,7 +57,18 @@ public class GameChar extends GameObject
 		if(transform.position.y < -MainGame.Screen_Size.y/2)
 		{
 			rigidBody.SetPosition(new Vector2(transform.position.x,MainGame.Screen_Size.y/2));
-		}			
+		}
+	}
+	
+	@Override
+	public void Delete()
+	{
+		isDeleted		= true;
+		
+		MainGame.render.renderVector.remove(objectRenderer);
+		transform 		= null;
+		objectRenderer 	= null;
+		rigidBody 		= null;
 	}
 	
 }

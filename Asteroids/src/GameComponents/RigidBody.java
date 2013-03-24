@@ -1,9 +1,9 @@
 package GameComponents;
 
 import java.util.ArrayList;
+
+import GameComponents.ObjectRenderer.Shape;
 import GameObjects.GameChar;
-import Helpers.Color;
-import Helpers.Debug;
 import Maths.*;
 import Renderer.Renderer;
 
@@ -15,6 +15,7 @@ public class RigidBody
 	
 	public float mass = 1f;
 	public float frictionCoefficient = 0.05f;		// A force: pixel/s^2
+	public Collider collider;
 	
 	// Accessible and modifiable Physics States.
 	public Vector2 acceleration = Vector2.zero();	// A sum of forces : pixel/s^2
@@ -22,10 +23,12 @@ public class RigidBody
 	public float angularVelocity = 0;				// rad/s 	
 	public float angularAcceleration = 0;
 	
+	
+	
 	private GameChar parent;
 	private ArrayList<Forces> forcesList;
 	private ArrayList<Torque> torqueList;
-	private Vector2 previousPosition = Vector2.zero();
+	private Vector2 previousPosition;
 	private float previousRotation = 0;
 	
 	public RigidBody(GameChar parent)
@@ -33,6 +36,8 @@ public class RigidBody
 		this.parent = parent;
 		this.forcesList = new ArrayList<Forces>();
 		this.torqueList = new ArrayList<Torque>();
+		previousPosition = parent.transform.position;
+		collider = new Collider();
 	}
 
 	public RigidBody(GameChar parent, float mass)
@@ -40,7 +45,9 @@ public class RigidBody
 		this.parent = parent;
 		this.forcesList = new ArrayList<Forces>();
 		this.torqueList = new ArrayList<Torque>();
+		previousPosition = parent.transform.position;
 		this.mass = mass;
+		collider = new Collider();
 	}
 	
 	/**
@@ -249,6 +256,30 @@ public class RigidBody
 		{
 			this.torqueVal = torqueVal;
 			this.mode = mode;
+		}
+	}
+	
+	public class Collider
+	{
+		Shape collisionShape;
+		
+		
+	}
+	
+	public enum CollisionShape
+	{
+		Square (
+				new Vector2[]
+					{
+						new Vector2(-10f,-10f), new Vector2(10f,-10f),
+						new Vector2(10f,10f), new Vector2(-10f,10f) 
+					}
+		);
+		
+		public Vector2[] vertices;
+		CollisionShape(Vector2[] vertices)
+		{
+			this.vertices = vertices;
 		}
 	}
 

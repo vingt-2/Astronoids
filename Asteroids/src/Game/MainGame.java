@@ -2,7 +2,6 @@ package Game;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.media.opengl.GL2;
 
@@ -11,23 +10,29 @@ import jogamp.graph.math.MathFloat;
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import GameObjects.Alien;
+import Game.SharedRessources.RessourceType;
 import GameObjects.GameChar;
 import GameObjects.Player;
-import Helpers.Color;
 import Helpers.Debug;
 import Maths.*;
 import Renderer.*;
 
 public class MainGame 
 {
-	Renderer render;
-	public static final Controls controls = new Controls();
+	//Main Parameters
+	public static String Window_Name		= "Asteroids";
+	public static Vector2 Screen_Size 		= new Vector2(1024,780);
+	
 	
 	// Game singletons
-	public static final Debug debug = new Debug();
-	public static Vector2 Screen_Size = new Vector2(1024,780);
+	public static final SharedRessources sharedRessources	= new SharedRessources();
+	public static final Renderer render 					= new Renderer(Window_Name);
+	public static final Controls controls 					= new Controls();
+	public static final Debug debug 						= new Debug();
+
 	
 	ArrayList<GameChar> objectVector;
+
 	public static Player player;
 	GameChar object_2;
 	Alien alien;
@@ -46,31 +51,35 @@ public class MainGame
 		
 	}
 
+	public static Player player	;
+
+
 	public void init(GL2 gl)
 	{
-		player = new Player();
-		player.objectRenderer.shape= Shape.Square;
-		player.objectRenderer.SetTexture(gl, "./resources/textures/rocket_ship.png");
-		render.renderVector.add(player.objectRenderer);
-	
-		object_2 = new GameChar();
-		object_2.objectRenderer.shape = Shape.Square;
-		render.renderVector.add(object_2.objectRenderer);
+		sharedRessources.LoadRessources
+		(new Ressource[]
+			{
+				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture),
+				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture)
+			}
+		);
 
+		player = new Player();
 		player.transform.size = new Vector2(3,3);
+
 		
 		alien = new Alien();
 		alien.objectRenderer.shape=Shape.Square;
 		alien.objectRenderer.SetTexture(gl, "./resources/textures/Alien.png");
 		render.renderVector.add(alien.objectRenderer);
 	
+
+		player.rigidBody.frictionCoefficient = 0.1f;
+
 	}
 
 	public void Update(GL2 gl)
 	{
-		//Update every frame
-		debug.gl = gl;
-
 		// Put Game Logic here
 		
 		if(controls.isPressed(KeyEvent.VK_ESCAPE))
@@ -80,12 +89,18 @@ public class MainGame
 
 		//Update object_1 transform, physics, rendering etc...
 		player.Update();
+
 		object_2.Update();
 		alien.Update();
+
+
 	}
 
-	public void ObjectDemo()
+	
+	// Main Method. DO NOT touch this. If you do. YOU WILL DIE.
+	public static void main(String[] args)
 	{
+
 		test += 0.01f;
 
 		if(test < 2){
@@ -122,5 +137,13 @@ public class MainGame
     
    
     
+
+
+		MainGame game = new MainGame();							// Initiating a new Game.
+		
+		render.mainGame = game;									// Associate this Game to the renderer.
+		render.CreateWindow(new Vector2(1024,780),controls);	// Create a new Frame object and returns its reference.
+	}
+	
 
 }
