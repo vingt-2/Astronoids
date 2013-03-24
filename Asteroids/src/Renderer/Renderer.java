@@ -22,6 +22,8 @@ import com.jogamp.opengl.util.FPSAnimator;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
@@ -77,6 +79,13 @@ public class Renderer implements GLEventListener
 		frame.add(canvas);
 		frame.setSize((int)size.x, (int)size.y);
 		frame.setVisible(true);
+		frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+
+                System.exit(0);
+            }
+        } );
 		return frame;
 	}
 
