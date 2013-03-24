@@ -49,7 +49,7 @@ public class Player extends GameChar
 		{
 			Vector2 objectFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1));
 			rigidBody.PushForce(Vector2.Scale(1000, objectFrontInWorldCoordinates),ForceMode.Impulse);
-			effect.TurnOn();
+			effect.TurnOff();
 		}
 		else
 		{
