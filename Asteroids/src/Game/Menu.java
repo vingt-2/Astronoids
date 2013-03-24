@@ -28,7 +28,7 @@ public class Menu {
 		System.out.println("prout");
 			if (MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				System.out.println("prout2");
-				MainGame.inMenu = false;
+				//MainGame.inMenu = false;
 		} else { 
 			startGameButton.Update();
 			System.out.println("prout3");

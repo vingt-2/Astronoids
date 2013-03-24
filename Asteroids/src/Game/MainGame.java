@@ -67,14 +67,6 @@ public class MainGame
 		player.Update();
 		alien.Update();
 
-		//if (inMenu)
-		//{
-		//	menu.Update();
-		//	System.out.println("hello");
-		//} else {
-		//	System.out.println("update");
-		//	player.Update();
-		//	object_2.Update();
 	}
 
 	public static void main(String[] args)
