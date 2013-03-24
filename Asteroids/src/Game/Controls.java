@@ -13,7 +13,10 @@ public class Controls implements KeyListener
 	@Override
 	public void keyPressed(KeyEvent arg0) 
 	{
-		keyPressed[arg0.getKeyCode()] = true;
+		if(!keyPressed[arg0.getKeyCode()])
+		{
+			keyPressed[arg0.getKeyCode()] = true;
+		}
 	}
 	
 	@Override
