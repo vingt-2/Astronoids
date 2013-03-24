@@ -14,11 +14,11 @@ public class ParticleEffects extends GameObject
 
 	private Particles[] particleArray;
 
-	public ParticleEffects(Transform transform,int particlesNumber)
+	public ParticleEffects(Transform transform,int maxParticles)
 	{
 		this.transform = transform;
 
-		particleArray = new Particles[particlesNumber];
+		particleArray = new Particles[maxParticles];
 	}
 
 	public void Update()
@@ -29,11 +29,11 @@ public class ParticleEffects extends GameObject
 		{
 			if( particleArray[i] == null )
 			{
-				if(ran.nextInt(1000) % 27 == 0 )
+				if(ran.nextInt(1000) % 217 == 0 )
 				{
 					if( isTurnedOn )
 					{	
-						particleArray[i] = new Particles(ran.nextInt(1500)+5000,new Vector2(transform.position.x,transform.position.y));
+						particleArray[i] = new Particles(ran.nextInt(1500)+3000,new Vector2(transform.position.x,transform.position.y));
 						particleArray[i].objectRenderer.shape= Shape.Square;
 						particleArray[i].objectRenderer.SetTexture("smoke");
 						particleArray[i].rigidBody.frictionCoefficient = 0.01f;
