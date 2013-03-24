@@ -22,6 +22,7 @@ public class ObjectRenderer
 	public ObjectRenderer(GameChar parent)
 	{
 		MainGame.render.renderVector.add(this);
+		shape = Shape.Square;
 		objectUVs = new Vector2[0];
 		this.parent = parent;
 	}

@@ -54,11 +54,7 @@ public class MainGame
 
 		player = new Player();
 		player.transform.size = new Vector2(3,3);
-		
-		
-
-
-		player.rigidBody.frictionCoefficient = 0.1f;
+		player.rigidBody.frictionCoefficient = 0.05f;
 	}
 
 	public void Update(GL2 gl)
