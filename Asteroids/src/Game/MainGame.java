@@ -51,7 +51,8 @@ public class MainGame
 		alien = new Alien();
 		alien.transform.size=new Vector2(2,2);
 		alien.rigidBody.frictionCoefficient= 0.1f;
-		
+
+
 	}
 
 	public void Update(GL2 gl)
