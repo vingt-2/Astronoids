@@ -1,5 +1,6 @@
 package Game;
 
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,6 +10,7 @@ import javax.media.opengl.GL2;
 import jogamp.graph.math.MathFloat;
 
 import GameComponents.ObjectRenderer.Shape;
+import GameComponents.RigidBody;
 import GameComponents.RigidBody.ForceMode;
 import GameObjects.GameChar;
 import GameObjects.Player;
@@ -29,7 +31,8 @@ public class MainGame
 	ArrayList<GameChar> objectVector;
 	Player player;
 	GameChar object_2;
-	
+	GameChar object_3;
+	GameChar object_4;
 
 	float test = 0;
 
@@ -47,16 +50,29 @@ public class MainGame
 	{
 		player = new Player();
 		player.objectRenderer.shape= Shape.Square;
-		player.objectRenderer.SetTexture(gl, "./resources/textures/rocket_ship.png");
+		player.objectRenderer.SetTexture(gl, "./resources/textures/KFC.png");
 		render.renderVector.add(player.objectRenderer);
 	
 		object_2 = new GameChar();
 		object_2.objectRenderer.shape = Shape.Square;
 		render.renderVector.add(object_2.objectRenderer);
 
-		player.transform.size = new Vector2(3,3);
+		player.transform.size = new Vector2(6,6);
+		object_2.transform.size = new Vector2(6,6);
+		player.rigidBody.frictionCoefficient = 0.05f;
 		
-		player.rigidBody.frictionCoefficient = 0.01f;
+
+		object_3 = new GameChar();
+		object_3.objectRenderer.shape = Shape.Square;
+		render.renderVector.add(object_3.objectRenderer);
+		object_3.objectRenderer.SetTexture(gl, "./resources/textures/asteroid.png");
+		
+		object_3.transform.position = new Vector2(30,10);
+		object_3.transform.size = new Vector2(10,10);
+		object_3.rigidBody.PushTorque(0.5f, RigidBody.ForceMode.Force );
+		object_3.rigidBody.PushForce(new Vector2(15, 100), ForceMode.Force);
+		
+		
 	}
 
 	public void Update(GL2 gl)
@@ -72,8 +88,15 @@ public class MainGame
 		}
 
 		//Update object_1 transform, physics, rendering etc...
+		
 		player.Update();
 		object_2.Update();
+		object_3.Update();
+		
+		if(player.rigidBody.isColliding(player, object_2)){
+			  
+		}
+		player.rigidBody.isColliding(player, object_3);
 	}
 
 	public void ObjectDemo()

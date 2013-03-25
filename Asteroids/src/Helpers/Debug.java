@@ -11,7 +11,7 @@ import Maths.Vector3;
 
 public class Debug 
 {
-	public GL2 gl;
+	public static GL2 gl;
 	
 	public void DrawRay(Vector2 origin,Vector2 end)
 	{

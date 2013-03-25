@@ -1,5 +1,6 @@
 package GameComponents;
 
+
 import java.util.ArrayList;
 
 import GameComponents.ObjectRenderer.Shape;
@@ -17,7 +18,7 @@ public class RigidBody
 	
 	public float mass = 1f;
 	public float frictionCoefficient = 0.05f;		// A force: pixel/s^2
-	public Collider collider;
+	public CollisionShape collider = CollisionShape.Square;
 	
 	// Accessible and modifiable Physics States.
 	public Vector2 acceleration = Vector2.zero();	// A sum of forces : pixel/s^2
@@ -26,7 +27,7 @@ public class RigidBody
 	public float angularAcceleration = 0;
 	
 	
-	
+	public static Debug debug = new Debug();
 	private GameChar parent;
 	private ArrayList<Forces> forcesList;
 	private ArrayList<Torque> torqueList;
@@ -38,7 +39,7 @@ public class RigidBody
 		this.parent = parent;
 		this.forcesList = new ArrayList<Forces>();
 		this.torqueList = new ArrayList<Torque>();
-		collider = new Collider();
+		
 	}
 
 	public RigidBody(GameChar parent, float mass)
@@ -47,7 +48,7 @@ public class RigidBody
 		this.forcesList = new ArrayList<Forces>();
 		this.torqueList = new ArrayList<Torque>();
 		this.mass = mass;
-		collider = new Collider();
+		
 	}
 	
 	/**
@@ -259,12 +260,10 @@ public class RigidBody
 		}
 	}
 	
-	public class Collider
-	{
-		Shape collisionShape;
+	
 		
 		
-	}
+	
 	
 	public enum CollisionShape
 	{
@@ -274,13 +273,107 @@ public class RigidBody
 						new Vector2(-10f,-10f), new Vector2(10f,-10f),
 						new Vector2(10f,10f), new Vector2(-10f,10f) 
 					}
-		);
+		),		
+		
+		Triangle (
+				
+				new Vector2[] {new Vector2(-10f, -10f), new Vector2(10f, -10f), new Vector2(0,10)}
+						
+				),
+				
+		HexAngle(
+				
+				new Vector2[] {new Vector2(-10,-4),new Vector2(1,-10),new Vector2(10,-10),new Vector2(10,4),new Vector2(-1,10),new Vector2(-10,10)}
+				);
+		
+		
+		
 		
 		public Vector2[] vertices;
 		CollisionShape(Vector2[] vertices)
 		{
 			this.vertices = vertices;
 		}
+		
+		
+		
+	
 	}
+	
+public boolean isColliding(GameChar char1, GameChar char2){
+		
+		float rotation = char1.transform.rotation;
+		
+		Vector2[] box1 = makeBox(char1);
+		Vector2[] box2 = makeBox(char2);
+		
+		for (int i =0; i<box1.length; i++){
+			//System.out.println(box1[i].x);
+			//System.out.println(box1[i].y);
+			//System.out.println(box2[i].x);
+			//System.out.println(box2[i].y);
+		}
+		
+		for(int i= 0; i<4; i++){
+			for (int j = 0; j<4;j++){
+				if(i!=j)
+						if(intersects(box1[i],box1[(i+1)%4],box2[j],box2[(j+1)%4])) return true;
+					
+				}
+		}
+		
+
+		for (int i =0; i<box1.length; i++){
+			//System.out.println(box1[i].x);
+			//System.out.println(box1[i].y);
+			//System.out.println(box2[i].x);
+			//System.out.println(box2[i].y);
+		
+		debug.DrawRay(box1[i],box1[(i+1)%4]);
+		debug.DrawRay(box2[i],box2[(i+1)%4]);
+		}
+		return false;
+		
+	}
+	
+	public boolean intersects(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2){
+		
+		return java.awt.geom.Line2D.linesIntersect((double)a1.x,(double)a1.y,(double)a2.x,(double)a2.y,(double)b1.x,(double)b1.y,(double)b2.x,(double)b2.y);
+		
+	}
+	
+	public boolean isColliding(){
+		
+		CollisionShape shape = parent.rigidBody.collider;
+		
+		if (shape.equals(Shape.Square)){
+			Vector2[] box = makeBox(parent);
+		}
+		
+		
+		
+		return false;
+	}
+
+	public Vector2[] makeBox(GameChar char1){
+		
+		Vector2 position1 = char1.transform.position;
+		Vector2 size1 = char1.transform.size;
+		float r = char1.transform.rotation;
+		
+		Vector2[] box = {new Vector2(position1.x+(-10)*size1.x*(float)Math.sin(r)-(-10)*(float)Math.cos(r)*size1.y, position1.y+(-10)*size1.x*(float)Math.cos(r)+(-10)*(float)Math.sin(r)*size1.y),
+				new Vector2(position1.x+(10)*size1.x*(float)Math.sin(r)-(-10)*(float)Math.cos(r)*size1.y, position1.y+(10)*size1.x*(float)Math.cos(r)+(-10)*(float)Math.sin(r)*size1.y),
+				new Vector2(position1.x+(10)*size1.x*(float)Math.sin(r)-(10)*(float)Math.cos(r)*size1.y, position1.y+(10)*size1.x*(float)Math.cos(r)+(10)*(float)Math.sin(r)*size1.y),
+				new Vector2(position1.x+(-10)*size1.x*(float)Math.sin(r)-(10)*(float)Math.cos(r)*size1.y, position1.y+(-10)*size1.x*(float)Math.cos(r)+(10)*(float)Math.sin(r)*size1.y)}
+				;
+		
+		return box;
+		
+		
+		
+	}
+	
+	
+	
 
 }
