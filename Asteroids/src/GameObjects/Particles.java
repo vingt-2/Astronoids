@@ -29,12 +29,13 @@ public class Particles extends GameChar
 
 		//MainGame.debug.DrawLine(transform.position,toPlayer,toPlayer.GetLength());
 
-		if(toPlayer.GetLength() < 200)
+		if(toPlayer.GetLength() < 100)
 		{
-			objectRenderer.opacity *= toPlayer.GetLength()/200;
-			if(toPlayer.GetLength() < 100)
+			rigidBody.PushForce(toPlayer.Normalized().Scaled(-30*MainGame.player.rigidBody.velocity.GetLength()), ForceMode.Impulse);
+
+			if(toPlayer.GetLength() < 50)
 			{
-				rigidBody.PushForce(toPlayer.Normalized().Scaled(-30*MainGame.player.rigidBody.velocity.GetLength()), ForceMode.Impulse);
+				objectRenderer.opacity *= toPlayer.GetLength()/50;
 			}
 		}
 	}

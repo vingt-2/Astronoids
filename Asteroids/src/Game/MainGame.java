@@ -51,11 +51,11 @@ public class MainGame
 
 		player = new Player();
 		player.transform.size = new Vector2(3,3);
-		player.rigidBody.frictionCoefficient = 0.1f;
+		player.rigidBody.frictionCoefficient = 0.05f;
 		
 		alien = new Alien();
 		alien.transform.size=new Vector2(2,2);
-		alien.rigidBody.frictionCoefficient= 0.1f;
+		alien.rigidBody.frictionCoefficient= 0.05f;
 
 
 	}
