@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import GameComponents.ObjectRenderer.Shape;
 import GameObjects.GameChar;
-import Helpers.Color;
 import Helpers.Debug;
 import Maths.*;
 import Renderer.Renderer;
@@ -31,7 +30,7 @@ public class RigidBody
 	private GameChar parent;
 	private ArrayList<Forces> forcesList;
 	private ArrayList<Torque> torqueList;
-	private Vector2 previousPosition = Vector2.zero();
+	private Vector2 previousPosition;
 	private float previousRotation = 0;
 	
 	public RigidBody(GameChar parent)
@@ -39,6 +38,8 @@ public class RigidBody
 		this.parent = parent;
 		this.forcesList = new ArrayList<Forces>();
 		this.torqueList = new ArrayList<Torque>();
+
+		previousPosition = parent.transform.position;
 		
 	}
 
@@ -47,6 +48,7 @@ public class RigidBody
 		this.parent = parent;
 		this.forcesList = new ArrayList<Forces>();
 		this.torqueList = new ArrayList<Torque>();
+		previousPosition = parent.transform.position;
 		this.mass = mass;
 		
 	}

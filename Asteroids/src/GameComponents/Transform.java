@@ -18,6 +18,15 @@ public class Transform
 		UpdateTransform();
 	}
 	
+	public Transform(Vector2 position)
+	{
+		size = new Vector2(1,1);
+		this.position = new Vector2(position.x,position.y);
+		rotation = 0;
+		UpdateTransform();
+	}
+	
+	
 	public void UpdateTransform()
 	{
 		Matrix3 translationMatrix = new Matrix3(0);
