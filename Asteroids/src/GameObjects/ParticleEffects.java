@@ -25,7 +25,7 @@ public class ParticleEffects extends GameObject
 	public void Update()
 	{
 		Random ran = new Random();
-		Vector2 back = transform.LocalPositionToWorld(new Vector2(0,-1)).Normalized();
+		Vector2 back = transform.LocalDirectionToWorld(new Vector2(0,-1)).Normalized();
 		int shipLength = 15;
 		Vector2 particlePos = transform.LocalPositionToWorld(new Vector2(0,-shipLength));
 		for(int i = 0; i < particleArray.length; i++)
