@@ -2,6 +2,7 @@ package GameObjects;
 
 import java.util.Random;
 
+import Game.MainGame;
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import GameComponents.Transform;
@@ -24,9 +25,9 @@ public class ParticleEffects extends GameObject
 	public void Update()
 	{
 		Random ran = new Random();
-		Vector2 back = transform.LocalDirectionToWorld(new Vector2(0,-1)).Normalized();
-		Vector2 particlePos;
-		int shipLngth = 30;
+		Vector2 back = transform.LocalPositionToWorld(new Vector2(0,-1)).Normalized();
+		int shipLength = 15;
+		Vector2 particlePos = transform.LocalPositionToWorld(new Vector2(0,-shipLength));
 		for(int i = 0; i < particleArray.length; i++)
 		{
 			if( particleArray[i] == null )
@@ -35,9 +36,6 @@ public class ParticleEffects extends GameObject
 				{
 					if( isTurnedOn )
 					{	
-						particlePos = new Vector2(transform.position.x-(shipLngth*(float) Math.sin(transform.rotation)),
-								transform.position.y-(shipLngth*(float) Math.cos(transform.rotation)));
-						
 						particleArray[i] = new Particles(ran.nextInt(1500)+3000, particlePos);
 						particleArray[i].objectRenderer.shape= Shape.Square;
 						particleArray[i].objectRenderer.SetTexture("smoke");
