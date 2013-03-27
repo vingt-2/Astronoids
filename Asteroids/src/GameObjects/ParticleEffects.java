@@ -25,6 +25,8 @@ public class ParticleEffects extends GameObject
 	{
 		Random ran = new Random();
 		Vector2 back = transform.LocalDirectionToWorld(new Vector2(0,-1)).Normalized();
+		Vector2 particlePos;
+		int shipLngth = 30;
 		for(int i = 0; i < particleArray.length; i++)
 		{
 			if( particleArray[i] == null )
@@ -33,7 +35,10 @@ public class ParticleEffects extends GameObject
 				{
 					if( isTurnedOn )
 					{	
-						particleArray[i] = new Particles(ran.nextInt(1500)+3000,new Vector2(transform.position.x,transform.position.y));
+						particlePos = new Vector2(transform.position.x-(shipLngth*(float) Math.sin(transform.rotation)),
+								transform.position.y-(shipLngth*(float) Math.cos(transform.rotation)));
+						
+						particleArray[i] = new Particles(ran.nextInt(1500)+3000, particlePos);
 						particleArray[i].objectRenderer.shape= Shape.Square;
 						particleArray[i].objectRenderer.SetTexture("smoke");
 						particleArray[i].rigidBody.frictionCoefficient = 0.01f;
