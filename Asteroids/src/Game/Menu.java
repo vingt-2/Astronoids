@@ -16,9 +16,11 @@ public class Menu {
 	GameChar random;
 	GameChar background;
 	GameChar quitButton;
+	GameChar instructionTitle;
 	public int counter = 0;
-	public int counter1 = 0;
+	public int counter1 = 0, counter2 = 0;
 	public boolean inInstructions = false;
+	public boolean inGame = false;
 
 	public Menu(){ 
 		Controls.menuCounter = 0;
@@ -67,6 +69,7 @@ public class Menu {
 				case 0:
 					MainGame.inMenu = false;
 					MainGame.enterKeyPressed = true;
+					inGame = true;
 					break;
 				case 1:
 					if (counter == 0){
@@ -75,6 +78,7 @@ public class Menu {
 						counter++;
 					}
 					random.Update();
+					instructionTitle.Update();
 					break;
 				case 2:
 					System.exit(0);
@@ -92,7 +96,8 @@ public class Menu {
 					counter = 0;
 					counter1 = 0;
 					random.Delete();
-				}
+					instructionTitle.Delete();
+				} 
 		} else {
 			background.Update();
 			startGameButton.Update();
@@ -106,8 +111,12 @@ public class Menu {
 		instruction.Delete();
 		quitButton.Delete();
 		random = new GameChar(); 
+		instructionTitle = new GameChar();
+		instructionTitle.objectRenderer.SetTexture("instructionTitle");
+		instructionTitle.transform.size = new Vector2 (20,5);
+		instructionTitle.transform.position = new Vector2 (25,45);
 		random.objectRenderer.SetTexture("random");
-		random.transform.size = new Vector2 (35,30);
+		random.transform.size = new Vector2 (35,25);
 	}
 	
 	public void initMenu() { 
