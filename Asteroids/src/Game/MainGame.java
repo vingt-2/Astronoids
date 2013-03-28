@@ -11,6 +11,7 @@ import GameObjects.Alien;
 import Game.SharedRessources.RessourceType;
 
 import GameObjects.GameChar;
+import GameObjects.Laser;
 import GameObjects.Player;
 import Helpers.Debug;
 import Maths.*;
@@ -30,10 +31,12 @@ public class MainGame
 	public static final Debug debug 						= new Debug();
 
 	
-	ArrayList<GameChar> objectVector;
+	public static ArrayList<GameChar> objectVector;
 
 	public static Player player;
 	 Alien alien;
+
+	 Laser laser;
 
 
 	public void init(GL2 gl)
@@ -45,17 +48,20 @@ public class MainGame
 			
 				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture),
 				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
-				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture )
+				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
+				new Ressource("Laser","./resources/textures/Laser.png", RessourceType.Texture )
 			}
 		);
 
 		player = new Player();
 		player.transform.size = new Vector2(3,3);
-		player.rigidBody.frictionCoefficient = 0.05f;
+		player.rigidBody.frictionCoefficient = 0.1f;
 		
-		alien = new Alien();
-		alien.transform.size=new Vector2(2,2);
-		alien.rigidBody.frictionCoefficient= 0.05f;
+		laser = new Laser();
+		
+//		alien = new Alien();
+//		alien.transform.size=new Vector2(2,2);
+//		alien.rigidBody.frictionCoefficient= 0.1f;
 
 
 	}
@@ -68,13 +74,19 @@ public class MainGame
 		{
 			System.exit(0);
 		}
+		
 
+		
 		//Update object_1 transform, physics, rendering etc...
 		
 		player.Update();
+		
+		
 
-		alien.Update();
-
+		//alien.Update();
+		
+		//player.rigidBody.isColliding(player,alien);
+		
 
 	}
 
