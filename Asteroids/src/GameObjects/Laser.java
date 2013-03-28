@@ -16,44 +16,30 @@ public class Laser extends GameChar {
 	long creationTime;
 	long lifeTime = 500;
 	
-	public Laser(){
+	public Laser(Vector2 position){
 		
-		super();
-		//objectRenderer.shape = Shape.Square;
-		//objectRenderer.SetTexture("Laser");
+		super(position);
 		creationTime = System.currentTimeMillis();
 		
 	}
 	
 	public void Update()
 	{
-		
-		
 		super.Update();
-	
-		 
 		if (counter == 0)
 			{	
 			
 			rigidBody.SetPosition(MainGame.player.transform.LocalPositionToWorld(new Vector2(0,0)));
-			
 			counter ++;
 			}
 		
 			rigidBody.frictionCoefficient = 0.0f;
 			rigidBody.mass = 0.001f;
 			rigidBody.acceleration = new Vector2(0,0);
+			rigidBody.PushForce(new Vector2(-(float)Math.cos((MainGame.player.transform.rotation+(Math.PI/2))),
+					(float)Math.sin((MainGame.player.transform.rotation+(Math.PI/2)))), ForceMode.Impulse);
 			
-			rigidBody.PushForce(new Vector2(-(float)Math.cos((MainGame.player.transform.rotation+(Math.PI/2))),(float)Math.sin((MainGame.player.transform.rotation+(Math.PI/2)))), ForceMode.Impulse);
-			
-		
-			
-		
 		if (TimeToDie()) Delete();
-		
-		
-	
-		
 		
 		// Laser Stuff
 		

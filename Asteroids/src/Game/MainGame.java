@@ -52,9 +52,7 @@ public class MainGame
 				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture),
 				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
 				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
-
 				new Ressource("asteroid", "./resources/textures/asteroid.png", RessourceType.Texture),
-
 				new Ressource("Laser","./resources/textures/Laser.png", RessourceType.Texture )
 			}
 		);
@@ -62,10 +60,8 @@ public class MainGame
 		player = new Player();
 		player.transform.size = new Vector2(3,3);
 		player.rigidBody.frictionCoefficient = 0.1f;
-		
-		laser = new Laser();
-		
-		fieldGenerator = new FieldGenerator(5, 5);
+				
+		fieldGenerator = new FieldGenerator(12, 5);
 //		alien = new Alien();
 //		alien.transform.size=new Vector2(2,2);
 //		alien.rigidBody.frictionCoefficient= 0.1f;
