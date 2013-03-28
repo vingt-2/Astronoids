@@ -93,6 +93,7 @@ public class Renderer implements GLEventListener
 	    int x = (int) ((dimension.getWidth() - size.x) / 2);
 	    int y = (int) ((dimension.getHeight() - size.y) / 2);
 	    frame.setLocation(x, y);
+	    frame.setResizable(false);
 		return frame;
 	}
 
