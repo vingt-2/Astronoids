@@ -24,6 +24,9 @@ public class MainGame
 	//Main Parameters
 	public static String Window_Name		= "Asteroids";
 	public static Vector2 Screen_Size 		= new Vector2(1024,780);
+	public static boolean inMenu			= true;
+	public static boolean enterKeyPressed 	= false;
+	public static boolean inStartGame = true;
 	
 	
 	// Game singletons
@@ -31,19 +34,40 @@ public class MainGame
 	public static final Renderer render 					= new Renderer(Window_Name);
 	public static final Controls controls 					= new Controls();
 	public static final Debug debug 						= new Debug();
+	public static  Menu menu; 								//= new Menu();
 
 	
 	public static ArrayList<GameChar> objectVector;
 
 	public static Player player;
 
+
 	Alien alien;
 	public static FieldGenerator fieldGenerator;
 	Laser laser;
 
-
+	
 	public void init(GL2 gl)
 	{
+		if (inMenu) { 
+			sharedRessources.LoadRessources
+			(new Ressource [] {
+						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
+						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
+						new Ressource("random","./resources/textures/instructions.png", RessourceType.Texture),
+						new Ressource("instructionOnHover","./resources/textures/vertOnHover.png", RessourceType.Texture),
+						new Ressource("instruction","./resources/textures/vert.png", RessourceType.Texture),
+						new Ressource("logoOnHover","./resources/textures/startGameOnHover.png", RessourceType.Texture),
+						new Ressource("logo","./resources/textures/startGame.png",RessourceType.Texture),
+						new Ressource("background","./resources/textures/space.jpg", RessourceType.Texture)
+					}
+			);
+			menu = new Menu();
+		} else { 
+			
+		menu.startGameButton.Delete();
+		menu.instruction.Delete();
+		menu.quitButton.Delete();
 
 		sharedRessources.LoadRessources
 		(new Ressource[]
@@ -56,10 +80,14 @@ public class MainGame
 				new Ressource("Laser","./resources/textures/Laser.png", RessourceType.Texture )
 			}
 		);
-
-		player = new Player();
+ 		player = new Player();
 		player.transform.size = new Vector2(3,3);
 		player.rigidBody.frictionCoefficient = 0.1f;
+		
+		alien = new Alien();
+		alien.transform.size=new Vector2(2,2);
+		alien.rigidBody.frictionCoefficient= 0.1f;
+		}
 				
 		fieldGenerator = new FieldGenerator(12, 5);
 	
@@ -68,18 +96,27 @@ public class MainGame
 //		alien.transform.size=new Vector2(2,2);
 //		alien.rigidBody.frictionCoefficient= 0.1f;
 
-
 	}
-
+	
 	public void Update(GL2 gl)
 	{
+		
+		
+		if(inMenu){ 
+			menu.Update();
+	} else {
+		if (enterKeyPressed) { 
+			init (gl);
+			enterKeyPressed = false;
+		}
+		
 		// Put Game Logic here
 		
 		if(controls.isPressed(KeyEvent.VK_ESCAPE))
 		{
 			System.exit(0);
 		}
-		
+
 		
 		ArrayList<Asteroid> rocks = fieldGenerator.GetAsteroidArray();
 		Laser[] lasers = player.secondEffect.GetLaserArray();
@@ -115,12 +152,19 @@ public class MainGame
 			
 		}
 		
+
+		
+
 		//Update object_1 transform, physics, rendering etc...
 		
 		player.Update();
-		
+		alien.Update();
 		fieldGenerator.Update();
+
 		
+
+		}
+
 		
 		//alien.Update();
 		

@@ -8,6 +8,7 @@ public class Controls implements KeyListener
 {
 
 	boolean[] keyPressed = new boolean[KeyEvent.KEY_LAST];
+	static int menuCounter =0;
 	
 	
 	@Override
@@ -17,6 +18,10 @@ public class Controls implements KeyListener
 		{
 			keyPressed[arg0.getKeyCode()] = true;
 		}
+		if(arg0.getKeyCode() == KeyEvent.VK_DOWN && menuCounter < 3)
+			menuCounter++;
+		if(arg0.getKeyCode() == KeyEvent.VK_UP && menuCounter != 0)
+			menuCounter--;
 	}
 	
 	@Override

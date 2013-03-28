@@ -1,13 +1,9 @@
 package Game;
 
 import java.awt.event.KeyEvent;
-import java.awt.image.renderable.RenderableImage;
 
-import javax.media.opengl.GL2;
-
-
+import Maths.Vector2;
 import Renderer.*;
-import GameComponents.ObjectRenderer.Shape;
 import GameObjects.GameChar;
 import Game.Controls;
 
@@ -15,26 +11,124 @@ import Game.Controls;
 public class Menu {
 
 	Renderer render; 
-	GameChar playButton;
 	GameChar startGameButton;
-	
-	public Menu(){ //constructor
+	GameChar instruction;
+	GameChar random;
+	GameChar background;
+	GameChar quitButton;
+	public int counter = 0;
+	public int counter1 = 0;
+	public boolean inInstructions = false;
+
+	public Menu(){ 
+		Controls.menuCounter = 0;
+		background = new GameChar();
 		startGameButton = new GameChar();
-		
+		instruction = new GameChar();
+		quitButton = new GameChar();
+		background.objectRenderer.SetTexture("background");
+		background.transform.size = new Vector2(60,60);
+		startGameButton.objectRenderer.SetTexture("logoOnHover");
+		startGameButton.transform.size = new Vector2 (17,17);
+		startGameButton.transform.position = new Vector2 (0,10);
+		startGameButton.rigidBody.frictionCoefficient = 0.1f;
+		instruction.objectRenderer.SetTexture("instruction");
+		instruction.transform.size = new Vector2 (25,18);
+		instruction.transform.position = new Vector2 (0,-9);
+		instruction.rigidBody.frictionCoefficient = 0.1f;
+		quitButton.objectRenderer.SetTexture("quit");
+		quitButton.transform.position = new Vector2 (0,-8);
+		quitButton.transform.size = new Vector2 (11,11);
 		
 		}
 		
 	public void Update(){ 
-		System.out.println("prout");
+		if(!inInstructions){
+		switch(Controls.menuCounter){
+		case 0:
+			startGameButton.objectRenderer.SetTexture("logoOnHover"); 
+			instruction.objectRenderer.SetTexture("instruction");
+			quitButton.objectRenderer.SetTexture("quit");
+			break;
+		case 1:
+			startGameButton.objectRenderer.SetTexture("logo"); 
+			instruction.objectRenderer.SetTexture("instructionOnHover");
+			quitButton.objectRenderer.SetTexture("quit");
+			break;
+		case 2:
+			startGameButton.objectRenderer.SetTexture("logo"); 
+			instruction.objectRenderer.SetTexture("instruction");
+			quitButton.objectRenderer.SetTexture("quitOnHover");
+			break;
+		}
+		}
 			if (MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				System.out.println("prout2");
-				//MainGame.inMenu = false;
-		} else { 
+				switch(Controls.menuCounter){
+				case 0:
+					MainGame.inMenu = false;
+					MainGame.enterKeyPressed = true;
+					break;
+				case 1:
+					if (counter == 0){
+						initInstructions();
+						inInstructions = true;
+						counter++;
+					}
+					random.Update();
+					break;
+				case 2:
+					System.exit(0);
+					break;
+				}
+			}
+			if (MainGame.controls.isPressed(KeyEvent.VK_BACK_SPACE)){
+				if(inInstructions){
+					if (counter1 == 0){
+						initMenu();
+						Controls.menuCounter = 0;
+						counter1++;
+					}
+					inInstructions = false;
+					counter = 0;
+					counter1 = 0;
+					random.Delete();
+				}
+		} else {
+			background.Update();
 			startGameButton.Update();
-			System.out.println("prout3");
+			instruction.Update();
+			quitButton.Update();
 		}	
-	}
 		
 	}
+	public void initInstructions(){
+		startGameButton.Delete();
+		instruction.Delete();
+		quitButton.Delete();
+		random = new GameChar(); 
+		random.objectRenderer.SetTexture("random");
+		random.transform.size = new Vector2 (35,30);
+	}
+	
+	public void initMenu() { 
+		background = new GameChar();
+		startGameButton = new GameChar();
+		instruction = new GameChar();
+		quitButton = new GameChar();
+		background.objectRenderer.SetTexture("background");
+		background.transform.size = new Vector2(60,60);
+		startGameButton.objectRenderer.SetTexture("logoOnHover");
+		startGameButton.transform.size = new Vector2 (17,17);
+		startGameButton.transform.position = new Vector2 (0,10);
+		startGameButton.rigidBody.frictionCoefficient = 0.1f;
+		instruction.objectRenderer.SetTexture("instruction");
+		instruction.transform.size = new Vector2 (25,18);
+		instruction.transform.position = new Vector2 (0,-9);
+		instruction.rigidBody.frictionCoefficient = 0.1f;
+		quitButton.objectRenderer.SetTexture("quit");
+		quitButton.transform.position = new Vector2 (0,-8);
+		quitButton.transform.size = new Vector2 (11,11);
+	}
+}
 
 
