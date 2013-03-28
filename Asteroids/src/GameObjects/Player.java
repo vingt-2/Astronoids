@@ -2,6 +2,8 @@ package GameObjects;
 
 import java.awt.event.KeyEvent;
 import Game.MainGame;
+import Game.Ressource;
+import Game.SharedRessources.RessourceType;
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import Helpers.Color;
@@ -11,8 +13,12 @@ public class Player extends GameChar
 {
 	
 	ParticleEffects effect = new ParticleEffects(transform,2000);
+	Shoot secondEffect = new Shoot(transform);
+	
+	
 	long lastTime = 0;
 	final static long effectTimeThreshold = 1000; // wait 000ms to toggle effect
+	
 	
 	public Player()
 	{
@@ -27,8 +33,11 @@ public class Player extends GameChar
 		
 		// Player Stuff
 		effect.Update();
-		PlayerControls();
 		
+		secondEffect.Update();
+		
+		PlayerControls();
+
 		
 		Vector2 charFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
 		MainGame.debug.DrawLine(transform.position,charFrontInWorldCoordinates,100,Color.Blue);
@@ -64,6 +73,7 @@ public class Player extends GameChar
 				if(!effect.isTurnedOn)
 				{
 					effect.TurnOn();
+					
 				}
 				else				
 				{
@@ -71,7 +81,17 @@ public class Player extends GameChar
 				}
 				lastTime = time;
 			}
+			
+			secondEffect.TurnOn();
+			
+			
+			
+			
+		} else {
+			secondEffect.TurnOff();
+			secondEffect.i++;
 		}
+		
 	}
 	
 }

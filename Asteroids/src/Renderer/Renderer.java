@@ -19,9 +19,11 @@ import Maths.*;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import java.awt.Dimension;
 // Util imports
 import java.awt.Frame;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.color.ColorSpace;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -87,6 +89,10 @@ public class Renderer implements GLEventListener
                 System.exit(0);
             }
         } );
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - size.x) / 2);
+	    int y = (int) ((dimension.getHeight() - size.y) / 2);
+	    frame.setLocation(x, y);
 		return frame;
 	}
 

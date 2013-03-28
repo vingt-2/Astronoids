@@ -1,13 +1,19 @@
 package Game;
 
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.media.opengl.GL2;
 
 import GameComponents.ObjectRenderer.Shape;
+
 import GameObjects.Alien;
 import Game.SharedRessources.RessourceType;
+
+import GameObjects.Asteroid;
+import GameObjects.FieldGenerator;
 import GameObjects.GameChar;
+import GameObjects.Laser;
 import GameObjects.Player;
 import Helpers.Debug;
 import Maths.*;
@@ -31,9 +37,14 @@ public class MainGame
 	public static  Menu menu; 								//= new Menu();
 
 	
-	ArrayList<GameChar> objectVector;
+	public static ArrayList<GameChar> objectVector;
+
 	public static Player player;
-	 Alien alien; 
+
+
+	Alien alien;
+	FieldGenerator fieldGenerator;
+	Laser laser;
 
 	
 	public void init(GL2 gl)
@@ -44,7 +55,6 @@ public class MainGame
 						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
 						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
 						new Ressource("random","./resources/textures/random.png", RessourceType.Texture),
-						new Ressource("bebe","./resources/textures/bebe.png", RessourceType.Texture),
 						new Ressource("instructionOnHover","./resources/textures/vertOnHover.png", RessourceType.Texture),
 						new Ressource("instruction","./resources/textures/vert.png", RessourceType.Texture),
 						new Ressource("logoOnHover","./resources/textures/startGameOnHover.png", RessourceType.Texture),
@@ -52,13 +62,13 @@ public class MainGame
 						new Ressource("background","./resources/textures/space.jpg", RessourceType.Texture)
 					}
 			);
-			System.out.println("YELO!");
 			menu = new Menu();
 		} else { 
 			
 		menu.startGameButton.Delete();
 		menu.instruction.Delete();
 		menu.quitButton.Delete();
+
 		sharedRessources.LoadRessources
 		(new Ressource[]
 			{
@@ -66,7 +76,8 @@ public class MainGame
 				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture),
 				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
 				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
-
+				new Ressource("asteroid", "./resources/textures/asteroid.png", RessourceType.Texture),
+				new Ressource("Laser","./resources/textures/Laser.png", RessourceType.Texture )
 			}
 		);
  		player = new Player();
@@ -77,6 +88,12 @@ public class MainGame
 		alien.transform.size=new Vector2(2,2);
 		alien.rigidBody.frictionCoefficient= 0.1f;
 		}
+				
+		fieldGenerator = new FieldGenerator(12, 5);
+//		alien = new Alien();
+//		alien.transform.size=new Vector2(2,2);
+//		alien.rigidBody.frictionCoefficient= 0.1f;
+
 	}
 	
 	public void Update(GL2 gl)
@@ -95,10 +112,16 @@ public class MainGame
 				enterKeyPressed = false;
 			}
 		//Update object_1 transform, physics, rendering etc...
+		
 		player.Update();
 		alien.Update();
-		
+		fieldGenerator.Update();
 		}
+		
+		//alien.Update();
+		
+		//player.rigidBody.isColliding(player,alien);
+		
 	}
 
 	public static void main(String[] args)
@@ -107,7 +130,7 @@ public class MainGame
 		MainGame game = new MainGame();							// Initiating a new Game.
 	
 		render.mainGame = game;									// Associate this Game to the renderer.
-		render.CreateWindow(new Vector2(1024,780),controls); // Create a new Frame object and returns its reference.
+		render.CreateWindow(new Vector2(1024,780),controls);	// Create a new Frame object and returns its reference.
 		
 	}
 	

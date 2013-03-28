@@ -89,7 +89,11 @@ public class ObjectRenderer
 			this.vertices = vertices;
 			this.UVs = UVs;
 		}
+		
+		
 
 	}
+	
+	
 
 }
