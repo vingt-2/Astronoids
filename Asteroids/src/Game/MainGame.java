@@ -10,6 +10,8 @@ import GameComponents.ObjectRenderer.Shape;
 import GameObjects.Alien;
 import Game.SharedRessources.RessourceType;
 
+import GameObjects.Asteroid;
+import GameObjects.FieldGenerator;
 import GameObjects.GameChar;
 import GameObjects.Player;
 import Helpers.Debug;
@@ -33,8 +35,8 @@ public class MainGame
 	ArrayList<GameChar> objectVector;
 
 	public static Player player;
-	 Alien alien;
-
+	Alien alien;
+	FieldGenerator fieldGenerator;
 
 	public void init(GL2 gl)
 	{
@@ -45,7 +47,8 @@ public class MainGame
 			
 				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture),
 				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
-				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture )
+				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
+				new Ressource("asteroid", "./resources/textures/asteroid.png", RessourceType.Texture)
 			}
 		);
 
@@ -56,7 +59,8 @@ public class MainGame
 		alien = new Alien();
 		alien.transform.size=new Vector2(2,2);
 		alien.rigidBody.frictionCoefficient= 0.05f;
-
+		
+		fieldGenerator = new FieldGenerator(5, 5);
 
 	}
 
@@ -74,8 +78,8 @@ public class MainGame
 		player.Update();
 
 		alien.Update();
-
-
+		
+		fieldGenerator.Update();
 	}
 
 	public static void main(String[] args)
@@ -84,7 +88,7 @@ public class MainGame
 		MainGame game = new MainGame();							// Initiating a new Game.
 	
 		render.mainGame = game;									// Associate this Game to the renderer.
-		render.CreateWindow(new Vector2(1024,780),controls); // Create a new Frame object and returns its reference.
+		render.CreateWindow(new Vector2(1024,780),controls);	// Create a new Frame object and returns its reference.
 		
 	}
 	
