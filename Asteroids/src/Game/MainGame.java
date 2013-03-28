@@ -18,6 +18,9 @@ public class MainGame
 	//Main Parameters
 	public static String Window_Name		= "Asteroids";
 	public static Vector2 Screen_Size 		= new Vector2(1024,780);
+	public static boolean inMenu			= true;
+	public static boolean enterKeyPressed 	= false;
+	public static boolean inStartGame = true;
 	
 	
 	// Game singletons
@@ -25,36 +28,57 @@ public class MainGame
 	public static final Renderer render 					= new Renderer(Window_Name);
 	public static final Controls controls 					= new Controls();
 	public static final Debug debug 						= new Debug();
+	public static  Menu menu; 								//= new Menu();
 
 	
 	ArrayList<GameChar> objectVector;
 	public static Player player;
-	 Alien alien;
+	 Alien alien; 
 
-
+	
 	public void init(GL2 gl)
 	{
+		if (inMenu) { 
+			sharedRessources.LoadRessources
+			(new Ressource [] {
+						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
+						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
+						new Ressource("random","./resources/textures/random.png", RessourceType.Texture),
+						new Ressource("bebe","./resources/textures/bebe.png", RessourceType.Texture),
+						new Ressource("instructionOnHover","./resources/textures/vertOnHover.png", RessourceType.Texture),
+						new Ressource("instruction","./resources/textures/vert.png", RessourceType.Texture),
+						new Ressource("logoOnHover","./resources/textures/startGameOnHover.png", RessourceType.Texture),
+						new Ressource("logo","./resources/textures/startGame.png",RessourceType.Texture),
+						new Ressource("background","./resources/textures/space.jpg", RessourceType.Texture)
+					}
+			);
+			System.out.println("YELO!");
+			menu = new Menu();
+		} else { 
+			
+		menu.startGameButton.Delete();
+		menu.instruction.Delete();
+		menu.quitButton.Delete();
 		sharedRessources.LoadRessources
 		(new Ressource[]
 			{
 			
 				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture),
 				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
-				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture )
+				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
+
 			}
 		);
-
-		player = new Player();
+ 		player = new Player();
 		player.transform.size = new Vector2(3,3);
 		player.rigidBody.frictionCoefficient = 0.1f;
 		
 		alien = new Alien();
 		alien.transform.size=new Vector2(2,2);
 		alien.rigidBody.frictionCoefficient= 0.1f;
-
-
+		}
 	}
-
+	
 	public void Update(GL2 gl)
 	{
 		// Put Game Logic here
@@ -63,11 +87,18 @@ public class MainGame
 		{
 			System.exit(0);
 		}
-
+		if(inMenu){ 
+				menu.Update();
+		} else {
+			if (enterKeyPressed) { 
+				init (gl);
+				enterKeyPressed = false;
+			}
 		//Update object_1 transform, physics, rendering etc...
 		player.Update();
 		alien.Update();
-
+		
+		}
 	}
 
 	public static void main(String[] args)
