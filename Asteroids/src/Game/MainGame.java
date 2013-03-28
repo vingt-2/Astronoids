@@ -13,6 +13,7 @@ import Game.SharedRessources.RessourceType;
 import GameObjects.Asteroid;
 import GameObjects.FieldGenerator;
 import GameObjects.GameChar;
+import GameObjects.Laser;
 import GameObjects.Player;
 import Helpers.Debug;
 import Maths.*;
@@ -32,11 +33,18 @@ public class MainGame
 	public static final Debug debug 						= new Debug();
 
 	
-	ArrayList<GameChar> objectVector;
+	public static ArrayList<GameChar> objectVector;
 
 	public static Player player;
+<<<<<<< HEAD
 	Alien alien;
 	FieldGenerator fieldGenerator;
+=======
+	 Alien alien;
+
+	 Laser laser;
+
+>>>>>>> 9ab45d32acc69a3e59183decaa0120707a892bc3
 
 	public void init(GL2 gl)
 	{
@@ -48,19 +56,32 @@ public class MainGame
 				new Ressource("rocket_ship","./resources/textures/rocket_ship.png",RessourceType.Texture),
 				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
 				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
+<<<<<<< HEAD
 				new Ressource("asteroid", "./resources/textures/asteroid.png", RessourceType.Texture)
+=======
+				new Ressource("Laser","./resources/textures/Laser.png", RessourceType.Texture )
+>>>>>>> 9ab45d32acc69a3e59183decaa0120707a892bc3
 			}
 		);
 
 		player = new Player();
 		player.transform.size = new Vector2(3,3);
-		player.rigidBody.frictionCoefficient = 0.05f;
+		player.rigidBody.frictionCoefficient = 0.1f;
 		
+		laser = new Laser();
+		
+<<<<<<< HEAD
 		alien = new Alien();
 		alien.transform.size=new Vector2(2,2);
 		alien.rigidBody.frictionCoefficient= 0.05f;
 		
 		fieldGenerator = new FieldGenerator(5, 5);
+=======
+//		alien = new Alien();
+//		alien.transform.size=new Vector2(2,2);
+//		alien.rigidBody.frictionCoefficient= 0.1f;
+
+>>>>>>> 9ab45d32acc69a3e59183decaa0120707a892bc3
 
 	}
 
@@ -72,14 +93,26 @@ public class MainGame
 		{
 			System.exit(0);
 		}
+		
 
+		
 		//Update object_1 transform, physics, rendering etc...
 		
 		player.Update();
+		
+		
 
+<<<<<<< HEAD
 		alien.Update();
 		
 		fieldGenerator.Update();
+=======
+		//alien.Update();
+		
+		//player.rigidBody.isColliding(player,alien);
+		
+
+>>>>>>> 9ab45d32acc69a3e59183decaa0120707a892bc3
 	}
 
 	public static void main(String[] args)
