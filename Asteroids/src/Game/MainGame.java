@@ -54,7 +54,7 @@ public class MainGame
 			(new Ressource [] {
 						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
 						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
-						new Ressource("random","./resources/textures/random.png", RessourceType.Texture),
+						new Ressource("random","./resources/textures/instructions.png", RessourceType.Texture),
 						new Ressource("instructionOnHover","./resources/textures/vertOnHover.png", RessourceType.Texture),
 						new Ressource("instruction","./resources/textures/vert.png", RessourceType.Texture),
 						new Ressource("logoOnHover","./resources/textures/startGameOnHover.png", RessourceType.Texture),

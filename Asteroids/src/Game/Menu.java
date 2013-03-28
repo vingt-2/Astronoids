@@ -16,12 +16,9 @@ public class Menu {
 	GameChar random;
 	GameChar background;
 	GameChar quitButton;
-	GameChar statisticButton;
 	public int counter = 0;
 	public int counter1 = 0;
 	public boolean inInstructions = false;
-	public boolean constantDown = false;
-	public Menu menu;
 
 	public Menu(){ 
 		Controls.menuCounter = 0;
@@ -32,16 +29,16 @@ public class Menu {
 		background.objectRenderer.SetTexture("background");
 		background.transform.size = new Vector2(60,60);
 		startGameButton.objectRenderer.SetTexture("logoOnHover");
-		startGameButton.transform.size = new Vector2 (15,15);
-		startGameButton.transform.position = new Vector2 (0,20);
+		startGameButton.transform.size = new Vector2 (17,17);
+		startGameButton.transform.position = new Vector2 (0,10);
 		startGameButton.rigidBody.frictionCoefficient = 0.1f;
 		instruction.objectRenderer.SetTexture("instruction");
-		instruction.transform.size = new Vector2 (10,10);
-		instruction.transform.position = new Vector2 (0,0);
+		instruction.transform.size = new Vector2 (25,18);
+		instruction.transform.position = new Vector2 (0,-9);
 		instruction.rigidBody.frictionCoefficient = 0.1f;
 		quitButton.objectRenderer.SetTexture("quit");
-		quitButton.transform.position = new Vector2 (0,-10);
-		quitButton.transform.size = new Vector2 (10,10);
+		quitButton.transform.position = new Vector2 (0,-8);
+		quitButton.transform.size = new Vector2 (11,11);
 		
 		}
 		
@@ -92,6 +89,8 @@ public class Menu {
 						counter1++;
 					}
 					inInstructions = false;
+					counter = 0;
+					counter1 = 0;
 					random.Delete();
 				}
 		} else {
@@ -108,7 +107,7 @@ public class Menu {
 		quitButton.Delete();
 		random = new GameChar(); 
 		random.objectRenderer.SetTexture("random");
-		random.transform.size = new Vector2 (10,10);
+		random.transform.size = new Vector2 (35,30);
 	}
 	
 	public void initMenu() { 
@@ -119,16 +118,16 @@ public class Menu {
 		background.objectRenderer.SetTexture("background");
 		background.transform.size = new Vector2(60,60);
 		startGameButton.objectRenderer.SetTexture("logoOnHover");
-		startGameButton.transform.size = new Vector2 (10,10);
-		startGameButton.transform.position = new Vector2 (0,20);
+		startGameButton.transform.size = new Vector2 (17,17);
+		startGameButton.transform.position = new Vector2 (0,10);
 		startGameButton.rigidBody.frictionCoefficient = 0.1f;
 		instruction.objectRenderer.SetTexture("instruction");
-		instruction.transform.size = new Vector2 (10,10);
-		instruction.transform.position = new Vector2 (0,0);
+		instruction.transform.size = new Vector2 (25,18);
+		instruction.transform.position = new Vector2 (0,-9);
 		instruction.rigidBody.frictionCoefficient = 0.1f;
 		quitButton.objectRenderer.SetTexture("quit");
-		quitButton.transform.position = new Vector2 (0,-10);
-		quitButton.transform.size = new Vector2 (10,10);
+		quitButton.transform.position = new Vector2 (0,-8);
+		quitButton.transform.size = new Vector2 (11,11);
 	}
 }
 
