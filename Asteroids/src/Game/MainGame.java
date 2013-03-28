@@ -52,6 +52,7 @@ public class MainGame
 		if (inMenu) { 
 			sharedRessources.LoadRessources
 			(new Ressource [] {
+						new Ressource("instructionTitle","./resources/textures/instructionFont.png", RessourceType.Texture),
 						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
 						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
 						new Ressource("random","./resources/textures/instructions.png", RessourceType.Texture),
@@ -100,8 +101,10 @@ public class MainGame
 	
 	public void Update(GL2 gl)
 	{
-		
-		
+		if(controls.isPressed(KeyEvent.VK_ESCAPE))
+		{
+			System.exit(0);
+		}
 		if(inMenu){ 
 			menu.Update();
 	} else {
@@ -111,11 +114,6 @@ public class MainGame
 		}
 		
 		// Put Game Logic here
-		
-		if(controls.isPressed(KeyEvent.VK_ESCAPE))
-		{
-			System.exit(0);
-		}
 
 		
 		ArrayList<Asteroid> rocks = fieldGenerator.GetAsteroidArray();
