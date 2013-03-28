@@ -331,8 +331,8 @@ public boolean isColliding(GameChar char1, GameChar char2){
 			//System.out.println(box2[i].x);
 			//System.out.println(box2[i].y);
 		
-		debug.DrawRay(box1[i],box1[(i+1)%4]);
-		debug.DrawRay(box2[i],box2[(i+1)%4]);
+		//debug.DrawRay(box1[i],box1[(i+1)%4]);
+		//debug.DrawRay(box2[i],box2[(i+1)%4]);
 		}
 		return false;
 		

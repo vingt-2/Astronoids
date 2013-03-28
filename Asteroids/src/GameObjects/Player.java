@@ -13,7 +13,7 @@ public class Player extends GameChar
 {
 	
 	ParticleEffects effect = new ParticleEffects(transform,2000);
-	Shoot secondEffect = new Shoot(transform);
+	public Shoot secondEffect = new Shoot(transform);
 	
 	
 	long lastTime = 0;

@@ -70,6 +70,11 @@ public class Shoot extends GameObject{
 			isTurnedOn = false;
 		}
 	}
+	
+	public Laser[] GetLaserArray(){
+		
+		return lasers;
+	}
 }
 
 
