@@ -40,7 +40,7 @@ public class Player extends GameChar
 
 		
 		Vector2 charFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
-		MainGame.debug.DrawLine(transform.position,charFrontInWorldCoordinates,100,Color.Blue);
+		//MainGame.debug.DrawLine(transform.position,charFrontInWorldCoordinates,100,Color.Blue);
 		
 	}
 	

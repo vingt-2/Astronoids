@@ -13,6 +13,9 @@ public class FieldGenerator extends GameObject {
 	public Transform transform;
 	public static int number;
 	public ArrayList<Asteroid> astrdField;
+	int randPosX;
+	int randPosY;
+	int randSign;
 	
 	public FieldGenerator(int nbAsteroids, int speed){
 		this.transform = transform;
@@ -26,10 +29,21 @@ public class FieldGenerator extends GameObject {
 		for(int i = 0; i < number; i++){
 			
 			if(astrdField.size() <= i){
-				astrdField.add(new Asteroid(new Vector2((float) rand.nextInt(1500)-750, (float) rand.nextInt(600)-300)));
+				randPosX = rand.nextInt(1500)-750;
+				randPosY = rand.nextInt(1000)-500;	
+				if(rand.nextBoolean()) {
+					randSign=1;
+				}else{ 
+					randSign=-1;
+				}
+				if (randPosX<120 && randPosX>-120) randPosX = 200+rand.nextInt(100)*randSign;
+				
+				if (randPosY<120 && randPosY>-120) randPosX = 200+rand.nextInt(100)*randSign;
+			
+				astrdField.add(new Asteroid(new Vector2((float) randPosX, (float) randPosY)));
 				astrdField.get(i).rigidBody.PushForce(new Vector2(rand.nextInt(60)-30,rand.nextInt(60)-30),ForceMode.Force);
 				astrdField.get(i).rigidBody.PushTorque(rand.nextInt(10)%4-2, ForceMode.Force);
-				int randSize =rand.nextInt(10)%2+4;
+				int randSize =rand.nextInt(12)%4+3;
 				astrdField.get(i).transform.size=(new Vector2( randSize, randSize));
 				
 			}

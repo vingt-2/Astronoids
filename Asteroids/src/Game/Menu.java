@@ -27,7 +27,7 @@ public class Menu {
 		instruction = new GameChar();
 		quitButton = new GameChar();
 		background.objectRenderer.SetTexture("background");
-		background.transform.size = new Vector2(60,60);
+		background.transform.size = new Vector2(60,50);
 		startGameButton.objectRenderer.SetTexture("logoOnHover");
 		startGameButton.transform.size = new Vector2 (17,17);
 		startGameButton.transform.position = new Vector2 (0,10);

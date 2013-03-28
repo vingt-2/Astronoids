@@ -36,7 +36,7 @@ public class ParticleEffects extends GameObject
 				{
 					if( isTurnedOn )
 					{	
-						particleArray[i] = new Particles(ran.nextInt(1500)+3000, particlePos);
+						particleArray[i] = new Particles(ran.nextInt(400), particlePos);
 						particleArray[i].objectRenderer.shape= Shape.Square;
 						particleArray[i].objectRenderer.SetTexture("smoke");
 						particleArray[i].rigidBody.frictionCoefficient = 0.01f;

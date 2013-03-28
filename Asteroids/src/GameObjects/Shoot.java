@@ -31,7 +31,7 @@ public class Shoot extends GameObject{
 			lasers[i%100] = new Laser(new Vector2 (1000000f,10000000f));
 			lasers[i%100].objectRenderer.shape= Shape.Square;
 			lasers[i%100].objectRenderer.SetTexture("Laser");
-			lasers[i%100].transform.size= new Vector2(2,2);			
+			lasers[i%100].transform.size= new Vector2(1,1);			
 		}
 						
 			for (int j = 0; j<lasers.length; j++){

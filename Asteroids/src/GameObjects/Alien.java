@@ -9,7 +9,7 @@ import Maths.Vector2;
 
 
 public class Alien extends GameChar{
-	float distanceThreshold = 15;
+	float distanceThreshold = 30;
 
 		public Alien()
 		{
@@ -27,7 +27,7 @@ public class Alien extends GameChar{
 			AlienAI();
 			
 			Vector2 charFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
-			MainGame.debug.DrawLine(transform.position,charFrontInWorldCoordinates,100,Color.Blue);
+			//MainGame.debug.DrawLine(transform.position,charFrontInWorldCoordinates,100,Color.Blue);
 		}
 		
 		private void AlienAI()
