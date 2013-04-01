@@ -3,6 +3,7 @@ package GameComponents;
 
 import java.util.ArrayList;
 
+import Game.MainGame;
 import GameComponents.ObjectRenderer.Shape;
 import GameObjects.GameChar;
 import Helpers.Debug;
@@ -11,7 +12,7 @@ import Renderer.Renderer;
 
 public class RigidBody 
 {
-	public static final float deltaTime= 1f/(float)Renderer.RERFRESH_RATE;
+	public float deltaTime = MainGame.render.deltaTime;
 	
 	//	currently 1 unit = 1 pixel on the original window size.
 	
@@ -59,6 +60,7 @@ public class RigidBody
 	
 	public void Update()
 	{
+		deltaTime = MainGame.render.deltaTime; 
 		UpdateVelocity();
 		UpdateAcceleration();
 		UpdateTransform();

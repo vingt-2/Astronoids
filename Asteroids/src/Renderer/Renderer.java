@@ -42,17 +42,20 @@ import java.util.ArrayList;
 
 public class Renderer implements GLEventListener
 {	
-	public static final int RERFRESH_RATE = 60 ; // Refresh rate fixed at (1/60)hz, leading to 60frame/s
+	public static final int FIXED_REFRESH_RATE = 60 ; // Refresh rate fixed at (1/60)hz, leading to 60frame/s
+	
+	public float deltaTime = 1.f/FIXED_REFRESH_RATE;
+	
 	String windowName = "";
 	Vector2 screenSize;
 	FPSAnimator animator;
+	
 	public GLAutoDrawable externDrawable;
-
 	public MainGame mainGame;
 	public Menu menu;
-
 	public ArrayList<ObjectRenderer> renderVector;
 
+	private long lastTime = System.currentTimeMillis();
 
 	public Renderer(String windowName)
 	{
@@ -141,6 +144,7 @@ public class Renderer implements GLEventListener
 	public void Update(GLAutoDrawable drawable)
 	{
 		GL2 gl = drawable.getGL().getGL2();
+		this.UpdateTime();
 		mainGame.Update(gl);
 	}
 
@@ -155,6 +159,19 @@ public class Renderer implements GLEventListener
 			renderVector.get(i).Draw(gl);
 		}
 
+	}
+	
+	public void UpdateTime()
+	{
+		long time = System.currentTimeMillis();
+		// DeltaTime is in second, so convert it back.
+		deltaTime = (time - lastTime) / 1000.f;
+		lastTime = time;
+	}
+	
+	public int GetFPS()
+	{
+		return (int) (1.f/deltaTime);
 	}
 	
 	public int CreateTexture(String filePath)
