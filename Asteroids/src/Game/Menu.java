@@ -11,6 +11,9 @@ import Game.Controls;
 public class Menu {
 	
 	Renderer render; 
+	
+	String inputTest = "";
+	
 	GameChar startGameButton;
 	GameChar instruction;
 	GameChar random;
@@ -43,6 +46,8 @@ public class Menu {
 		quitButton.transform.position = new Vector2 (0,-8);
 		quitButton.transform.size = new Vector2 (11,11);
 		
+		MainGame.controls.recordKey = true;
+		
 		}
 		
 	public void Update(){ 
@@ -53,9 +58,8 @@ public class Menu {
 			instruction.objectRenderer.SetTexture("instruction");
 			quitButton.objectRenderer.SetTexture("quit");
 			
-			MainGame.render.DrawText("drawing text exemple",Vector2.zero(),Color.Blue,1f);
-			
-			
+			inputTest = MainGame.controls.recordString;
+			MainGame.render.DrawText(inputTest,Vector2.zero(),Color.Blue,1f);
 			
 			break;
 		case 1:
