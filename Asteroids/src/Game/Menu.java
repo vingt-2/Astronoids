@@ -22,6 +22,7 @@ public class Menu {
 	public boolean inInstructions = false;
 	public boolean inGame = false;
 
+
 	public Menu(){ 
 		Controls.menuCounter = 0;
 		background = new GameChar();
@@ -44,25 +45,25 @@ public class Menu {
 		
 		}
 		
-	public void Update(){ 
-		if(!inInstructions){
-		switch(Controls.menuCounter){
-		case 0:
-			startGameButton.objectRenderer.SetTexture("logoOnHover"); 
-			instruction.objectRenderer.SetTexture("instruction");
-			quitButton.objectRenderer.SetTexture("quit");
-			break;
-		case 1:
-			startGameButton.objectRenderer.SetTexture("logo"); 
-			instruction.objectRenderer.SetTexture("instructionOnHover");
-			quitButton.objectRenderer.SetTexture("quit");
-			break;
-		case 2:
-			startGameButton.objectRenderer.SetTexture("logo"); 
-			instruction.objectRenderer.SetTexture("instruction");
-			quitButton.objectRenderer.SetTexture("quitOnHover");
-			break;
-		}
+	public void Update() { 
+		if(!inInstructions && !MainGame.inPauseGame){
+			switch(Controls.menuCounter){
+			case 0:
+				startGameButton.objectRenderer.SetTexture("logoOnHover"); 
+				instruction.objectRenderer.SetTexture("instruction");
+				quitButton.objectRenderer.SetTexture("quit");
+				break;
+			case 1:
+				startGameButton.objectRenderer.SetTexture("logo"); 
+				instruction.objectRenderer.SetTexture("instructionOnHover");
+				quitButton.objectRenderer.SetTexture("quit");
+				break;
+			case 2:
+				startGameButton.objectRenderer.SetTexture("logo"); 
+				instruction.objectRenderer.SetTexture("instruction");
+				quitButton.objectRenderer.SetTexture("quitOnHover");
+				break;
+			}
 		}
 			if (MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				switch(Controls.menuCounter){
@@ -85,6 +86,22 @@ public class Menu {
 					break;
 				}
 			}
+			if(MainGame.inPauseGame) { 
+				System.out.println("Pause");
+				if (counter2 == 0){
+					System.out.println("Carre");
+					initPauseMenu();
+					counter2++;
+				}
+				 /*try {
+					MainGame.pauseImage.Update();
+					MainGame.player.wait(100);
+					MainGame.fieldGenerator.wait(100);
+				} catch (InterruptedException e) {
+					
+				} */
+				MainGame.pauseImage.Update();
+			} 
 			if (MainGame.controls.isPressed(KeyEvent.VK_BACK_SPACE)){
 				if(inInstructions){
 					if (counter1 == 0){
@@ -103,7 +120,9 @@ public class Menu {
 			startGameButton.Update();
 			instruction.Update();
 			quitButton.Update();
-		}	
+		}
+		
+		
 		
 	}
 	public void initInstructions(){
@@ -137,6 +156,10 @@ public class Menu {
 		quitButton.objectRenderer.SetTexture("quit");
 		quitButton.transform.position = new Vector2 (0,-8);
 		quitButton.transform.size = new Vector2 (11,11);
+	}
+	
+	public void initPauseMenu(){
+		MainGame.pauseImage.transform.size = new Vector2(10,10);
 	}
 }
 

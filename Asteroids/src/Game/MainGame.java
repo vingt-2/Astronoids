@@ -25,6 +25,7 @@ public class MainGame
 	public static String Window_Name		= "Asteroids";
 	public static Vector2 Screen_Size 		= new Vector2(1024,780);
 	public static boolean inMenu			= true;
+	public static boolean inPauseGame		= false;
 	public static boolean enterKeyPressed 	= false;
 	public static boolean inStartGame = true;
 	public static boolean winChecker = false;
@@ -37,6 +38,7 @@ public class MainGame
 	public static  Menu menu; 								//= new Menu();
 	public static GameChar GameOver;
 	public static GameChar Win;
+	public static GameChar pauseImage;
 	
 	public static ArrayList<GameChar> objectVector;
 
@@ -117,6 +119,12 @@ public class MainGame
 		if (enterKeyPressed) { 
 			init (gl);
 			enterKeyPressed = false;
+		}
+		if (controls.isPressed(KeyEvent.VK_P)){
+			inMenu = true;
+			inPauseGame = true;
+			pauseImage = new GameChar();
+			
 		}
 		
 		// Put Game Logic here
