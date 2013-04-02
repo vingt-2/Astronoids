@@ -1,3 +1,11 @@
+/**
+ * Controls:
+ * 		Key Listener.
+ * 		
+ * 		Summon isPressed(key) from everywhere in the program to know if one particular key is Pressed.
+ * 
+ */
+
 package Game;
 
 import java.awt.event.KeyEvent;

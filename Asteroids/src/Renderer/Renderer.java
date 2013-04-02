@@ -14,12 +14,15 @@ import Game.Controls;
 import Game.MainGame;
 import Game.Menu;
 import GameComponents.ObjectRenderer;
+import Helpers.Color;
 import Maths.*;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.util.FPSAnimator;
+import com.jogamp.opengl.util.awt.TextRenderer;
 
 import java.awt.Dimension;
+import java.awt.Font;
 // Util imports
 import java.awt.Frame;
 import java.awt.Graphics2D;
@@ -46,16 +49,17 @@ public class Renderer implements GLEventListener
 	
 	public float deltaTime = 1.f/FIXED_REFRESH_RATE;
 	
-	String windowName = "";
-	Vector2 screenSize;
-	FPSAnimator animator;
-	
 	public GLAutoDrawable externDrawable;
 	public MainGame mainGame;
 	public Menu menu;
 	public ArrayList<ObjectRenderer> renderVector;
+	public Font font = new Font("SansSerif", Font.BOLD, 36);
 
 	private long lastTime = System.currentTimeMillis();
+	private String windowName = "";
+	private Vector2 screenSize;
+	private FPSAnimator animator;
+    private TextRenderer textRenderer = new TextRenderer(font);
 
 	public Renderer(String windowName)
 	{
@@ -250,6 +254,16 @@ public class Renderer implements GLEventListener
 		
 		return textureID.get(0);
 		
+	}
+	
+	public void DrawText(String text,Vector2 position, Color color, float opacity)
+	{
+		Vector2 context = new Vector2(externDrawable.getWidth(),externDrawable.getHeight());
+		textRenderer.beginRendering((int)context.x,(int)context.y);
+	    // optionally set the color
+		textRenderer.setColor(color.r, color.g, color.b, opacity);
+		textRenderer.draw(text,(int)(position.x+context.x/2),(int)(position.y+context.y/2));
+		textRenderer.endRendering();
 	}
 
 }

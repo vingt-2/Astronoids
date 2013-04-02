@@ -1,3 +1,12 @@
+/**
+ * GameChar:
+ * 		A special type of GameObject that holds:
+ * 		 - a Transform: To keep track of space coordinates matters.
+ * 		 - a RigidBody: To keep track of physic state matters.
+ * 		 - an ObjectRenderer: To keep track of "Drawing to screen" matters
+ * 
+ */
+
 package GameObjects;
 
 import Game.MainGame;
@@ -26,9 +35,14 @@ public class GameChar extends GameObject
 		rigidBody 		= new RigidBody(this);
 	}
 	
+	/**
+	 * Update all the GameChar stuff related stuff.
+	 * 
+	 */
 	public void Update()
 	{
-		if(!isDeleted)		// Makes sure we're not about trying to use smthign about to be garbage collected
+		// Makes sure we're not about trying to use smthign about to be garbage collected
+		if(!isDeleted)
 		{
 			//Update Components
 			transform.UpdateTransform();
@@ -38,6 +52,12 @@ public class GameChar extends GameObject
 			WrapPositionAroundScreen();
 		}
 	}
+	
+	/**
+	 * 
+	 * A special function to Wrap around the screen.
+	 * 
+	 */
 	
 	private void WrapPositionAroundScreen()
 	{

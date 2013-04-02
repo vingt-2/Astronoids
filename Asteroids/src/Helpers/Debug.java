@@ -1,3 +1,10 @@
+/**
+ * Debug:
+ * 		A debug Class to access some useful infos:
+ * 			Drawing rays, vectors, shape, that kind of stuff.
+ * 
+ * 
+ */
 package Helpers;
 
 import javax.media.opengl.GL2;

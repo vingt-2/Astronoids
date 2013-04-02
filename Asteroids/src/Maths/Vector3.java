@@ -1,3 +1,8 @@
+/**
+ * Vector3:
+ * 		A Vector3 Class that implements Vector 3D stuff
+ *
+ */
 package Maths;
 
 public class Vector3 

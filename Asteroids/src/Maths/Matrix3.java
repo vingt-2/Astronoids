@@ -1,10 +1,8 @@
 package Maths;
 
 /**
- * 
- * @author Vingt-2
- *
- *	A Matrix3 Class that implements Matrix 3x3 stuff.
+ * Matrix3:
+ * 		A Matrix3 Class that implements Matrix3x3 stuff
  *
  */
 

@@ -1,3 +1,13 @@
+/**
+ * ObjectRenderer:
+ * 		An Object component that holds all the infos related to Drawing the object.
+ * 		It is linked to it's parent. so that It can access the transform information to draw at the right spot.
+ * 		The renderer Display pipeline goes through all ObjectRenderer to be displays
+ * 		and call their Draw() methods, according to: 
+ * 		shape (of the primitive), the texture to be projected in this shape, and an opacity coefficient
+ * 
+ */
+
 package GameComponents;
 
 import Game.MainGame;
@@ -27,6 +37,13 @@ public class ObjectRenderer
 		this.parent = parent;
 	}
 
+	/**
+	 * Draws the object to the specified openGL context "gl".
+	 * 
+	 * @param gl
+	 * @return
+	 */
+	
 	public boolean Draw(GL2 gl)
 	{
 		if(textureSet)
@@ -63,6 +80,14 @@ public class ObjectRenderer
 		return true;
 	}
 
+	/**
+	 * Get a texture name from the sharedRessource Table from MainGame,
+	 * and assign it's corresponding textureID to the object.
+	 * If the lookup fails, textureSet flag will not be set to True,
+	 * the draw method will then display the primitive shape.
+	 * 
+	 * @param name
+	 */
 	public void SetTexture(String name)
 	{
 		int texID = MainGame.sharedRessources.GetTexture(name);
@@ -70,6 +95,11 @@ public class ObjectRenderer
 		textureID = texID;
 	}
 
+	/**
+	 * Some Shapes that will be used as primitive to draw objects.
+	 * The shapes are a couple of vertices, defined in local space.
+	 *
+	 */
 	public enum Shape
 	{
 		Square

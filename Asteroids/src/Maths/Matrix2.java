@@ -1,10 +1,8 @@
 package Maths;
 
 /**
- * 
- * @author Vingt-2
- *
- *	A Matrix2 Class that implements Matrix2x2 stuff
+ * Matrix2:
+ * 		A Matrix2 Class that implements Matrix2x2 stuff
  *
  */
 

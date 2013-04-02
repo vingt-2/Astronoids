@@ -1,7 +1,7 @@
 package Game;
 
+import Helpers.Color;
 import java.awt.event.KeyEvent;
-
 import Maths.Vector2;
 import Renderer.*;
 import GameObjects.GameChar;
@@ -9,7 +9,7 @@ import Game.Controls;
 
 
 public class Menu {
-
+	
 	Renderer render; 
 	GameChar startGameButton;
 	GameChar instruction;
@@ -22,7 +22,8 @@ public class Menu {
 	public boolean inInstructions = false;
 	public boolean inGame = false;
 
-	public Menu(){ 
+	public Menu()
+	{ 
 		Controls.menuCounter = 0;
 		background = new GameChar();
 		startGameButton = new GameChar();
@@ -51,11 +52,17 @@ public class Menu {
 			startGameButton.objectRenderer.SetTexture("logoOnHover"); 
 			instruction.objectRenderer.SetTexture("instruction");
 			quitButton.objectRenderer.SetTexture("quit");
+			
+			MainGame.render.DrawText("drawing text exemple",Vector2.zero(),Color.Blue,1f);
+			
+			
+			
 			break;
 		case 1:
 			startGameButton.objectRenderer.SetTexture("logo"); 
 			instruction.objectRenderer.SetTexture("instructionOnHover");
 			quitButton.objectRenderer.SetTexture("quit");
+
 			break;
 		case 2:
 			startGameButton.objectRenderer.SetTexture("logo"); 

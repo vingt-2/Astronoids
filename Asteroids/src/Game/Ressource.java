@@ -1,3 +1,11 @@
+/**
+ * Ressource:
+ * 		Defines what a ressource is:
+ * 			It has a name,
+ * 				   a filepath,
+ * 				   and a type.
+ * 
+ */
 package Game;
 
 import Game.SharedRessources.RessourceType;

@@ -1,3 +1,12 @@
+/**
+ * Transform:
+ * 		An Object component that holds the world representation of an object.
+ * 		An object is then placed in the world according to it's Position, Size, and Rotation,
+ * 		which are the main attributes of a Transform.
+ * 		These 3 attribute are concatenated into 1 matrix, the transformMatrix
+ * 
+ */
+
 package GameComponents;
 
 import Maths.*;
@@ -26,7 +35,10 @@ public class Transform
 		UpdateTransform();
 	}
 	
-	
+	/**
+	 * Updates the Transform matrix according to current Position/Scale/Rotation
+	 * 
+	 */
 	public void UpdateTransform()
 	{
 		Matrix3 translationMatrix = new Matrix3(0);
@@ -54,12 +66,26 @@ public class Transform
 		transformMatrix = Matrix3.Add(translationMatrix,rotationTsize);
 	}
 	
+	/**
+	 * Transform the direction vector "vector" from Local space to World Space
+	 * 
+	 * @param vector
+	 * @return
+	 */
+	
 	public Vector2 LocalDirectionToWorld(Vector2 vector)
 	{
 		// Homogeneous coordinate to 0 so that it's left untouched by the translation (Direction)
 		Vector3 homogeneous = new Vector3(vector,0f);
 		return Matrix3.Multiply(transformMatrix,homogeneous).GetVec2();
 	}
+	
+	/**
+	 * Transform the direction vector "vector" from Local space to World Space
+	 * 
+	 * @param vector
+	 * @return
+	 */
 	
 	public Vector2 LocalPositionToWorld(Vector2 vector)
 	{
