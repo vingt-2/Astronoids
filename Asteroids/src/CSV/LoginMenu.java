@@ -25,6 +25,8 @@ public class LoginMenu {
 		CsvToBean csv = new CsvToBean();
 		CSVReader reader = new CSVReader(new FileReader(USERS_FILE));
 		List usersList = csv.parse(strat, reader);
+		reader = new CSVReader(new FileReader(USERS_FILE));
+		List userWrite = reader.readAll();
 
 		for(Object object : usersList){
 			User user = (User) object;
@@ -49,6 +51,8 @@ public class LoginMenu {
 		CsvToBean csv = new CsvToBean();
 		CSVReader reader = new CSVReader(new FileReader(USERS_FILE));
 		List usersList = csv.parse(strat, reader);
+		reader = new CSVReader(new FileReader(USERS_FILE));
+		List writeUser = reader.readAll();
 
 		boolean available = true;
 
@@ -64,7 +68,8 @@ public class LoginMenu {
 
 		if(available){
 			CSVWriter writer = new CSVWriter(new FileWriter(USERS_FILE));
-			writer.writeNext(new String[] {username, "0", "0", "0", "0"});
+			writeUser.add(new String[] {username, "0", "0", "0", "0"});
+			writer.writeAll(writeUser);
 			System.out.println("User has been added");
 			writer.close();
 		}
