@@ -64,8 +64,7 @@ public class LoginMenu {
 
 		if(available){
 			CSVWriter writer = new CSVWriter(new FileWriter(USERS_FILE));
-			usersList.add(new User(username, 0, 0, 0, 0));
-			writer.writeAll(usersList);
+			writer.writeNext(new String[] {username, "0", "0", "0", "0"});
 			System.out.println("User has been added");
 			writer.close();
 		}
