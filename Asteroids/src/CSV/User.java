@@ -3,7 +3,6 @@ package CSV;
 public class User {
 	
 	private String username;
-	private String password;
 	private int bestScore;
 	private int nbGamesPlayed;
 	private int avgScore;
@@ -13,9 +12,8 @@ public class User {
 		
 	};
 	
-	public User(String username, String password, int bestScore, int nbGamesPlayed, int avgScore, int playtime){
+	public User(String username, int bestScore, int nbGamesPlayed, int avgScore, int playtime){
 		this.username = username;
-		this.password = password;
 		this.bestScore = bestScore;
 		this.nbGamesPlayed = nbGamesPlayed;
 		this.avgScore = avgScore;
@@ -29,15 +27,7 @@ public class User {
 	public void setUsername(String username){
 		this.username = username;
 	}
-	
-	public String getPassword(){
-		return password;
-	}
-	
-	public void setPassword(String password){
-		this.password = password;
-	}
-	
+
 	public int getBestScore(){
 		return bestScore;
 	}
