@@ -18,6 +18,8 @@ public class Highscore {
 	private String username;
 	private int score;
 
+	public static List<String[]> highscores;
+
 	public Highscore(){
 
 	}
@@ -75,10 +77,8 @@ public class Highscore {
 	public static List<String[]> getHighscores() throws FileNotFoundException, IOException{
 
 		CSVReader reader = new CSVReader(new FileReader(HIGHSCORES_FILE));
-		List<String[]> highscores = reader.readAll();
+		highscores = reader.readAll();
 		reader.close();
-
-		return highscores;
 
 	}
 
