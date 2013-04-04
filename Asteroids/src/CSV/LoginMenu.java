@@ -15,6 +15,7 @@ public class LoginMenu {
 	
 	private static final String USERS_FILE="resources/CSV/users.csv";
 	public static boolean login = false;
+	public static User player;
 	
 	public static boolean login(String username) throws IOException{
 
@@ -33,6 +34,7 @@ public class LoginMenu {
 			if(username.equals(user.getUsername())){
 				login = true;
 				System.out.println("true");
+				player = user;
 				break;
 			}
 			else System.out.println("false");
