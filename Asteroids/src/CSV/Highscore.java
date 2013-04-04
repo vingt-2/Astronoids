@@ -19,7 +19,7 @@ public class Highscore {
 	private int score;
 
 	public static List<String[]> highscores;
-
+	
 	public Highscore(){
 
 	}
@@ -66,15 +66,17 @@ public class Highscore {
 				writer.writeAll(writeHighscores);
 				writer.close();
 				System.out.println("Highscores have been changed");
-
+				
 				break;
 			}
 		}
 
+		reader = new CSVReader(new FileReader(HIGHSCORES_FILE));
+		highscores = reader.readAll();
 		reader.close();
 	}
 
-	public static List<String[]> getHighscores() throws FileNotFoundException, IOException{
+	public static void getHighscores() throws FileNotFoundException, IOException{
 
 		CSVReader reader = new CSVReader(new FileReader(HIGHSCORES_FILE));
 		highscores = reader.readAll();
