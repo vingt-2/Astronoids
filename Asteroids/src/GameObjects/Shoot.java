@@ -15,9 +15,11 @@ public class Shoot extends GameObject{
 	public int i = 0;
 	private Laser[] lasers;	
 	public boolean isTurnedOn = false;
+	Transform shootTrans;
 	
 	public Shoot(Transform transform){
 		
+		shootTrans = transform;
 		transform = this.transform;
 		lasers = new Laser[100];
 	}
@@ -28,9 +30,12 @@ public class Shoot extends GameObject{
 		if(isTurnedOn){
 			
 			//temp fix for Texture rendering in middle of screen
-			lasers[i%100] = new Laser(new Vector2 (1000000f,10000000f));
+			lasers[i%100] = new Laser(new Vector2 (1000000f,10000000f), shootTrans);
 			lasers[i%100].objectRenderer.shape= Shape.Square;
-			lasers[i%100].objectRenderer.SetTexture("Laser");
+			if(shootTrans.equals(MainGame.player.transform))
+				lasers[i%100].objectRenderer.SetTexture("redLaser");
+			else
+				lasers[i%100].objectRenderer.SetTexture("greenLaser");
 			lasers[i%100].transform.size= new Vector2(1,1);			
 		}
 						
