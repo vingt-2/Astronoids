@@ -65,9 +65,8 @@ public class Player extends GameChar
 			effect.TurnOff();
 		}
 
-		if(MainGame.controls.isPressed(KeyEvent.VK_SPACE))
+		if(MainGame.controls.isPressed(KeyEvent.VK_X))
 		{
-
 			secondEffect.TurnOff();
 			secondEffect.i++;
 			long time = System.currentTimeMillis();
