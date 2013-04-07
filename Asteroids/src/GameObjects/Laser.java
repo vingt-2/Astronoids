@@ -17,12 +17,14 @@ public class Laser extends GameChar {
 	long creationTime;
 	long lifeTime = 800;
 	Transform shooterTrans;
+	float direction;
 	
-	public Laser(Vector2 position, Transform shooterTrans){
+	public Laser(Vector2 position, Transform shooterTrans, float direction){
 		
 		super(position);
 		creationTime = System.currentTimeMillis();
 		this.shooterTrans = shooterTrans;
+		this.direction = direction;
 	}
 	
 	public void Update()
@@ -38,8 +40,8 @@ public class Laser extends GameChar {
 			rigidBody.frictionCoefficient = 0.0f;
 			rigidBody.mass = 0.001f;
 			rigidBody.acceleration = new Vector2(0,0);
-			rigidBody.PushForce(new Vector2(-(float)Math.cos((shooterTrans.rotation+(Math.PI/2))),
-					(float)Math.sin((shooterTrans.rotation+(Math.PI/2)))), ForceMode.Impulse);
+			rigidBody.PushForce(new Vector2(-(float)Math.cos((shooterTrans.rotation+(direction))),
+					(float)Math.sin((shooterTrans.rotation+(direction)))), ForceMode.Impulse);
 			
 		if (TimeToDie()) Delete();
 		
