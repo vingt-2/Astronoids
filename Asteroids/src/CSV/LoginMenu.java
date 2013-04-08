@@ -14,38 +14,47 @@ import au.com.bytecode.opencsv.bean.CsvToBean;
 public class LoginMenu {
 	
 	private static final String USERS_FILE="resources/CSV/users.csv";
+	public static boolean login = false;
+	public static User player;
 	
-	public static void login(String username, String password) throws IOException{
+	public static boolean login(String username) throws IOException{
 
 		ColumnPositionMappingStrategy<User> strat = new ColumnPositionMappingStrategy<User>();
 		strat.setType(User.class);
-		strat.setColumnMapping(new String[] {"username", "password", "bestScore",
+		strat.setColumnMapping(new String[] {"username", "bestScore",
 				"nbGamesPlayed", "avgScore", "playTime"});
 		CsvToBean csv = new CsvToBean();
 		CSVReader reader = new CSVReader(new FileReader(USERS_FILE));
 		List usersList = csv.parse(strat, reader);
+		reader = new CSVReader(new FileReader(USERS_FILE));
+		List userWrite = reader.readAll();
 
 		for(Object object : usersList){
 			User user = (User) object;
-			if(username.equals(user.getUsername()) && password.equals(user.getPassword())){
+			if(username.equals(user.getUsername())){
+				login = true;
 				System.out.println("true");
+				player = user;
 				break;
 			}
 			else System.out.println("false");
 		}
 
 		reader.close();
+		return login;
 
 	}
 
-	public static void addUser(String username, String password) throws IOException{		
+	public static void addUser(String username) throws IOException{		
 		ColumnPositionMappingStrategy<User> strat = new ColumnPositionMappingStrategy<User>();
 		strat.setType(User.class);
-		strat.setColumnMapping(new String[] {"username", "password", "bestScore",
+		strat.setColumnMapping(new String[] {"username", "bestScore",
 				"nbGamesPlayed", "avgScore", "playTime"});
 		CsvToBean csv = new CsvToBean();
 		CSVReader reader = new CSVReader(new FileReader(USERS_FILE));
 		List usersList = csv.parse(strat, reader);
+		reader = new CSVReader(new FileReader(USERS_FILE));
+		List writeUser = reader.readAll();
 
 		boolean available = true;
 
@@ -61,8 +70,8 @@ public class LoginMenu {
 
 		if(available){
 			CSVWriter writer = new CSVWriter(new FileWriter(USERS_FILE));
-			usersList.add(new User(username, password, 0, 0, 0, 0));
-			writer.writeAll(usersList);
+			writeUser.add(new String[] {username, "0", "0", "0", "0"});
+			writer.writeAll(writeUser);
 			System.out.println("User has been added");
 			writer.close();
 		}

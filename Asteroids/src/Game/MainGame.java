@@ -37,9 +37,15 @@ public class MainGame
 	public static boolean inMenu			= true;
 	public static boolean enterKeyPressed 	= false;
 	public static boolean inStartGame = true;
+
 	
 	
 	
+
+	public static boolean winChecker = false;
+	public int counter=0;
+
+
 	// Game singletons
 	public static final SharedRessources sharedRessources	= new SharedRessources();
 	public static final Renderer render 					= new Renderer(Window_Name);
@@ -68,7 +74,7 @@ public class MainGame
 		{ 
 			sharedRessources.LoadRessources
 			(new Ressource[] 
-				{
+					{
 					new Ressource("instructionTitle","./resources/textures/instructionFont.png", RessourceType.Texture),
 					new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
 					new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
@@ -78,8 +84,8 @@ public class MainGame
 					new Ressource("logoOnHover","./resources/textures/startGameOnHover.png", RessourceType.Texture),
 					new Ressource("logo","./resources/textures/startGame.png",RessourceType.Texture),
 					new Ressource("background","./resources/textures/space.jpg", RessourceType.Texture)
-				}
-			);
+					}
+					);
 			menu = new Menu();
 		}
 		else 
@@ -87,20 +93,22 @@ public class MainGame
 			menu.startGameButton.Delete();
 			menu.instruction.Delete();
 			menu.quitButton.Delete();
-			
+
 			sharedRessources.LoadRessources
 			(new Ressource[]
-				{
+					{
 					new Ressource("rocket_ship","./resources/textures/awesome_space_ship.png",RessourceType.Texture),
 					new Ressource("shielded_ship","./resources/textures/awesome_space_ship_shielded.png",RessourceType.Texture),
 					new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
 					new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
 					new Ressource("asteroid", "./resources/textures/Asteroid_2.png", RessourceType.Texture),
-					new Ressource("Laser","./resources/textures/Laser.png", RessourceType.Texture ),
+					new Ressource("redLaser","./resources/textures/Laser.png", RessourceType.Texture),
+					new Ressource("greenLaser","./resources/textures/Laser.png", RessourceType.Texture),
+					new Ressource("blueLaser","./resources/textures/Laser.png", RessourceType.Texture),
 					new Ressource("game_over","./resources/textures/Game_over.png", RessourceType.Texture),
 					new Ressource("Win","./resources/textures/anti_mind_virus.png", RessourceType.Texture)
-				}
-			);
+					}
+					);
 			player = new Player();
 			player.transform.size = new Vector2(4,4);
 			player.rigidBody.frictionCoefficient = 0.05f;
