@@ -12,7 +12,7 @@ import javax.media.opengl.GLEventListener;
 
 import Game.Controls;
 import Game.MainGame;
-import Game.Menu;
+import Game.Menu2;
 import GameComponents.ObjectRenderer;
 import Helpers.Color;
 import Maths.*;
@@ -51,7 +51,7 @@ public class Renderer implements GLEventListener
 	
 	public GLAutoDrawable externDrawable;
 	public MainGame mainGame;
-	public Menu menu;
+	public Menu2 menu;
 	public ArrayList<ObjectRenderer> renderVector;
 	public Font font = new Font("SansSerif", Font.BOLD, 36);
 

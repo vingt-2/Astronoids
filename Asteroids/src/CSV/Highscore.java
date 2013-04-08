@@ -19,7 +19,7 @@ public class Highscore {
 	private int score;
 
 	public static List<String[]> highscores;
-	
+
 	public Highscore(){
 
 	}
@@ -85,3 +85,4 @@ public class Highscore {
 	}
 
 }
+
