@@ -181,8 +181,8 @@ public class Menu {
 					inEnterUsernameNew = false;
 					inStartMenu = true;
 					startMenuCounter = 0;
-				} 
-				*/
+				} */
+				
 			}
 			startGame.Update();
 			instructions.Update();
