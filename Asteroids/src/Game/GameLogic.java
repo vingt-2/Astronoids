@@ -6,8 +6,11 @@ import java.util.Random;
 import GameComponents.RigidBody.ForceMode;
 import GameObjects.Asteroid;
 import GameObjects.GameChar;
+import GameObjects.HUD;
 import GameObjects.Laser;
+import Helpers.Color;
 import Maths.Vector2;
+import Renderer.Renderer;
 
 public class GameLogic {
 
@@ -20,12 +23,14 @@ public class GameLogic {
 	public static Vector2 brokenAsteroid;
 	public static float brokenSize;
 	public static ArrayList<Asteroid> rocks;
+	public static boolean lostLife = false;
 	
 	public void UpdateLogic() {
 
 		rocks = MainGame.fieldGenerator.GetAsteroidArray();
 		Laser[] lasers = MainGame.player.secondEffect.GetLaserArray();
 		
+			
 
 		for (int i = 0; i < rocks.size(); i++) {
 //			System.out.println(System.currentTimeMillis() - immunityTimer);
@@ -49,6 +54,7 @@ public class GameLogic {
 							immunity = true;
 							immunityTimer = System.currentTimeMillis();
 							MainGame.player.objectRenderer.SetTexture("shielded_ship");
+							lostLife = true;
 						}
 
 					}
@@ -85,7 +91,7 @@ public class GameLogic {
 								
 								rocks.get(i).Delete();
 								rocks.remove(i);
-								
+								HUD.points += 10;
 																
 								}
 								MainGame.fieldGenerator.number--;
@@ -109,13 +115,17 @@ public class GameLogic {
 				}
 			}
 		}
-
+		
+		
+		MainGame.fieldGenerator.Update();
+		MainGame.hud.Update();
 		// Update object_1 transform, physics, rendering etc...
 		if (!MainGame.player.isDeleted) {
 			MainGame.player.Update();
 			MainGame.alien.Update();
 
 		} else {
+			
 			MainGame.GameOver = new GameChar();
 			MainGame.GameOver.objectRenderer.SetTexture("game_over");
 			MainGame.GameOver.transform.size = new Vector2(50, 13);
@@ -123,8 +133,8 @@ public class GameLogic {
 			MainGame.GameOver.rigidBody.frictionCoefficient = 0.1f;
 			MainGame.GameOver.Update();
 		}
-		MainGame.fieldGenerator.Update();
-
+		
+		
 		if (winChecker) {
 
 			if (counter == 0) {

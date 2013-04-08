@@ -41,8 +41,6 @@ public class FieldGenerator extends GameObject {
 					astrdField.get(i).rigidBody.PushTorque(rand.nextInt(10)%4-2, ForceMode.Force);
 					astrdField.get(i).transform.size=(new Vector2( GameLogic.brokenSize, GameLogic.brokenSize ));
 					
-					System.out.println("farts");
-										
 				}
 				else{
 				randPosX = rand.nextInt(1500)-750;
