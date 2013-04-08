@@ -1,17 +1,24 @@
+/**
+ * RigidBody:
+ * 		An Object component that holds the physic state of an Object.
+ * 		A RigidBody keeps is linked to a it's parent and access and modify it's transform
+ * 		according to it's physic state (i.e, velocity and angularVelocity).
+ * 		The movement is initiated by pushing forces on the rigidbody, and is calculated using
+ * 		mass, frictionCoefficient attributes
+ * 
+ */
+
 package GameComponents;
 
-
 import java.util.ArrayList;
-
+import Game.MainGame;
 import GameComponents.ObjectRenderer.Shape;
 import GameObjects.GameChar;
-import Helpers.Debug;
 import Maths.*;
-import Renderer.Renderer;
 
 public class RigidBody 
 {
-	public static final float deltaTime= 1f/(float)Renderer.RERFRESH_RATE;
+	public float deltaTime = MainGame.render.deltaTime;
 	
 	//	currently 1 unit = 1 pixel on the original window size.
 	
@@ -25,8 +32,6 @@ public class RigidBody
 	public float angularVelocity = 0;				// rad/s 	
 	public float angularAcceleration = 0;
 	
-	
-	public static Debug debug = new Debug();
 	private GameChar parent;
 	private ArrayList<Forces> forcesList;
 	private ArrayList<Torque> torqueList;
@@ -59,6 +64,7 @@ public class RigidBody
 	
 	public void Update()
 	{
+		deltaTime = MainGame.render.deltaTime; 
 		UpdateVelocity();
 		UpdateAcceleration();
 		UpdateTransform();
@@ -331,8 +337,8 @@ public boolean isColliding(GameChar char1, GameChar char2){
 			//System.out.println(box2[i].x);
 			//System.out.println(box2[i].y);
 		
-		//debug.DrawRay(box1[i],box1[(i+1)%4]);
-		//debug.DrawRay(box2[i],box2[(i+1)%4]);
+		//MainGame.debug.DrawRay(box1[i],box1[(i+1)%4]);
+		//MainGame.debug.DrawRay(box2[i],box2[(i+1)%4]);
 		}
 		return false;
 		

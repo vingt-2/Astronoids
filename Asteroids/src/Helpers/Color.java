@@ -1,3 +1,9 @@
+/**
+ * Color:
+ * 		Simple enough, that's some Color enum.
+ * 
+ */
+
 package Helpers;
 
 public enum Color 

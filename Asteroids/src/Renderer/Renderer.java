@@ -12,14 +12,17 @@ import javax.media.opengl.GLEventListener;
 
 import Game.Controls;
 import Game.MainGame;
-import Game.Menu;
+import Game.Menu2;
 import GameComponents.ObjectRenderer;
+import Helpers.Color;
 import Maths.*;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.util.FPSAnimator;
+import com.jogamp.opengl.util.awt.TextRenderer;
 
 import java.awt.Dimension;
+import java.awt.Font;
 // Util imports
 import java.awt.Frame;
 import java.awt.Graphics2D;
@@ -42,17 +45,21 @@ import java.util.ArrayList;
 
 public class Renderer implements GLEventListener
 {	
-	public static final int RERFRESH_RATE = 60 ; // Refresh rate fixed at (1/60)hz, leading to 60frame/s
-	String windowName = "";
-	Vector2 screenSize;
-	FPSAnimator animator;
+	public static final int FIXED_REFRESH_RATE = 60 ; // Refresh rate fixed at (1/60)hz, leading to 60frame/s
+	
+	public float deltaTime = 1.f/FIXED_REFRESH_RATE;
+	
 	public GLAutoDrawable externDrawable;
-
 	public MainGame mainGame;
-	public Menu menu;
-
+	public Menu2 menu;
 	public ArrayList<ObjectRenderer> renderVector;
+	public Font font = new Font("SansSerif", Font.BOLD, 36);
 
+	private long lastTime = System.currentTimeMillis();
+	private String windowName = "";
+	private Vector2 screenSize;
+	private FPSAnimator animator;
+    private TextRenderer textRenderer = new TextRenderer(font);
 
 	public Renderer(String windowName)
 	{
@@ -141,6 +148,7 @@ public class Renderer implements GLEventListener
 	public void Update(GLAutoDrawable drawable)
 	{
 		GL2 gl = drawable.getGL().getGL2();
+		this.UpdateTime();
 		mainGame.Update(gl);
 	}
 
@@ -155,6 +163,19 @@ public class Renderer implements GLEventListener
 			renderVector.get(i).Draw(gl);
 		}
 
+	}
+	
+	public void UpdateTime()
+	{
+		long time = System.currentTimeMillis();
+		// DeltaTime is in second, so convert it back.
+		deltaTime = (time - lastTime) / 1000.f;
+		lastTime = time;
+	}
+	
+	public int GetFPS()
+	{
+		return (int) (1.f/deltaTime);
 	}
 	
 	public int CreateTexture(String filePath)
@@ -233,6 +254,16 @@ public class Renderer implements GLEventListener
 		
 		return textureID.get(0);
 		
+	}
+	
+	public void DrawText(String text,Vector2 position, Color color, float opacity)
+	{
+		Vector2 context = new Vector2(externDrawable.getWidth(),externDrawable.getHeight());
+		textRenderer.beginRendering((int)context.x,(int)context.y);
+	    // optionally set the color
+		textRenderer.setColor(color.r, color.g, color.b, opacity);
+		textRenderer.draw(text,(int)(position.x+context.x/2),(int)(position.y+context.y/2));
+		textRenderer.endRendering();
 	}
 
 }

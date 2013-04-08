@@ -55,23 +55,35 @@ public class MainGame
 		if (inMenu) { 
 			sharedRessources.LoadRessources
 			(new Ressource [] {
-						new Ressource("instructionTitle","./resources/textures/instructionFont.png", RessourceType.Texture),
+						new Ressource("instructionTable","./resources/textures/instructionTable.png",RessourceType.Texture),
+						new Ressource("instructionFont","./resources/textures/instructionFont.png",RessourceType.Texture),
+						new Ressource("startGame","./resources/textures/startGame.png",RessourceType.Texture),
+						new Ressource("instructions","./resources/textures/instructions.png",RessourceType.Texture),
+						new Ressource("statistics","./resources/textures/statistics.png",RessourceType.Texture),
+						new Ressource("highScores","./resources/textures/highScores.png",RessourceType.Texture),
+						new Ressource("startGameOnHover","./resources/textures/startGameOnHover.png",RessourceType.Texture),
+						new Ressource("instructionsOnHover","./resources/textures/instructionsOnHover.png",RessourceType.Texture),
+						new Ressource("statisticsOnHover","./resources/textures/statisticsOnHover.png",RessourceType.Texture),
+						new Ressource("highScoresOnHover","./resources/textures/highScoresOnHover.png",RessourceType.Texture),
+						new Ressource("enterUsername","./resources/textures/enterUsername.png", RessourceType.Texture),
 						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
 						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
-						new Ressource("random","./resources/textures/instructions.png", RessourceType.Texture),
-						new Ressource("instructionOnHover","./resources/textures/vertOnHover.png", RessourceType.Texture),
-						new Ressource("instruction","./resources/textures/vert.png", RessourceType.Texture),
-						new Ressource("logoOnHover","./resources/textures/startGameOnHover.png", RessourceType.Texture),
-						new Ressource("logo","./resources/textures/startGame.png",RessourceType.Texture),
+						new Ressource("twoPlayerOnHover","./resources/textures/two_player_hover.png",RessourceType.Texture),
+						new Ressource("twoPlayer","./resources/textures/two_player.png", RessourceType.Texture),
+						new Ressource("loadUserOnHover","./resources/textures/load_user_hover.png", RessourceType.Texture),
+						new Ressource("loadUser","./resources/textures/load_user.png", RessourceType.Texture),
+						new Ressource("createUserOnHover","./resources/textures/create_user_hover.png", RessourceType.Texture),
+						new Ressource("createUser","./resources/textures/create_user.png",RessourceType.Texture),
 						new Ressource("background","./resources/textures/space.jpg", RessourceType.Texture)
 					}
 			);
 			menu = new Menu();
 		} else { 
 			
-		menu.startGameButton.Delete();
-		menu.instruction.Delete();
-		menu.quitButton.Delete();
+		menu.startGame.Delete();
+		menu.instructions.Delete();
+		menu.statistics.Delete();
+		menu.highScores.Delete();
 		
 		
 
@@ -120,12 +132,12 @@ public class MainGame
 			init (gl);
 			enterKeyPressed = false;
 		}
-		if (controls.isPressed(KeyEvent.VK_P)){
+		/*if (controls.isPressed(KeyEvent.VK_P)){
 			inMenu = true;
 			inPauseGame = true;
 			pauseImage = new GameChar();
 			
-		}
+		} */
 		
 		// Put Game Logic here
 

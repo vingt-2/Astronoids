@@ -1,3 +1,9 @@
+/**
+ * Vector2:
+ * 		A Vector2 Class that implements Vector 2D stuff
+ *
+ */
+
 package Maths;
 
 public class Vector2 

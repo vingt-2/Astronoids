@@ -1,3 +1,11 @@
+/**
+ * Controls:
+ * 		Key Listener.
+ * 		
+ * 		Summon isPressed(key) from everywhere in the program to know if one particular key is Pressed.
+ * 
+ */
+
 package Game;
 
 import java.awt.event.KeyEvent;
@@ -8,16 +16,33 @@ public class Controls implements KeyListener
 {
 
 	boolean[] keyPressed = new boolean[KeyEvent.KEY_LAST];
-	static int menuCounter =0;
+	boolean recordKey = false;
+	String recordString = "";
+	
+	static int menuCounter = 0;
 	
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) 
 	{
-		if(!keyPressed[arg0.getKeyCode()])
+		int keyCode = arg0.getKeyCode();
+		if(!keyPressed[keyCode])
 		{
-			keyPressed[arg0.getKeyCode()] = true;
+			keyPressed[keyCode] = true;
 		}
+		
+		if(recordKey)
+		{
+			if(keyCode == KeyEvent.VK_BACK_SPACE && recordString.length() > 0)
+			{
+				recordString = recordString.substring(0, recordString.length()-1);
+			}
+			else if ((keyCode >= '0' && keyCode <= '9') || (keyCode >= 'A' && keyCode <= 'Z'))
+			{
+				recordString += "" + (char) arg0.getKeyCode();
+			}
+		}
+		
 		if(arg0.getKeyCode() == KeyEvent.VK_DOWN && menuCounter < 3)
 			menuCounter++;
 		if(arg0.getKeyCode() == KeyEvent.VK_UP && menuCounter != 0)
@@ -39,6 +64,19 @@ public class Controls implements KeyListener
 	public boolean isPressed(int keyCode)
 	{	
 		return keyPressed[keyCode];
+	}
+	
+	public String currentString()
+	{
+		String output = "";
+		for(int i=0; i < keyPressed.length; i++)
+		{
+			if(keyPressed[i])
+			{
+				output += (char) i;
+			}
+		}
+		return output;
 	}
 
 }
