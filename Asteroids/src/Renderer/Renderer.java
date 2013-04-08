@@ -68,8 +68,8 @@ public class Renderer implements GLEventListener
 	}
 
 
-
-	public Frame CreateWindow(Vector2 size, Controls controls)
+  
+	  public Frame CreateWindow(Vector2 size, Controls controls)
 	{
 		Frame frame = new Frame(windowName);
 		GLProfile glp = GLProfile.get(GLProfile.GL2);

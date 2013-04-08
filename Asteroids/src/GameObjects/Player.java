@@ -18,13 +18,14 @@ public class Player extends GameChar
 	
 	long lastTime = 0;
 	final static long effectTimeThreshold = 1000; // wait 000ms to toggle effect
-	
+	public int lives;
 	
 	public Player()
 	{
 		super();
 		objectRenderer.shape= Shape.Square;
 		objectRenderer.SetTexture("rocket_ship");
+		this.lives = 3;
 	}
 	
 	public void Update()

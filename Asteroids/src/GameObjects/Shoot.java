@@ -10,11 +10,12 @@ import Maths.Vector2;
 
 public class Shoot extends GameObject{
 
-	
+	public float deltaTime = MainGame.render.deltaTime;
 	public Transform transform;
 	public int i = 0;
 	private Laser[] lasers;	
 	public boolean isTurnedOn = false;
+	public long watchmen;
 	
 	public Shoot(Transform transform){
 		
@@ -24,7 +25,8 @@ public class Shoot extends GameObject{
 	
 	
 	public void Update(){
-				
+		
+		if(System.currentTimeMillis()-watchmen>deltaTime){
 		if(isTurnedOn){
 			
 			//temp fix for Texture rendering in middle of screen
@@ -50,7 +52,8 @@ public class Shoot extends GameObject{
 			}
 		
 			}
-		
+		}
+		watchmen = System.currentTimeMillis();
 			//i++;
 		
 	}

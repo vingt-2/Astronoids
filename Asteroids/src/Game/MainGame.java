@@ -37,8 +37,8 @@ public class MainGame
 	public static boolean inMenu			= true;
 	public static boolean enterKeyPressed 	= false;
 	public static boolean inStartGame = true;
-	public static boolean winChecker = false;
-	public int counter=0;
+	
+	
 	
 	// Game singletons
 	public static final SharedRessources sharedRessources	= new SharedRessources();
@@ -48,16 +48,19 @@ public class MainGame
 	public static Menu menu; 								//= new Menu();
 	public static GameChar GameOver;
 	public static GameChar Win;
+	public GameLogic logic;
+	
+
 
 	public static ArrayList<GameChar> objectVector;
 
 	public static Player player;
 	public static FieldGenerator fieldGenerator;
 
-	Alien alien;
+	static Alien alien;
 
 	Laser laser;
-
+	
 
 	public void init(GL2 gl)
 	{
@@ -89,6 +92,7 @@ public class MainGame
 			(new Ressource[]
 				{
 					new Ressource("rocket_ship","./resources/textures/awesome_space_ship.png",RessourceType.Texture),
+					new Ressource("shielded_ship","./resources/textures/awesome_space_ship_shielded.png",RessourceType.Texture),
 					new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
 					new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
 					new Ressource("asteroid", "./resources/textures/Asteroid_2.png", RessourceType.Texture),
@@ -106,6 +110,7 @@ public class MainGame
 			alien.rigidBody.frictionCoefficient= 0.05f;
 		}
 		fieldGenerator = new FieldGenerator(12, 5);
+		logic = new GameLogic();
 	}
 
 	public void Update(GL2 gl)
@@ -128,93 +133,9 @@ public class MainGame
 
 			// Put Game Logic here
 
-
-			ArrayList<Asteroid> rocks = fieldGenerator.GetAsteroidArray();
-			Laser[] lasers = player.secondEffect.GetLaserArray();
-
-			//System.out.println(rocks[4].terminator);
-
-			for (int i = 0; i<rocks.size(); i++)
-			{
-
-				if(!player.isDeleted){
-					//System.out.println(rocks[i].terminator);
-					if (!(rocks.size()<= i)){
-						if(player.rigidBody.isColliding(player, rocks.get(i) ))
-						{
-							//rocks[i].objectRenderer.opacity = 0;
-							//rocks.get(i).terminator = true;
-							//	rocks.get(i).Delete();
-							//	rocks.remove(i);
-							//	fieldGenerator.number--;
-							player.Delete();
-
-
-
-
-						}
-						for(int j =0; j<lasers.length; j++){
-							if( lasers[j] != null && i!=rocks.size()) {
-								if(lasers[j].rigidBody.isColliding(lasers[j], rocks.get(i))){
-									rocks.get(i).Delete();
-									rocks.remove(i);
-									fieldGenerator.number--;
-									System.out.println("boom");
-									lasers[j].Delete();
-									lasers[j] = null;
-
-								}
-							}
-						}
-					}
-
-					if(!(fieldGenerator.GetAsteroidArray().size()<= i))
-						rocks.get(i).terminator = false;
-
-					if(fieldGenerator.number == 0) {
-						winChecker = true;
-
-					}
-				}
-			}
-
-
-
-
-
-			//Update object_1 transform, physics, rendering etc...
-			if(!player.isDeleted){
-				player.Update();
-				alien.Update();
-
-
-			}else{
-				GameOver = new GameChar();
-				GameOver.objectRenderer.SetTexture("game_over");
-				GameOver.transform.size = new Vector2 (50,13);
-				GameOver.transform.position = new Vector2 (0,-9);
-				GameOver.rigidBody.frictionCoefficient = 0.1f;
-				GameOver.Update();
-			}
-			fieldGenerator.Update();
-
-
-
-			if(winChecker){
-
-				if(counter ==0){
-					Win = new GameChar();
-					counter ++;
-				}
-				Win.objectRenderer.SetTexture("Win");
-				Win.transform.size = new Vector2(40, 8);
-				Win.transform.position = new Vector2(0, 0);
-				Win.rigidBody.frictionCoefficient = 0.1f;
-				Win.Update();
-			}
+			logic.UpdateLogic();
 
 		}
-
 
 		//alien.Update();
 
@@ -229,7 +150,7 @@ public class MainGame
 
 		render.mainGame = game;									// Associate this Game to the renderer.
 		render.CreateWindow(new Vector2(1024,780),controls);	// Create a new Frame object and returns its reference.
-
+		
 	}
 
 

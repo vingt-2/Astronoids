@@ -14,7 +14,9 @@ public class Laser extends GameChar {
 
 	int counter = 0;
 	long creationTime;
-	long lifeTime = 500;
+	long lifeTime = 700;
+	public float deltaTime = MainGame.render.deltaTime;
+	public long watchmen;
 	
 	public Laser(Vector2 position){
 		
@@ -25,6 +27,7 @@ public class Laser extends GameChar {
 	
 	public void Update()
 	{
+		if(System.currentTimeMillis()-watchmen>deltaTime){
 		super.Update();
 		if (counter == 0)
 			{	
@@ -41,6 +44,9 @@ public class Laser extends GameChar {
 			
 		if (TimeToDie()) Delete();
 		
+		}
+		
+		watchmen =System.currentTimeMillis();
 		// Laser Stuff
 		
 		
