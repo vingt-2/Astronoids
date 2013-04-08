@@ -38,10 +38,9 @@ public class MainGame
 	public static boolean enterKeyPressed 	= false;
 	public static boolean inStartGame = true;
 
+	public boolean update=true;
+	public int pressCount = 0;
 	
-	
-	
-
 	public static boolean winChecker = false;
 	public int counter=0;
 
@@ -140,8 +139,19 @@ public class MainGame
 			}
 
 			// Put Game Logic here
+			if(controls.isPressed(KeyEvent.VK_P) && pressCount==0){
+				update = !(update);
+				pressCount++;
+			}
+			if(!controls.isPressed(KeyEvent.VK_P))
+				pressCount = 0;
+			if(update)
+				logic.UpdateLogic();
 
-			logic.UpdateLogic();
+			else{ //Pause Game
+				
+			}
+
 
 		}
 
