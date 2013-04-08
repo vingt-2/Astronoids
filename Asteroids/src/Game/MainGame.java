@@ -23,6 +23,7 @@ import Game.SharedRessources.RessourceType;
 import GameObjects.Asteroid;
 import GameObjects.FieldGenerator;
 import GameObjects.GameChar;
+import GameObjects.HUD;
 import GameObjects.Laser;
 import GameObjects.Player;
 import Helpers.Debug;
@@ -66,6 +67,7 @@ public class MainGame
 	static Alien alien;
 
 	Laser laser;
+	public static HUD hud;
 	
 
 	public void init(GL2 gl)
@@ -106,7 +108,8 @@ public class MainGame
 					new Ressource("greenLaser","./resources/textures/Laser.png", RessourceType.Texture),
 					new Ressource("blueLaser","./resources/textures/Laser.png", RessourceType.Texture),
 					new Ressource("game_over","./resources/textures/Game_over.png", RessourceType.Texture),
-					new Ressource("Win","./resources/textures/anti_mind_virus.png", RessourceType.Texture)
+					new Ressource("Win","./resources/textures/anti_mind_virus.png", RessourceType.Texture),
+					new Ressource("Empty","./resources/textures/Untitled-1.png", RessourceType.Texture)
 					}
 					);
 			player = new Player();
@@ -116,9 +119,13 @@ public class MainGame
 			alien = new Alien();
 			alien.transform.size=new Vector2(2,2);
 			alien.rigidBody.frictionCoefficient= 0.05f;
+			
+			hud = new HUD();
 		}
 		fieldGenerator = new FieldGenerator(12, 5);
 		logic = new GameLogic();
+		
+
 	}
 
 	public void Update(GL2 gl)
