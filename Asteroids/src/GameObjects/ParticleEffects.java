@@ -36,6 +36,7 @@ public class ParticleEffects extends GameObject
 				{
 					if( isTurnedOn )
 					{	
+						
 						particleArray[i] = new Particles(ran.nextInt(2000), particlePos);
 						particleArray[i].objectRenderer.shape= Shape.Square;
 						particleArray[i].objectRenderer.SetTexture("smoke");

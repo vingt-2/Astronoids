@@ -66,7 +66,7 @@ public class Highscore {
 				writer.writeAll(writeHighscores);
 				writer.close();
 				System.out.println("Highscores have been changed");
-
+				
 				break;
 			}
 		}

@@ -28,8 +28,14 @@ public class MainGame
 	public static boolean inPauseGame		= false;
 	public static boolean enterKeyPressed 	= false;
 	public static boolean inStartGame = true;
+
+	public boolean update=true;
+	public int pressCount = 0;
+	
 	public static boolean winChecker = false;
 	public int counter=0;
+
+
 	// Game singletons
 	public static final SharedRessources sharedRessources	= new SharedRessources();
 	public static final Renderer render 					= new Renderer(Window_Name);
@@ -40,16 +46,22 @@ public class MainGame
 	public static GameChar Win;
 	public static GameChar pauseImage;
 	
+	public GameLogic logic;
+	
+
 	public static ArrayList<GameChar> objectVector;
 
 	public static Player player;
 	public static FieldGenerator fieldGenerator;
 
-	Alien alien;
 	
 	Laser laser;
 
 	
+	static Alien alien;
+
+	
+
 	public void init(GL2 gl)
 	{
 		if (inMenu) { 
@@ -85,39 +97,45 @@ public class MainGame
 		menu.statistics.Delete();
 		menu.highScores.Delete();
 		
-		
+			sharedRessources.LoadRessources
+			(new Ressource[]
+					{
+					new Ressource("rocket_ship","./resources/textures/awesome_space_ship.png",RessourceType.Texture),
+					new Ressource("shielded_ship","./resources/textures/awesome_space_ship_shielded.png",RessourceType.Texture),
+					new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
+					new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
+					new Ressource("asteroid", "./resources/textures/Asteroid_2.png", RessourceType.Texture),
+					new Ressource("redLaser","./resources/textures/Laser.png", RessourceType.Texture),
+					new Ressource("greenLaser","./resources/textures/Laser.png", RessourceType.Texture),
+					new Ressource("blueLaser","./resources/textures/Laser.png", RessourceType.Texture),
+					new Ressource("game_over","./resources/textures/Game_over.png", RessourceType.Texture),
+					new Ressource("Win","./resources/textures/anti_mind_virus.png", RessourceType.Texture)
+					}
+					);
+			player = new Player();
+			player.transform.size = new Vector2(4,4);
+			player.rigidBody.frictionCoefficient = 0.05f;
 
-		sharedRessources.LoadRessources
-		(new Ressource[]
-			{
-			
-				new Ressource("rocket_ship","./resources/textures/awesome_space_ship.png",RessourceType.Texture),
-				new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
-				new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
-				new Ressource("asteroid", "./resources/textures/Asteroid_2.png", RessourceType.Texture),
-				new Ressource("Laser","./resources/textures/Laser.png", RessourceType.Texture ),
-				new Ressource("game_over","./resources/textures/Game_over.png", RessourceType.Texture),
-				new Ressource("Win","./resources/textures/anti_mind_virus.png", RessourceType.Texture)
-			}
-		);
- 		player = new Player();
-		player.transform.size = new Vector2(4,4);
-		player.rigidBody.frictionCoefficient = 0.1f;
-		
-		alien = new Alien();
-		alien.transform.size=new Vector2(2,2);
-		alien.rigidBody.frictionCoefficient= 0.1f;
+			alien = new Alien();
+			alien.transform.size=new Vector2(2,2);
+			alien.rigidBody.frictionCoefficient= 0.05f;
+
 		}
 		
 		
 		fieldGenerator = new FieldGenerator(12, 5);
+
 		
 		
 //		alien = new Alien();
 //		alien.transform.size=new Vector2(2,2);
 //		alien.rigidBody.frictionCoefficient= 0.1f;
 
+		logic = new GameLogic();
 	}
+
+
+	
 	
 	public void Update(GL2 gl)
 	{
@@ -132,103 +150,30 @@ public class MainGame
 			init (gl);
 			enterKeyPressed = false;
 		}
-		/*if (controls.isPressed(KeyEvent.VK_P)){
-			inMenu = true;
-			inPauseGame = true;
-			pauseImage = new GameChar();
-			
-		} */
 		
-		// Put Game Logic here
-
-		
-		ArrayList<Asteroid> rocks = fieldGenerator.GetAsteroidArray();
-		Laser[] lasers = player.secondEffect.GetLaserArray();
-		
-		//System.out.println(rocks[4].terminator);
-	
-		for (int i = 0; i<rocks.size(); i++)
-		{
-			
-			if(!player.isDeleted){
-			//System.out.println(rocks[i].terminator);
-			if (!(rocks.size()<= i)){
-				if(player.rigidBody.isColliding(player, rocks.get(i) ))
-				{
-					//rocks[i].objectRenderer.opacity = 0;
-					//rocks.get(i).terminator = true;
-				//	rocks.get(i).Delete();
-				//	rocks.remove(i);
-				//	fieldGenerator.number--;
-					player.Delete();
-					
-					
-					
-					
-				}
-				for(int j =0; j<lasers.length; j++){
-					if( lasers[j] != null && i!=rocks.size()) {
-						if(lasers[j].rigidBody.isColliding(lasers[j], rocks.get(i))){
-							rocks.get(i).Delete();
-							rocks.remove(i);
-							fieldGenerator.number--;
-							System.out.println("boom");
-							lasers[j].Delete();
-							lasers[j] = null;
-
-						}
-					}
-				}
+			if (enterKeyPressed) 
+			{ 
+				init (gl);
+				enterKeyPressed = false;
 			}
-			
-			if(!(fieldGenerator.GetAsteroidArray().size()<= i))
-			rocks.get(i).terminator = false;
-			
-			if(fieldGenerator.number == 0) {
-				winChecker = true;
+
+			// Put Game Logic here
+			if(controls.isPressed(KeyEvent.VK_P) && pressCount==0){
+				update = !(update);
+				pressCount++;
+			}
+			if(!controls.isPressed(KeyEvent.VK_P))
+				pressCount = 0;
+			if(update)
+				logic.UpdateLogic();
+
+			else{ //Pause Game
 				
 			}
-		}
-		}
-		
-		
 
-		
 
-		//Update object_1 transform, physics, rendering etc...
-		if(!player.isDeleted){
-			player.Update();
-			alien.Update();
-			
-			
-		}else{
-			GameOver = new GameChar();
-			GameOver.objectRenderer.SetTexture("game_over");
-			GameOver.transform.size = new Vector2 (50,13);
-			GameOver.transform.position = new Vector2 (0,-9);
-			GameOver.rigidBody.frictionCoefficient = 0.1f;
-			GameOver.Update();
-		}
-		fieldGenerator.Update();
-		
-		
-		
-		if(winChecker){
-			
-			if(counter ==0){
-				Win = new GameChar();
-				counter ++;
-			}
-				Win.objectRenderer.SetTexture("Win");
-				Win.transform.size = new Vector2(40, 8);
-				Win.transform.position = new Vector2(0, 0);
-				Win.rigidBody.frictionCoefficient = 0.1f;
-				Win.Update();
-		}
-		
 		}
 
-		
 		//alien.Update();
 		
 		//player.rigidBody.isColliding(player,alien);

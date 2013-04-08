@@ -268,11 +268,7 @@ public class RigidBody
 		}
 	}
 	
-	
 		
-		
-	
-	
 	public enum CollisionShape
 	{
 		Square (
@@ -294,55 +290,49 @@ public class RigidBody
 				new Vector2[] {new Vector2(-10,-4),new Vector2(1,-10),new Vector2(10,-10),new Vector2(10,4),new Vector2(-1,10),new Vector2(-10,10)}
 				);
 		
-		
-		
-		
+			
 		public Vector2[] vertices;
 		CollisionShape(Vector2[] vertices)
 		{
 			this.vertices = vertices;
 		}
-		
-		
-		
-	
+			
 	}
 	
-public boolean isColliding(GameChar char1, GameChar char2){
+public boolean isColliding(GameChar char1){
 		
 		float rotation = char1.transform.rotation;
+		Vector2[] shape1;
+		Vector2[] shape2;
 		
-		Vector2[] box1 = makeBox(char1);
-		Vector2[] box2 = makeBox(char2);
-		
-		for (int i =0; i<box1.length; i++){
-			//System.out.println(box1[i].x);
-			//System.out.println(box1[i].y);
-			//System.out.println(box2[i].x);
-			//System.out.println(box2[i].y);
+	
+	if (parent.toString().contains("Asteroid")){
+			shape1 = makeAsteroid(parent);
 		}
+	else if(parent.toString().contains("Player")){
+		shape1 = makeShip(parent);
+	}
+	else {
+		shape1 = makeBox(parent);
+	}
 		
-		for(int i= 0; i<4; i++){
-			for (int j = 0; j<4;j++){
-				if(i!=j)
-						if(intersects(box1[i],box1[(i+1)%4],box2[j],box2[(j+1)%4])) return true;
-					
-				}
+	if (char1.toString().contains("Asteroid")){
+			shape2 = makeAsteroid(char1);
 		}
+	else if(char1.toString().contains("Player")){
+		shape2 = makeShip(char1);
+	}
+	else {
+		shape2 = makeBox(char1);
+	}
 		
-
-		for (int i =0; i<box1.length; i++){
-			//System.out.println(box1[i].x);
-			//System.out.println(box1[i].y);
-			//System.out.println(box2[i].x);
-			//System.out.println(box2[i].y);
-		
-		//MainGame.debug.DrawRay(box1[i],box1[(i+1)%4]);
-		//MainGame.debug.DrawRay(box2[i],box2[(i+1)%4]);
-		}
-		return false;
+	debugIt(shape1);
+	debugIt(shape2);
+	
+	return IntersectorLoop(shape1, shape2);
 		
 	}
+	
 	
 	public boolean intersects(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2){
 		
@@ -350,38 +340,89 @@ public boolean isColliding(GameChar char1, GameChar char2){
 		
 	}
 	
-	public boolean isColliding(){
-		
-		CollisionShape shape = parent.rigidBody.collider;
-		
-		if (shape.equals(Shape.Square)){
-			Vector2[] box = makeBox(parent);
-		}
-		
-		
-		
-		return false;
-	}
-
 	public Vector2[] makeBox(GameChar char1){
+		
+		
+		Vector2[] box = {
+										
+						vertexFormula(char1, -6, -6),
+						vertexFormula(char1,  6, -6),
+						vertexFormula(char1, 6, 6),
+						vertexFormula(char1,  -6,  6),
+											
+						};
+		return box;
+		
+				
+	}
+	
+	public Vector2[] makeAsteroid(GameChar char1){
+		
+		
+		//first variable is y and x is reversed on the axis
+		Vector2[] hexangle = {
+				
+				vertexFormula(char1, -3, -10),
+				vertexFormula(char1,  10, -4),
+				vertexFormula(char1, 10, 2),
+				vertexFormula(char1,  4,  5),
+				vertexFormula(char1, -2,  9),
+				vertexFormula(char1, -11, 2)};
+		
+		return hexangle;
+		
+	}
+	
+	public Vector2[] makeShip(GameChar char1){
+		
+		Vector2[] box = {
+								
+				vertexFormula(char1, -8, -10),
+				vertexFormula(char1, -1, -6),
+				vertexFormula(char1,  9, -3),
+				vertexFormula(char1, 9, 3),
+				vertexFormula(char1,  -1,  6),
+				vertexFormula(char1,  -8,  10),
+									
+				};
+return box;
+		
+	}
+	
+	private Vector2 vertexFormula(GameChar char1, int y, int x){
 		
 		Vector2 position1 = char1.transform.position;
 		Vector2 size1 = char1.transform.size;
 		float r = char1.transform.rotation;
 		
-		Vector2[] box = {new Vector2(position1.x+(-10)*size1.x*(float)Math.sin(r)-(-10)*(float)Math.cos(r)*size1.y, position1.y+(-10)*size1.x*(float)Math.cos(r)+(-10)*(float)Math.sin(r)*size1.y),
-				new Vector2(position1.x+(10)*size1.x*(float)Math.sin(r)-(-10)*(float)Math.cos(r)*size1.y, position1.y+(10)*size1.x*(float)Math.cos(r)+(-10)*(float)Math.sin(r)*size1.y),
-				new Vector2(position1.x+(10)*size1.x*(float)Math.sin(r)-(10)*(float)Math.cos(r)*size1.y, position1.y+(10)*size1.x*(float)Math.cos(r)+(10)*(float)Math.sin(r)*size1.y),
-				new Vector2(position1.x+(-10)*size1.x*(float)Math.sin(r)-(10)*(float)Math.cos(r)*size1.y, position1.y+(-10)*size1.x*(float)Math.cos(r)+(10)*(float)Math.sin(r)*size1.y)}
-				;
-		
-		return box;
-		
-		
+		return 	new Vector2(position1.x+(y)*size1.x*(float)Math.sin(r)-(x)*(float)Math.cos(r)*size1.y, 
+				position1.y+(x)*(float)Math.sin(r)*size1.y+(y)*size1.x*(float)Math.cos(r));
 		
 	}
 	
+	private boolean IntersectorLoop(Vector2[] shape1, Vector2[] shape2){
+		
+		for(int i= 0; i<shape1.length; i++){
+			for (int j = 0; j<shape2.length;j++){
+				if(i!=j)
+						if(intersects(shape1[i],shape1[(i+1)%shape1.length],shape2[j],shape2[(j+1)%shape2.length])) return true;
+					
+				}
+		}
+		
+		
+		return false;
+	}
 	
+	private void debugIt(Vector2[] shape){
+		
+		for (int i =0; i<shape.length; i++){
+		
+	MainGame.debug.DrawRay(shape[i],shape[(i+1)%shape.length]);
 	
+	}
+	
+		
+	}
 
 }
