@@ -62,7 +62,7 @@ public class Laser extends GameChar {
 //			Delete();
 //			
 //		}
-		
+//		
 	}
 	
 	public boolean TimeToDie()

@@ -128,7 +128,7 @@ public class MainGame
 		fieldGenerator = new FieldGenerator(12, 5);
 
 		
-		
+//		
 //		alien = new Alien();
 //		alien.transform.size=new Vector2(2,2);
 //		alien.rigidBody.frictionCoefficient= 0.1f;
@@ -180,7 +180,8 @@ public class MainGame
 
 		//alien.Update();
 		
-		//player.rigidBody.isColliding(player,alien);
+	//	player.rigidBody.isColliding(alien);
+	
 		
 	}
 
