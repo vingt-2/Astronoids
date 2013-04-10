@@ -65,6 +65,12 @@ public class MainGame
 		if (inMenu) { 
 			sharedRessources.LoadRessources
 			(new Ressource [] {
+						new Ressource("hardOnHover","./resources/textures/startGameOnHover.png",RessourceType.Texture),
+						new Ressource("hard","./resources/textures/startGame.png",RessourceType.Texture),
+						new Ressource("mediumOnHover","./resources/textures/startGameOnHover.png",RessourceType.Texture),
+						new Ressource("medium","./resources/textures/startGame.png",RessourceType.Texture),
+						new Ressource("easyOnHover","./resources/textures/startGameOnHover.png",RessourceType.Texture),
+						new Ressource("easy","./resources/textures/startGame.png",RessourceType.Texture),
 						new Ressource("instructionTable","./resources/textures/instructionTable.png",RessourceType.Texture),
 						new Ressource("instructionFont","./resources/textures/instructionFont.png",RessourceType.Texture),
 						new Ressource("startGame","./resources/textures/startGame.png",RessourceType.Texture),
@@ -90,10 +96,9 @@ public class MainGame
 			menu = new Menu();
 		} else { 
 			
-		menu.startGame.Delete();
-		menu.instructions.Delete();
-		menu.statistics.Delete();
-		menu.highScores.Delete();
+		menu.easy.Delete();
+		menu.medium.Delete();
+		menu.hard.Delete();
 		
 			sharedRessources.LoadRessources
 			(new Ressource[]
@@ -129,7 +134,7 @@ public class MainGame
 		fieldGenerator = new FieldGenerator(12, 5);
 
 		
-		
+//		
 //		alien = new Alien();
 //		alien.transform.size=new Vector2(2,2);
 //		alien.rigidBody.frictionCoefficient= 0.1f;
@@ -181,7 +186,8 @@ public class MainGame
 
 		//alien.Update();
 		
-		//player.rigidBody.isColliding(player,alien);
+	//	player.rigidBody.isColliding(alien);
+	
 		
 	}
 

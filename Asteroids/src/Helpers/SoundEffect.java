@@ -1,12 +1,17 @@
-import java.io.*
+package Helpers;
+
+import java.io.*;
 import java.net.URL;
 import javax.sound.sampled.*;
 
 
 public enum SoundEffect
 {
-	EXPLODE("explode.wav"),
-	SHOOT("shoot.wav");
+	SHOOT("shoot.wav"),
+	AFTERBURN("afterburn.wav"),
+	CRASH("crash.wav"),
+	ASTEROIDBREAK("asteroidbreak.wav"),
+	EXPLOSION("explosion.wav");
 
 
 	public static enum Volume
@@ -14,7 +19,7 @@ public enum SoundEffect
 		MUTE, LOW, MEDIUM, HIGH
 	}
 
-	public static Volume volume = Volume.LOW;
+	public static Volume volume = Volume.MEDIUM;
 
 	private Clip clip;
 
@@ -22,9 +27,9 @@ public enum SoundEffect
 	{
 		try
 		{
-			URL url = this.getClass().getClassLoader().getResource(soundFileName);
-	
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+			File soundclip = new File("./resources/soundfx/"+soundFileName);
+			
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundclip);
 			
 			clip = AudioSystem.getClip();
 

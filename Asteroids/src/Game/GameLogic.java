@@ -10,6 +10,7 @@ import GameObjects.HUD;
 import GameObjects.Laser;
 import GameObjects.PowerUp;
 import Helpers.Color;
+import Helpers.SoundEffect;
 import Maths.Vector2;
 import Renderer.Renderer;
 
@@ -65,6 +66,7 @@ public class GameLogic {
 						MainGame.player.lives--;
 
 						if (MainGame.player.lives == 0) {
+							SoundEffect.CRASH.play();
 							MainGame.player.Delete();
 						} else {
 							immunity = true;
@@ -88,7 +90,7 @@ public class GameLogic {
 						if (j<lasers.size() && i < rocks.size()) {
 							
 							if (lasers.get(j).rigidBody.isColliding(rocks.get(i))) {
-								
+								SoundEffect.ASTEROIDBREAK.play();
 								int pwrGen = rand.nextInt(40);
 								if( pwrGen==2) {
 									System.out.println("LIFE");

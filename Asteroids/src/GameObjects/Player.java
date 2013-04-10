@@ -7,6 +7,7 @@ import Game.SharedRessources.RessourceType;
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import Helpers.Color;
+import Helpers.SoundEffect;
 import Maths.Vector2;
 
 public class Player extends GameChar 
@@ -55,6 +56,7 @@ public class Player extends GameChar
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_UP))
 		{
+			SoundEffect.AFTERBURN.play();
 			Vector2 objectFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1));
 			rigidBody.PushForce(Vector2.Scale(1000, objectFrontInWorldCoordinates),ForceMode.Impulse);
 			effect.TurnOn();
@@ -66,6 +68,7 @@ public class Player extends GameChar
 
 		if(MainGame.controls.isPressed(KeyEvent.VK_X))
 		{
+			SoundEffect.SHOOT.play();
 			secondEffect.TurnOff();
 
 			long time = System.currentTimeMillis();
