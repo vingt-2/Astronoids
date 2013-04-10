@@ -87,8 +87,6 @@ public class Shoot extends GameObject{
 		}
 
 
-	
-
 	public void TurnOn()
 	{
 		if( !isTurnedOn )
