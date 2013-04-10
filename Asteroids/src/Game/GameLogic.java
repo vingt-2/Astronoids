@@ -9,6 +9,7 @@ import GameObjects.GameChar;
 import GameObjects.HUD;
 import GameObjects.Laser;
 import Helpers.Color;
+import Helpers.SoundEffect;
 import Maths.Vector2;
 import Renderer.Renderer;
 
@@ -44,11 +45,12 @@ public class GameLogic {
 						// rocks.get(i).Delete();
 						// rocks.remove(i);
 						// fieldGenerator.number--;
-
+						
 						MainGame.player.lives--;
 						
 
 						if (MainGame.player.lives == 0) {
+							SoundEffect.CRASH.play();
 							MainGame.player.Delete();
 						} else {
 							immunity = true;
@@ -70,6 +72,7 @@ public class GameLogic {
 							
 							if (lasers[j].rigidBody.isColliding(rocks.get(i)) ) {
 								
+								SoundEffect.ASTEROIDBREAK.play();
 								if (i<rocks.size()){
 									System.out.println("farts");
 								for( int k = 0; k<(rocks.get(i).transform.size.x)/2; k++){

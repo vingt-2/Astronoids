@@ -7,7 +7,11 @@ import javax.sound.sampled.*;
 
 public enum SoundEffect
 {
-	SHOOT("shoot.wav");
+	SHOOT("shoot.wav"),
+	AFTERBURN("afterburn.wav"),
+	CRASH("crash.wav"),
+	ASTEROIDBREAK("asteroidbreak.wav"),
+	EXPLOSION("explosion.wav");
 
 
 	public static enum Volume

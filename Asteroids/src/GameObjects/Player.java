@@ -56,6 +56,7 @@ public class Player extends GameChar
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_UP))
 		{
+			SoundEffect.AFTERBURN.play();
 			Vector2 objectFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1));
 			rigidBody.PushForce(Vector2.Scale(1000, objectFrontInWorldCoordinates),ForceMode.Impulse);
 			effect.TurnOn();
