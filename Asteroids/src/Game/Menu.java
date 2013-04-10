@@ -22,6 +22,10 @@ public class Menu {
 	GameChar highScores;
 	GameChar instructionTable;
 	GameChar instructionFont;
+	GameChar easy;
+	GameChar medium;
+	GameChar hard;
+
 
 	public static int counter2 = 0;
 
@@ -39,6 +43,7 @@ public class Menu {
 	public boolean inStatistics = false;
 	public boolean showHS = true;
 	public boolean inStartMenu = true;
+	public boolean inLevelMenu = false;
 
 	public Menu(){ 
 		Controls.menuCounter = 0;
@@ -75,6 +80,9 @@ public class Menu {
 		}
 		if(inGameMenu){
 			updateGameMenu();
+		}
+		if(inLevelMenu){
+			updateLevelMenu();
 		}
 
 		if (inEnterUsernameNew){
@@ -137,6 +145,16 @@ public class Menu {
 				Controls.menuCounter = 0;
 				showHS = false;
 				back = false;
+			}
+			if(inLevelMenu){
+				inLevelMenu = false;
+				inGameMenu = true;
+				back = false;
+				Controls.menuCounter = 0;
+				easy.Delete();
+				medium.Delete();
+				hard.Delete();
+				initGameMenu();
 			}
 
 		}
@@ -209,9 +227,13 @@ public class Menu {
 			statistics.objectRenderer.SetTexture("statistics");
 			highScores.objectRenderer.SetTexture("highScores");
 			if (MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				inLevelMenu = true;
 				inGameMenu = false;
+				initLevelMenu();
+				
+				/*inGameMenu = false;
 				MainGame.inMenu = false;
-				MainGame.enterKeyPressed = true;
+				MainGame.enterKeyPressed = true; */
 			}
 			break;
 		case 1: 
@@ -255,6 +277,48 @@ public class Menu {
 		instructions.Update();
 		statistics.Update();
 		highScores.Update();
+	}
+	
+	private void updateLevelMenu() {
+		switch(Controls.menuCounter){
+		case 0: 
+			easy.objectRenderer.SetTexture("easyOnHover");
+			medium.objectRenderer.SetTexture("medium");
+			hard.objectRenderer.SetTexture("hard");
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				inGameMenu = false;
+				MainGame.inMenu = false;
+				MainGame.enterKeyPressed = true;
+			}
+			break;
+		case 1: 
+			easy.objectRenderer.SetTexture("easy");
+			medium.objectRenderer.SetTexture("mediumOnHover");
+			hard.objectRenderer.SetTexture("hard");
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				//put medium level code
+			}
+			break;
+		case 2: 
+			easy.objectRenderer.SetTexture("easy");
+			medium.objectRenderer.SetTexture("medium");
+			hard.objectRenderer.SetTexture("hardOnHover");
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				//put hard level code
+			}
+			break;
+		/*case 3: 
+			easy.objectRenderer.SetTexture("createUser");
+			easy.objectRenderer.SetTexture("createUser");
+			easy.objectRenderer.SetTexture("createUser");
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				//put level KFC
+			}
+			break; */
+		}
+		easy.Update();
+		medium.Update();
+		hard.Update();
 	}
 
 	private void inEnterUsername() {
@@ -392,6 +456,29 @@ public class Menu {
 		instructions.Delete();
 		statistics.Delete();
 		highScores.Delete();
+	}
+	public void initLevelMenu(){ 
+		Controls.menuCounter = 0;
+		startGame.Delete();
+		instructions.Delete();
+		statistics.Delete();
+		highScores.Delete();
+		easy = new GameChar();
+		medium = new GameChar();
+		hard = new GameChar();
+		easy.objectRenderer.SetTexture("createUser");
+		easy.transform.size = new Vector2 (25,10);
+		easy.transform.position = new Vector2 (0,20);
+		easy.rigidBody.frictionCoefficient = 0.1f;
+		medium.objectRenderer.SetTexture("loadUser");
+		medium.transform.size = new Vector2 (25,10);
+		medium.transform.position = new Vector2 (0,10);
+		medium.rigidBody.frictionCoefficient = 0.1f;
+		hard.objectRenderer.SetTexture("twoPlayer");
+		hard.transform.size = new Vector2 (25,10);
+		hard.transform.position = new Vector2 (0,-5);
+		hard.rigidBody.frictionCoefficient = 0.1f;
+		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
 
 	public void initStartMenu(){
