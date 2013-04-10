@@ -76,7 +76,7 @@ public class MainGame
 						new Ressource("statisticsOnHover","./resources/textures/statisticsOnHover.png",RessourceType.Texture),
 						new Ressource("highScoresOnHover","./resources/textures/highScoresOnHover.png",RessourceType.Texture),
 						new Ressource("enterUsername","./resources/textures/enterUsername.png", RessourceType.Texture),
-						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
+						new Ressource("quitOnHover","./resources/textures/Quit_hover.png", RessourceType.Texture),
 						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
 						new Ressource("twoPlayerOnHover","./resources/textures/two_player_hover.png",RessourceType.Texture),
 						new Ressource("twoPlayer","./resources/textures/two_player.png", RessourceType.Texture),
@@ -108,7 +108,8 @@ public class MainGame
 					new Ressource("blueLaser","./resources/textures/Laser.png", RessourceType.Texture),
 					new Ressource("game_over","./resources/textures/Game_over.png", RessourceType.Texture),
 					new Ressource("Win","./resources/textures/anti_mind_virus.png", RessourceType.Texture),
-					new Ressource("Empty","./resources/textures/Untitled-1.png", RessourceType.Texture)
+					new Ressource("Empty","./resources/textures/Untitled-1.png", RessourceType.Texture),
+					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture)
 					}
 					);
 			player = new Player();

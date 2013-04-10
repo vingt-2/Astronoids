@@ -67,18 +67,19 @@ public class Player extends GameChar
 		if(MainGame.controls.isPressed(KeyEvent.VK_X))
 		{
 			secondEffect.TurnOff();
-			secondEffect.i++;
+
 			long time = System.currentTimeMillis();
 			if( time - lastTime >  effectTimeThreshold)
 			{
-				lastTime = time;
+				
 
 				if(!secondEffect.isTurnedOn)
 				{
 					secondEffect.TurnOn();
-
+					
 				}
-
+				lastTime = time;
+				Shoot.counter =0 ;
 			}
 		}
 

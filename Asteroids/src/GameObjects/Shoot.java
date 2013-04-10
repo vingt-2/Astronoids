@@ -1,5 +1,7 @@
 package GameObjects;
 
+import java.util.ArrayList;
+
 import Game.MainGame;
 import GameComponents.Transform;
 import GameComponents.ObjectRenderer.Shape;
@@ -17,9 +19,9 @@ public class Shoot extends GameObject{
 
 	public Transform transform;
 	public int i = 0;
-	private Laser[] lasers;	
+	private ArrayList<Laser> lasers;	
 	public boolean isTurnedOn = false;
-
+	public static int counter = 0;
 	public long watchmen;
 	
 
@@ -30,7 +32,7 @@ public class Shoot extends GameObject{
 
 		shootTrans = transform;
 		transform = this.transform;
-		lasers = new Laser[100];
+		lasers = new ArrayList<Laser>();
 	}
 
 
@@ -38,43 +40,45 @@ public class Shoot extends GameObject{
 
 		
 		if(System.currentTimeMillis()-watchmen>deltaTime){
-
-		if(isTurnedOn){
-
+			
+		if(isTurnedOn && counter == 0){
+			
 			//temp fix for Texture rendering in middle of screen
-			lasers[i%100] = new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/2);
-			lasers[i%100].objectRenderer.shape= Shape.Square;
+			Laser laser1 = new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/2);
+			lasers.add(laser1);
+			int l1Index = lasers.indexOf(laser1);
+			lasers.get(l1Index).objectRenderer.shape= Shape.Square;
 			if(shootTrans.equals(MainGame.player.transform))
-				lasers[i%100].objectRenderer.SetTexture("redLaser");
+				lasers.get(l1Index).objectRenderer.SetTexture("redLaser");
 			else
-				lasers[i%100].objectRenderer.SetTexture("greenLaser");
-			lasers[i%100].transform.size= new Vector2(0.75f,0.75f);
-			if( true){
-				i++;
-				lasers[i%100] = new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/4);
-				lasers[i%100].objectRenderer.shape= Shape.Square;
-				lasers[i%100].objectRenderer.SetTexture("redLaser");
-				lasers[i%100].transform.size= new Vector2(0.75f,0.75f);
-				i++;
-				lasers[i%100] = new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) (3*Math.PI/4) );
-				lasers[i%100].objectRenderer.shape= Shape.Square;
-				lasers[i%100].objectRenderer.SetTexture("redLaser");
-				lasers[i%100].transform.size= new Vector2(0.75f,0.75f);
-			}
+				lasers.get(l1Index).objectRenderer.SetTexture("greenLaser");
+			lasers.get(l1Index).transform.size= new Vector2(0.75f,0.75f);
+			
+//				i++;
+//				lasers.add( new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/4));
+//				lasers.get(i).objectRenderer.shape= Shape.Square;
+//				lasers.get(i).objectRenderer.SetTexture("redLaser");
+//				lasers.get(i).transform.size= new Vector2(0.75f,0.75f);
+//				i++;
+//				lasers.add(new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) (3*Math.PI/4) ));
+//				lasers.get(i).objectRenderer.shape= Shape.Square;
+//				lasers.get(i).objectRenderer.SetTexture("redLaser");
+//				lasers.get(i).transform.size= new Vector2(0.75f,0.75f);
+//			
+			counter++;
 		}
 
-		for (int j = 0; j<lasers.length; j++){
+		for (int j = 0; j<lasers.size(); j++){
 
-			if (lasers[j] != null){
+			if (j<lasers.size()){
 
-				if( lasers[j].TimeToDie() )
+				if( lasers.get(j).TimeToDie() )
 				{
-					lasers[j].Delete();
-					lasers[j] = null;
+					lasers.get(j).Delete();
+					lasers.remove(j);
 					TurnOff();
 				}
-
-				else lasers[j].Update();
+				else lasers.get(j).Update();
 			}
 
 			}
@@ -82,8 +86,6 @@ public class Shoot extends GameObject{
 		watchmen = System.currentTimeMillis();
 			//i++;
 		
-
-
 		}
 
 
@@ -105,10 +107,12 @@ public class Shoot extends GameObject{
 		}
 	}
 
-	public Laser[] GetLaserArray(){
 
+	public ArrayList<Laser> GetLaserArray() {
+		// TODO Auto-generated method stub
 		return lasers;
 	}
+	
 }
 
 

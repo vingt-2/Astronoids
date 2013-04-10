@@ -51,20 +51,20 @@ public class Menu {
 		background.objectRenderer.SetTexture("background");
 		background.transform.size = new Vector2(60,50);
 		createUser.objectRenderer.SetTexture("createUser");
-		createUser.transform.size = new Vector2 (25,10);
-		createUser.transform.position = new Vector2 (0,20);
+		createUser.transform.size = new Vector2 (30,10);
+		createUser.transform.position = new Vector2 (0,22);
 		createUser.rigidBody.frictionCoefficient = 0.1f;
 		loadUser.objectRenderer.SetTexture("loadUser");
-		loadUser.transform.size = new Vector2 (25,10);
+		loadUser.transform.size = new Vector2 (30,10);
 		loadUser.transform.position = new Vector2 (0,10);
 		loadUser.rigidBody.frictionCoefficient = 0.1f;
 		twoPlayer.objectRenderer.SetTexture("twoPlayer");
-		twoPlayer.transform.size = new Vector2 (25,10);
-		twoPlayer.transform.position = new Vector2 (0,-5);
+		twoPlayer.transform.size = new Vector2 (30,10);
+		twoPlayer.transform.position = new Vector2 (0,-3);
 		twoPlayer.rigidBody.frictionCoefficient = 0.1f;
 		quit.objectRenderer.SetTexture("quit");
-		quit.transform.position = new Vector2 (0,-10);
-		quit.transform.size = new Vector2 (11,11);
+		quit.transform.position = new Vector2 (0,-8);
+		quit.transform.size = new Vector2 (30,10);
 		
 		MainGame.controls.recordKey = true;
 		

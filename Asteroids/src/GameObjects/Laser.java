@@ -18,7 +18,7 @@ public class Laser extends GameChar {
 
 	public float deltaTime = MainGame.render.deltaTime;
 	public long watchmen;
-
+	public boolean hasCollided = false;
 	long lifeTime = 400;
 	Transform shooterTrans;
 	float direction;
@@ -49,7 +49,10 @@ public class Laser extends GameChar {
 			rigidBody.PushForce(new Vector2(-5*(float)Math.cos((shooterTrans.rotation+(direction))),
 					5*(float)Math.sin((shooterTrans.rotation+(direction)))), ForceMode.Impulse);
 			
-		if (TimeToDie()) Delete();
+			//if (TimeToDie()) Delete();
+			if(hasCollided){
+				Delete();
+			}
 		
 		}
 		

@@ -67,8 +67,10 @@ public class FieldGenerator extends GameObject {
 									
 				if(!(astrdField.size()<= i)){
 				if (astrdField.get(i).terminator) {
+					Asteroid temp = astrdField.get(i);
+					astrdField.remove(i);
+					temp.Delete();
 					
-					astrdField.get(i).Delete();
 					//astrdField[i] = astrdField[i+1];
 				}
 				else{
