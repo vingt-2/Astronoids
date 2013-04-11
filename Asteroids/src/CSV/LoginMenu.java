@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import Game.MainGame;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
@@ -38,6 +39,7 @@ public class LoginMenu {
 				login = true;
 				System.out.println("true");
 				player = user;
+				MainGame.currentUser = user;
 				break;
 			}
 			else System.out.println("false");
