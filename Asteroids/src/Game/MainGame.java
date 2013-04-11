@@ -65,7 +65,7 @@ public class MainGame
 						new Ressource("statisticsOnHover","./resources/textures/statisticsOnHover.png",RessourceType.Texture),
 						new Ressource("highScoresOnHover","./resources/textures/highScoresOnHover.png",RessourceType.Texture),
 						new Ressource("enterUsername","./resources/textures/enterUsername.png", RessourceType.Texture),
-						new Ressource("quitOnHover","./resources/textures/Quit_hover.png", RessourceType.Texture),
+						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
 						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
 						new Ressource("twoPlayerOnHover","./resources/textures/two_player_hover.png",RessourceType.Texture),
 						new Ressource("twoPlayer","./resources/textures/two_player.png", RessourceType.Texture),
