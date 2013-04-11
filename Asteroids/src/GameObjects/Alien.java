@@ -36,42 +36,57 @@ public class Alien extends GameChar{
 		private void AlienAI()
 		{
 			Vector2 forward= transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
+			
 			Vector2 direction = Vector2.Add(MainGame.gameLogic.player.transform.position, transform.position.negate());
-			Vector2 xDir= MainGame.gameLogic.player.transform.LocalDirectionToWorld(new Vector2(1,0)).Normalized();
+			
+			Vector2 xDir= MainGame.gameLogic.player.transform.LocalDirectionToWorld(new Vector2(-1,0));
 			int distanceThreshold=30;
-			//double k= Math.sqrt(Math.pow((MainGame.player.transform.position.x - transform.position.x),2)+Math.pow((MainGame.player.transform.position.y - transform.position.y),2));
-			float dotProduct= Vector2.Dot(xDir, direction);
+
+			float rotationSign = (float) sign(Vector2.Dot(xDir, direction.Normalized()));
+			
+			
+			float alignment = Vector2.Dot(forward, direction.Normalized());
 		
 			
-			if (Vector2.Dot(forward, direction) < 0.90f)
+			if ( alignment < 0.90f)
 			{
-	
-				rigidBody.PushTorque((float)(sign(dotProduct)*13), ForceMode.Impulse);
-			
-				if (Vector2.Dot(forward, direction)> 0.80f)
+				if(alignment < 0.70f)
 				{
-					rigidBody.PushTorque((float)(sign(dotProduct)*(7*(1-Vector2.Dot(forward, direction))/(0.25))), ForceMode.Impulse);
-					
-					rigidBody.PushForce(forward, ForceMode.Impulse);
-					
+					rigidBody.PushTorque(rotationSign*10*(1-alignment),ForceMode.Impulse);
+					MainGame.debug.DrawLine(transform.position, direction, direction.GetLength(),Color.Blue);	
 				}
-				
-				
-				
-				
+				else
+				{
+					rigidBody.PushTorque(rotationSign*10* ((1-alignment)), ForceMode.Impulse);
+					
+					
+					if(direction.GetLength() > distanceThreshold)
+					{
+						rigidBody.PushForce(Vector2.Scale(100,forward), ForceMode.Impulse);
+					}
+					
+					MainGame.debug.DrawLine(transform.position, direction, direction.GetLength(),Color.Red);
+				}
 			}
-			
+			else
+			{
+				if(direction.GetLength() > distanceThreshold)
+				{
+					rigidBody.PushForce(Vector2.Scale(200*alignment,forward), ForceMode.Impulse);
+				}
+				MainGame.debug.DrawLine(transform.position, direction, direction.GetLength(),Color.Green);
+				
+			}		
 		}
 			
-		public double sign(double sign){
+		public float sign(float sign)
+		{
 
-			if (sign < 0){
-				sign= 1;
-			}
-			else {
-				sign= - 1;
-			}
-			return sign;
+			if(sign > 0)
+				return 1;
+			else 
+				return -1;
+			
 		}
 		
 	
