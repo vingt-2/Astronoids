@@ -264,5 +264,12 @@ public class Renderer implements GLEventListener
 		textRenderer.draw(text,(int)(position.x+context.x/2),(int)(position.y+context.y/2));
 		textRenderer.endRendering();
 	}
+	
+	// Call this whenever the game is suspected to lag, to avoid physics bumping all over the place
+	
+	public void CheatTime()
+	{
+		lastTime = System.currentTimeMillis();
+	}
 
 }

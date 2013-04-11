@@ -29,9 +29,7 @@ public class Alien extends GameChar{
 			
 			// Alien Stuff
 			AlienAI();
-			
-			Vector2 charFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
-			//MainGame.debug.DrawLine(transform.position,charFrontInWorldCoordinates,100,Color.Blue);
+
 			
 		}
 		
@@ -45,19 +43,22 @@ public class Alien extends GameChar{
 			float dotProduct= Vector2.Dot(xDir, direction);
 		
 			
-			if (direction.GetLength() > distanceThreshold){
-				rigidBody.PushForce(Vector2.Scale(100, direction.Normalized()),ForceMode.Impulse);
-			
-			if (Vector2.Dot(forward, direction) < 0.90f){
+			if (Vector2.Dot(forward, direction) < 0.90f)
+			{
 	
 				rigidBody.PushTorque((float)(sign(dotProduct)*13), ForceMode.Impulse);
 			
-				if (Vector2.Dot(forward, direction)> 0.80f){
-					
+				if (Vector2.Dot(forward, direction)> 0.80f)
+				{
 					rigidBody.PushTorque((float)(sign(dotProduct)*(7*(1-Vector2.Dot(forward, direction))/(0.25))), ForceMode.Impulse);
 					
+					rigidBody.PushForce(forward, ForceMode.Impulse);
+					
 				}
-			}
+				
+				
+				
+				
 			}
 			
 		}

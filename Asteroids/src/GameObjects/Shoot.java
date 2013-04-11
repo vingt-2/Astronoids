@@ -10,7 +10,8 @@ import Maths.Vector2;
 
 
 
-public class Shoot extends GameObject{
+public class Shoot extends GameObject
+{
 
 
 	public float deltaTime = MainGame.render.deltaTime;
@@ -28,7 +29,8 @@ public class Shoot extends GameObject{
 	Transform shootTrans;
 
 
-	public Shoot(Transform transform){
+	public Shoot(Transform transform)
+	{
 
 		shootTrans = transform;
 		transform = this.transform;
@@ -39,9 +41,11 @@ public class Shoot extends GameObject{
 	public void Update(){
 
 		
-		if(System.currentTimeMillis()-watchmen>deltaTime){
+		if(System.currentTimeMillis()-watchmen>deltaTime)
+		{
 			
-		if(isTurnedOn && counter == 0){
+		if(isTurnedOn && counter == 0)
+		{
 			
 			//temp fix for Texture rendering in middle of screen
 			Laser laser1 = new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/2);
@@ -58,9 +62,11 @@ public class Shoot extends GameObject{
 			counter++;
 		}
 
-		for (int j = 0; j<lasers.size(); j++){
+		for (int j = 0; j<lasers.size(); j++)
+		{
 
-			if (j<lasers.size()){
+			if (j<lasers.size())
+			{
 
 				if( lasers.get(j).TimeToDie() )
 				{

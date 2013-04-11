@@ -110,6 +110,7 @@ public class MainGame
 			SoundEffect.ASTEROIDBREAK.ordinal();
 			SoundEffect.EXPLOSION.ordinal();
 			
+			render.CheatTime();
 			
 			gameLogic = new GameLogic();
 

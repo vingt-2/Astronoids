@@ -11,7 +11,7 @@ public class Player extends GameChar
 {
 
 	ParticleEffects effect = new ParticleEffects(transform,2000);
-	public Shoot secondEffect = new Shoot(transform);
+	public Shoot shooter = new Shoot(transform);
 	long lastShootTime = System.currentTimeMillis();
 	long lastPlayerTime = System.currentTimeMillis();
 	long time = System.currentTimeMillis();
@@ -35,7 +35,7 @@ public class Player extends GameChar
 		// Player Stuff
 		effect.Update();
 
-		secondEffect.Update();
+		shooter.Update();
 
 		PlayerControls();
 
@@ -71,14 +71,14 @@ public class Player extends GameChar
 
 		if(MainGame.controls.isPressed(KeyEvent.VK_X))
 		{
-			secondEffect.TurnOff();
+			shooter.TurnOff();
 			if( time - lastShootTime >  shootTimeThreshold)
 			{
 				SoundEffect.SHOOT.play();
 
-				if(!secondEffect.isTurnedOn)
+				if(!shooter.isTurnedOn)
 				{
-					secondEffect.TurnOn();
+					shooter.TurnOn();
 					
 				}
 				Shoot.counter = 0 ;

@@ -122,7 +122,15 @@ public class AsteroidField extends GameObject
 					for(int i = 0; i<size/2; i++)
 					{
 						fieldSize ++ ;
-						Asteroid newAst = new Asteroid(currentAsteroid.transform.position);
+						
+						int SPAWN_RADIUS = 20;
+						
+						Vector2 spawnSpot = (new Vector2 (rand.nextInt(10)-5,rand.nextInt(10)-5).Normalized().Scaled(20));
+		
+						
+						Vector2 newPost = Vector2.Add(currentAsteroid.transform.position,spawnSpot);
+						
+						Asteroid newAst = new Asteroid(newPost);
 						newAst.rigidBody.PushForce(new Vector2(rand.nextInt(400)-200,rand.nextInt(400)-200),ForceMode.Force);
 						newAst.rigidBody.PushTorque(rand.nextInt(10)%4-2, ForceMode.Force);
 						newAst.transform.size=(new Vector2( currentAsteroid.transform.size.x/2, currentAsteroid.transform.size.y/2 ));

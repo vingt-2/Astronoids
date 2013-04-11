@@ -7,10 +7,9 @@ import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import Maths.Vector2;
 
-public class Asteroid extends GameChar{
+public class Asteroid extends GameChar
+{
 
-	int counter = 0;
-	public boolean terminator = false;
 	public boolean isBroken = false;
 	
 	public Asteroid(Vector2 pos){
