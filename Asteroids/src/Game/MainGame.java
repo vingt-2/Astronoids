@@ -1,17 +1,12 @@
 package Game;
 
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.media.opengl.GL2;
 
-import GameComponents.ObjectRenderer.Shape;
-
 import GameObjects.Alien;
 import Game.SharedRessources.RessourceType;
 
-import GameObjects.Asteroid;
-import GameObjects.FieldGenerator;
 import GameObjects.GameChar;
 import GameObjects.HUD;
 import GameObjects.Laser;
@@ -53,7 +48,6 @@ public class MainGame
 	public static ArrayList<GameChar> objectVector;
 
 	public static Player player;
-	public static FieldGenerator fieldGenerator;
 	Laser laser;
 	static Alien alien;
 	public static HUD hud;
@@ -124,22 +118,15 @@ public class MainGame
 			alien = new Alien();
 			alien.transform.size=new Vector2(2,2);
 			alien.rigidBody.frictionCoefficient= 0.05f;
-
+			
+			logic = new GameLogic();
 			
 			hud = new HUD();
+			
 
 		}
 		
-		
-		fieldGenerator = new FieldGenerator(12, 5);
-
-		
-//		
-//		alien = new Alien();
-//		alien.transform.size=new Vector2(2,2);
-//		alien.rigidBody.frictionCoefficient= 0.1f;
-
-		logic = new GameLogic();
+	
 		
 
 	}

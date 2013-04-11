@@ -5,7 +5,8 @@ import java.util.Random;
 import GameComponents.ObjectRenderer.Shape;
 import Maths.Vector2;
 
-public class PowerUp extends GameChar {
+public class PowerUp extends GameChar 
+{
 	
 	int counter = 0;
 	public static boolean terminator = false;
@@ -19,18 +20,13 @@ public class PowerUp extends GameChar {
 		
 		type = powerUpType;
 		
-		switch(powerUpType){
-		
-		case("Life"):
+		if(powerUpType.equalsIgnoreCase("life"))
+		{
 			objectRenderer.SetTexture("Life");		
-			break;
-		case("Shield"):
+		}
+		else if(powerUpType.equalsIgnoreCase("shield"))
+		{
 			objectRenderer.SetTexture("shielded_ship");
-			break;
-//		case("spread"):
-//			objectRenderer.SetTexture("shotgun");		
-//				
-		
 		}
 		
 	}
