@@ -15,8 +15,11 @@ import GameObjects.AsteroidField;
 import GameObjects.GameChar;
 import GameObjects.HUD;
 import GameObjects.Laser;
+import GameObjects.Life;
 import GameObjects.Player;
-import GameObjects.PowerUp;
+import GameObjects.PickUp;
+import GameObjects.RapidFire;
+import GameObjects.Shield;
 import Helpers.SoundEffect;
 import Maths.Vector2;
 
@@ -35,7 +38,7 @@ public class GameLogic
 
 
 	public  ArrayList<Laser> lasers = new ArrayList<Laser>();
-	public  ArrayList<PowerUp> powerUpList = new ArrayList<PowerUp>();
+	public  ArrayList<PickUp> PickUpList = new ArrayList<PickUp>();
 	public AsteroidField asteroidField;
 
 
@@ -86,9 +89,11 @@ public class GameLogic
 
 		lasers = player.shooter.GetLaserArray();
 
+
 		/*
 		 * Computations on each asteroids 
 		 */
+
 		for (Asteroid currentAsteroid : asteroidField.asteroidList) 
 		{
 
@@ -109,23 +114,31 @@ public class GameLogic
 					{
 						immunity = true;
 						immunityTimer = System.currentTimeMillis();
-						player.objectRenderer.SetTexture("shielded_ship");
+						System.out.println("TRUE");
+						player.isShieldOn = true;
 						lostLife = true;
+						
 					}
 
 				}
 
 
 				// NO IDEA WHAT THIS IS DOING, damien ?
+				//I sets the player immune for 3 seconds after hitting and asteroid
 				if ((System.currentTimeMillis() - immunityTimer) > 3000
 						&& immunity) {
 
 					immunity = false;
-					player.objectRenderer.SetTexture("rocket_ship");
+					
 				}
 
 
+				
+				// Check for player lasers collision
+
+
 				// ASTEROID LASER/COLISION
+
 				for (int j = 0; j < lasers.size(); j++) 
 				{
 					if (j<lasers.size()) 
@@ -137,29 +150,23 @@ public class GameLogic
 							HUD.points += 10;
 							SoundEffect.ASTEROIDBREAK.play();
 
-
-							int pwrGen = rand.nextInt(40);
-
-							if( pwrGen==2) 
-							{
-								System.out.println("LIFE");
-								PowerUp buff1 = new PowerUp(currentAsteroid.transform.position, "Life");
-								powerUpList.add(buff1);
-								buff1.Update();
-							}
-							if( pwrGen == 3) 
-							{
-								System.out.println("SHIELD");
-								PowerUp buff2 = new PowerUp(currentAsteroid.transform.position, "Shield");
-								powerUpList.add(buff2);
-								buff2.Update();
-
-							}
-
+						
 							lasers.get(j).Delete();
 							lasers.remove(j);
+							
+							if(rand.nextInt(10) == 1){
+								PickUpList.add(new Shield(currentAsteroid.transform.position));
+							}
+							if(rand.nextInt(10) == 2){
+								PickUpList.add(new RapidFire(currentAsteroid.transform.position));
+							}
+							if(rand.nextInt(10) == 3){
+								PickUpList.add(new Life(currentAsteroid.transform.position));
+							}
+							
 						}
 					}
+										
 				}
 			}
 		}
@@ -167,6 +174,16 @@ public class GameLogic
 		if (asteroidField.asteroidList.size() == 0) 
 		{
 			GameWin = true;
+		}
+		
+		for(int j =0; j<PickUpList.size(); j++){
+			if(!(PickUpList.get(j).isDeleted)){
+				if(player.rigidBody.isColliding((PickUpList.get(j)))){
+					PickUpList.get(j).OnPickUp();
+					PickUpList.get(j).Delete();
+					PickUpList.remove(j);
+				}
+			}
 		}
 	}
 
@@ -211,41 +228,20 @@ public class GameLogic
 			}
 	}
 
-	private void UpdatePowerUps()
-	{
-		for (int i = 0; i<powerUpList.size();i++)
-		{
-
-			PowerUp currentPowerUp = powerUpList.get(i);
-
-			currentPowerUp.Update();
-			
-			if (player.rigidBody.isColliding(currentPowerUp))
-			{
-
-				if(currentPowerUp.type.equals("Life"))
-				{
-					player.lives++;
-				}
-
-				else if(currentPowerUp.type.equals("Shield"))
-				{
-					immunity = true;
-					immunityTimer = System.currentTimeMillis();
-					player.objectRenderer.SetTexture("shielded_ship");
-
-				}
-
-				powerUpList.remove(i);
-				currentPowerUp.Delete();
-			}
-		}
-	}
+	
 	
 	private void UpdateSceneObjects()
 	{	
+		for(int j =0; j<PickUpList.size(); j++){
+			if(!(PickUpList.get(j).isDeleted)){
+				
+				PickUpList.get(j).Update();
+			
+			}	
+				
+			}
 		asteroidField.Update();
-		UpdatePowerUps();
+		
 		hud.Update();
 		if (!player.isDeleted) 
 		{
