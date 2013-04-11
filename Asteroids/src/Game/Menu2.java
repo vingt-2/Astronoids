@@ -114,7 +114,7 @@ public class Menu2 {
 				} catch (InterruptedException e) {
 					
 				} */
-				MainGame.pauseImage.Update();
+			//	MainGame.pauseImage.Update();
 			} 
 			if (MainGame.controls.isPressed(KeyEvent.VK_BACK_SPACE)){
 				if(inInstructions){
@@ -172,8 +172,9 @@ public class Menu2 {
 		quitButton.transform.size = new Vector2 (11,11);
 	}
 	
-	public void initPauseMenu(){
-		MainGame.pauseImage.transform.size = new Vector2(10,10);
+	public void initPauseMenu()
+	{
+	//	MainGame.pauseImage.transform.size = new Vector2(10,10);
 	}
 }
 

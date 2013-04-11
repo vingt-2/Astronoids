@@ -38,8 +38,8 @@ public class Alien extends GameChar{
 		private void AlienAI()
 		{
 			Vector2 forward= transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
-			Vector2 direction = Vector2.Add(MainGame.player.transform.position, transform.position.negate());
-			Vector2 xDir= MainGame.player.transform.LocalDirectionToWorld(new Vector2(1,0)).Normalized();
+			Vector2 direction = Vector2.Add(MainGame.gameLogic.player.transform.position, transform.position.negate());
+			Vector2 xDir= MainGame.gameLogic.player.transform.LocalDirectionToWorld(new Vector2(1,0)).Normalized();
 			int distanceThreshold=30;
 			//double k= Math.sqrt(Math.pow((MainGame.player.transform.position.x - transform.position.x),2)+Math.pow((MainGame.player.transform.position.y - transform.position.y),2));
 			float dotProduct= Vector2.Dot(xDir, direction);

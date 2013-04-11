@@ -25,13 +25,13 @@ public class Particles extends GameChar
 		
 		objectRenderer.opacity = 1f - (float) timeLived/lifeTime;
 		
-		Vector2 toPlayer = Vector2.Add(MainGame.player.transform.position,transform.position.negate());
+		Vector2 toPlayer = Vector2.Add(MainGame.gameLogic.player.transform.position,transform.position.negate());
 
 		//MainGame.debug.DrawLine(transform.position,toPlayer,toPlayer.GetLength());
 
 		if(toPlayer.GetLength() < 100)
 		{
-			rigidBody.PushForce(toPlayer.Normalized().Scaled(-30*MainGame.player.rigidBody.velocity.GetLength()), ForceMode.Impulse);
+			rigidBody.PushForce(toPlayer.Normalized().Scaled(-30*MainGame.gameLogic.player.rigidBody.velocity.GetLength()), ForceMode.Impulse);
 
 			if(toPlayer.GetLength() < 50)
 			{

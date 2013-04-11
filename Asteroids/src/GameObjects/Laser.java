@@ -1,7 +1,5 @@
 package GameObjects;
 
-import java.awt.event.KeyEvent;
-
 import Game.MainGame;
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
@@ -60,12 +58,6 @@ public class Laser extends GameChar {
 		// Laser Stuff
 		
 		
-//		if(rigidBody.isColliding(MainGame.objectVector.get(0),MainGame.objectVector.get(1))){
-//			
-//			Delete();
-//			
-//		}
-//		
 	}
 	
 	public boolean TimeToDie()

@@ -48,23 +48,13 @@ public class Shoot extends GameObject{
 			lasers.add(laser1);
 			int l1Index = lasers.indexOf(laser1);
 			lasers.get(l1Index).objectRenderer.shape= Shape.Square;
-			if(shootTrans.equals(MainGame.player.transform))
+			if(shootTrans.equals(MainGame.gameLogic.player.transform))
 				lasers.get(l1Index).objectRenderer.SetTexture("redLaser");
 			else
 				lasers.get(l1Index).objectRenderer.SetTexture("greenLaser");
 			lasers.get(l1Index).transform.size= new Vector2(0.75f,0.75f);
 			
-//				i++;
-//				lasers.add( new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/4));
-//				lasers.get(i).objectRenderer.shape= Shape.Square;
-//				lasers.get(i).objectRenderer.SetTexture("redLaser");
-//				lasers.get(i).transform.size= new Vector2(0.75f,0.75f);
-//				i++;
-//				lasers.add(new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) (3*Math.PI/4) ));
-//				lasers.get(i).objectRenderer.shape= Shape.Square;
-//				lasers.get(i).objectRenderer.SetTexture("redLaser");
-//				lasers.get(i).transform.size= new Vector2(0.75f,0.75f);
-//			
+
 			counter++;
 		}
 

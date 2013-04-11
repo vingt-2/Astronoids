@@ -12,6 +12,7 @@ import GameObjects.HUD;
 import GameObjects.Laser;
 import GameObjects.Player;
 import Helpers.Debug;
+import Helpers.SoundEffect;
 import Maths.*;
 import Renderer.*;
 
@@ -37,22 +38,10 @@ public class MainGame
 	public static final Renderer render 					= new Renderer(Window_Name);
 	public static final Controls controls 					= new Controls();
 	public static final Debug debug 						= new Debug();
-	public static  Menu menu; 								//= new Menu();
-	public static GameChar GameOver;
-	public static GameChar Win;
-	public static GameChar pauseImage;
 	
-	public GameLogic logic;
-	
+	public static Menu menuLogic; 								
+	public static GameLogic gameLogic;
 
-	public static ArrayList<GameChar> objectVector;
-
-	public static Player player;
-	Laser laser;
-	static Alien alien;
-	public static HUD hud;
-
-	
 
 	public void init(GL2 gl)
 	{
@@ -87,12 +76,14 @@ public class MainGame
 						new Ressource("background","./resources/textures/space.jpg", RessourceType.Texture)
 					}
 			);
-			menu = new Menu();
-		} else { 
+			menuLogic = new Menu();
+		} 
+		else 
+		{ 
 			
-		menu.easy.Delete();
-		menu.medium.Delete();
-		menu.hard.Delete();
+		menuLogic.easy.Delete();
+		menuLogic.medium.Delete();
+		menuLogic.hard.Delete();
 		
 			sharedRessources.LoadRessources
 			(new Ressource[]
@@ -111,18 +102,16 @@ public class MainGame
 					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture)
 					}
 					);
-			player = new Player();
-			player.transform.size = new Vector2(4,4);
-			player.rigidBody.frictionCoefficient = 0.05f;
-
-			alien = new Alien();
-			alien.transform.size=new Vector2(2,2);
-			alien.rigidBody.frictionCoefficient= 0.05f;
 			
-			logic = new GameLogic();
+			SoundEffect.SHOOT.ordinal();
+			SoundEffect.SHOOT.ordinal();
+			SoundEffect.AFTERBURN.ordinal();
+			SoundEffect.CRASH.ordinal();
+			SoundEffect.ASTEROIDBREAK.ordinal();
+			SoundEffect.EXPLOSION.ordinal();
 			
-			hud = new HUD();
 			
+			gameLogic = new GameLogic();
 
 		}
 		
@@ -141,7 +130,7 @@ public class MainGame
 			System.exit(0);
 		}
 		if(inMenu){ 
-			menu.Update();
+			menuLogic.Update();
 	} else {
 		if (enterKeyPressed) { 
 			init (gl);
@@ -162,7 +151,7 @@ public class MainGame
 			if(!controls.isPressed(KeyEvent.VK_P))
 				pressCount = 0;
 			if(update)
-				logic.UpdateLogic();
+				gameLogic.UpdateLogic();
 
 			else{ //Pause Game
 				

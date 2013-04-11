@@ -12,7 +12,6 @@ package GameComponents;
 
 import java.util.ArrayList;
 import Game.MainGame;
-import GameComponents.ObjectRenderer.Shape;
 import GameObjects.GameChar;
 import Maths.*;
 
@@ -299,9 +298,9 @@ public class RigidBody
 			
 	}
 	
-public boolean isColliding(GameChar char1){
+public boolean isColliding(GameChar char1)
+{
 		
-		float rotation = char1.transform.rotation;
 		Vector2[] shape1;
 		Vector2[] shape2;
 		
@@ -418,7 +417,7 @@ return box;
 		
 		for (int i =0; i<shape.length; i++){
 		
-	MainGame.debug.DrawRay(shape[i],shape[(i+1)%shape.length]);
+			MainGame.debug.DrawRay(shape[i],shape[(i+1)%shape.length]);
 	
 	}
 	

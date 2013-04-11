@@ -15,9 +15,11 @@ public class Player extends GameChar
 
 	ParticleEffects effect = new ParticleEffects(transform,2000);
 	public Shoot secondEffect = new Shoot(transform);
-	long lastTime = 0;
+	long lastShootTime = System.currentTimeMillis();
+	long lastPlayerTime = System.currentTimeMillis();
+	long time = System.currentTimeMillis();
 	public int lives;
-	final static long effectTimeThreshold = 200; // wait 200ms to toggle effect
+	final static long shootTimeThreshold = 200; // wait 200ms between two shots.
 
 	public Player()
 	{
@@ -30,6 +32,8 @@ public class Player extends GameChar
 	public void Update()
 	{
 		super.Update();
+		
+		time = System.currentTimeMillis();
 
 		// Player Stuff
 		effect.Update();
@@ -37,10 +41,6 @@ public class Player extends GameChar
 		secondEffect.Update();
 
 		PlayerControls();
-
-
-		Vector2 charFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
-		//MainGame.debug.DrawLine(transform.position,charFrontInWorldCoordinates,100,Color.Blue);
 
 	}
 
@@ -56,7 +56,13 @@ public class Player extends GameChar
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_UP))
 		{
-			SoundEffect.AFTERBURN.play();
+			
+			if( time - lastPlayerTime > 200)
+			{
+				SoundEffect.AFTERBURN.play();
+				lastPlayerTime = time;
+			}
+			
 			Vector2 objectFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1));
 			rigidBody.PushForce(Vector2.Scale(1000, objectFrontInWorldCoordinates),ForceMode.Impulse);
 			effect.TurnOn();
@@ -68,21 +74,18 @@ public class Player extends GameChar
 
 		if(MainGame.controls.isPressed(KeyEvent.VK_X))
 		{
-			SoundEffect.SHOOT.play();
 			secondEffect.TurnOff();
-
-			long time = System.currentTimeMillis();
-			if( time - lastTime >  effectTimeThreshold)
+			if( time - lastShootTime >  shootTimeThreshold)
 			{
-				
+				SoundEffect.SHOOT.play();
 
 				if(!secondEffect.isTurnedOn)
 				{
 					secondEffect.TurnOn();
 					
 				}
-				lastTime = time;
-				Shoot.counter =0 ;
+				Shoot.counter = 0 ;
+				lastShootTime = time;
 			}
 		}
 
