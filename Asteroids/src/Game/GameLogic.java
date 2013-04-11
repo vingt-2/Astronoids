@@ -29,7 +29,7 @@ public class GameLogic
 
 	public static boolean lostLife = false;
 
-	public static ArrayList<PowerUp> buffs = new ArrayList<PowerUp>();
+	public static ArrayList<PowerUp> powerUpList = new ArrayList<PowerUp>();
 
 	public AsteroidField asteroidField;
 
@@ -62,129 +62,124 @@ public class GameLogic
 
 		if(!GameOver)
 		{
+			ExecuteLogic();
 
-			Random rand = new Random();
+			CheckForEndGame();
 
-			lasers = player.secondEffect.GetLaserArray();
+		}
 
-			ArrayList<Asteroid> rocks = asteroidField.asteroidList;
+		UpdateObjectVectors();
 
-			for (int i = 0; i < rocks.size(); i++) 
+	}
+
+
+
+	private void ExecuteLogic()
+	{
+
+		Random rand = new Random();
+
+		lasers = player.secondEffect.GetLaserArray();
+
+		ArrayList<Asteroid> rocks = asteroidField.asteroidList;
+
+		for (int i = 0; i < rocks.size(); i++) 
+		{
+			
+			
+			if(!(powerUpList.size() <= i))
 			{
-
-				if(!(buffs.size() <= i)){
-
-					if (player.rigidBody.isColliding(buffs.get(i))){
-
-						if(buffs.get(i).type.equals("Life")){
-							player.lives++;
-						}
-
-						else if(buffs.get(i).type.equals("Shield")){
-							immunity = true;
-							immunityTimer = System.currentTimeMillis();
-							player.objectRenderer.SetTexture("shielded_ship");
-
-						}
-						buffs.get(i).Delete();
-						buffs.remove(i);
-					}
-				}
-				if (!player.isDeleted) {
-					// System.out.println(rocks[i].terminator);
-
-					if (!(rocks.size() <= i)) 
-					{
-
-						if (player.rigidBody.isColliding(rocks.get(i))
-								&& !immunity) {
-							player.lives--;
-
-							if (player.lives == 0) 
-							{
-								SoundEffect.CRASH.play();
-								GameFail = true;
-								player.Delete();
-							} 
-							else 
-							{
-								immunity = true;
-								immunityTimer = System.currentTimeMillis();
-								player.objectRenderer.SetTexture("shielded_ship");
-								lostLife = true;
-							}
-
-						}
-
-
-
-						if ((System.currentTimeMillis() - immunityTimer) > 3000
-								&& immunity) {
-
-							immunity = false;
-							player.objectRenderer.SetTexture("rocket_ship");
-						}
-						for (int j = 0; j < lasers.size(); j++) 
-						{
-							if (j<lasers.size() && i < rocks.size()) 
-							{
-								if (lasers.get(j).rigidBody.isColliding(rocks.get(i)))
-								{
-									SoundEffect.ASTEROIDBREAK.play();
-									int pwrGen = rand.nextInt(40);
-									if( pwrGen==2) {
-										System.out.println("LIFE");
-										PowerUp buff1 = new PowerUp(rocks.get(i).transform.position, "Life");
-										buffs.add(buff1);
-										buff1.Update();
-
-									}
-									if( pwrGen == 3) 
-									{
-										System.out.println("SHIELD");
-										PowerUp buff2 = new PowerUp(rocks.get(i).transform.position, "Shield");
-										buffs.add(buff2);
-										buff2.Update();
-
-									}
-
-									rocks.get(i).isBroken = true;
-
-									HUD.points += 10;
-
-									asteroidField.fieldSize--;
-									lasers.get(j).Delete();
-									lasers.remove(j);
-								}
-							}
-						}
-					}
-				}
-
-				if (!(asteroidField.GetAsteroidArray().size() <= i))
-					rocks.get(i).terminator = false;
-
-				if (asteroidField.fieldSize == 0) 
+				if (player.rigidBody.isColliding(powerUpList.get(i)))
 				{
-					GameWin = true;
+
+					if(powerUpList.get(i).type.equals("Life"))
+					{
+						player.lives++;
+					}
+
+					else if(powerUpList.get(i).type.equals("Shield"))
+					{
+						immunity = true;
+						immunityTimer = System.currentTimeMillis();
+						player.objectRenderer.SetTexture("shielded_ship");
+
+					}
+					powerUpList.get(i).Delete();
+					powerUpList.remove(i);
 				}
 			}
-			
-			CheckForEndGame();
-			
+
+			if (player.rigidBody.isColliding(rocks.get(i)) && !immunity) 
+			{
+				player.lives--;
+
+				if (player.lives == 0) 
+				{
+					SoundEffect.CRASH.play();
+					GameFail = true;
+					player.Delete();
+				} 
+				else 
+				{
+					immunity = true;
+					immunityTimer = System.currentTimeMillis();
+					player.objectRenderer.SetTexture("shielded_ship");
+					lostLife = true;
+				}
+
+				if ((System.currentTimeMillis() - immunityTimer) > 3000 && immunity) 
+				{
+					immunity = false;
+					player.objectRenderer.SetTexture("rocket_ship");
+				}
+
+
+				// LAZERS
+				for (int j = 0; j < lasers.size(); j++) 
+				{
+					if (j<lasers.size() && i < rocks.size()) 
+					{
+						if (lasers.get(j).rigidBody.isColliding(rocks.get(i)))
+						{
+							SoundEffect.ASTEROIDBREAK.play();
+							int pwrGen = rand.nextInt(40);
+							if(pwrGen == 2) 
+							{
+								PowerUp buff1 = new PowerUp(rocks.get(i).transform.position, "Life");
+								powerUpList.add(buff1);
+								buff1.Update();
+
+							}
+							if(pwrGen == 3) 
+							{
+								PowerUp buff2 = new PowerUp(rocks.get(i).transform.position, "Shield");
+								powerUpList.add(buff2);
+								buff2.Update();
+
+							}
+
+							rocks.get(i).isBroken = true;
+
+							HUD.points += 10;
+
+							lasers.get(j).Delete();
+							lasers.remove(j);
+						}
+					}
+
+				}
+			}
+
+			if (!(asteroidField.GetAsteroidArray().size() <= i))
+				rocks.get(i).terminator = false;
+
+			if (asteroidField.asteroidList.size() == 0) 
+			{
+				GameWin = true;
+			}
 		}
-		
-		
-		asteroidField.Update();
-		hud.Update();
-		if (!player.isDeleted) 
-		{
-			player.Update();
-			alien.Update();
-		} 
 	}
-	
-	
+
 	private void CheckForEndGame()
 	{
 		if(GameFail)
@@ -197,7 +192,7 @@ public class GameLogic
 			gameFailed.transform.position = new Vector2(0, -9);
 			gameFailed.rigidBody.frictionCoefficient = 0.1f;
 			hud.otherInfos.add(gameFailed);
-			
+
 			GameOver = true;
 		}
 
@@ -211,11 +206,21 @@ public class GameLogic
 			gameWin.transform.position = new Vector2(0, 0);
 			gameWin.rigidBody.frictionCoefficient = 0.1f;
 			hud.otherInfos.add(gameWin);
-			
+
 			GameOver = true;
 		}
 	}
-	
+
+	private void UpdateObjectVectors()
+	{	
+		asteroidField.Update();
+		hud.Update();
+		if (!player.isDeleted) 
+		{
+			player.Update();
+			alien.Update();
+		} 
+	}
 }
 
 

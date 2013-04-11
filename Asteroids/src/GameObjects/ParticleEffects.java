@@ -2,7 +2,6 @@ package GameObjects;
 
 import java.util.Random;
 
-import Game.MainGame;
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import GameComponents.Transform;

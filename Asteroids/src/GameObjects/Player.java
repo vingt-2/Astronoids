@@ -2,11 +2,8 @@ package GameObjects;
 
 import java.awt.event.KeyEvent;
 import Game.MainGame;
-import Game.Ressource;
-import Game.SharedRessources.RessourceType;
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
-import Helpers.Color;
 import Helpers.SoundEffect;
 import Maths.Vector2;
 
