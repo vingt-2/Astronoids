@@ -16,7 +16,12 @@ public class Player extends GameChar
 	long lastPlayerTime = System.currentTimeMillis();
 	long time = System.currentTimeMillis();
 	public int lives;
-	final static long shootTimeThreshold = 200; // wait 200ms between two shots.
+	public boolean isShieldOn;
+	public boolean rapidFireOn;
+	private GameChar shield;
+	private long birthTime;
+	private long birthTime2;
+	public long shootTimeThreshold = 200; // wait 200ms between two shots.
 
 	public Player()
 	{
@@ -34,10 +39,11 @@ public class Player extends GameChar
 
 		// Player Stuff
 		effect.Update();
-
+		shieldOn();
 		shooter.Update();
-
+		rapidFireOn();
 		PlayerControls();
+		
 
 	}
 
@@ -85,7 +91,52 @@ public class Player extends GameChar
 				lastShootTime = time;
 			}
 		}
+		
+		
+	}
+	
+	public void shieldOn(){
+		
+		if(isShieldOn){
+			if (shield == null){
+				birthTime = System.currentTimeMillis();
+				shield = new GameChar();
+				shield.objectRenderer.SetTexture("Shield");
+				shield.transform = this.transform;
+				
+			}
+			
+			
+			else{
+				shield.objectRenderer.opacity = (float)((Math.cos(System.currentTimeMillis()/100)+1)/2);
+			}
+			
+			if(System.currentTimeMillis()-birthTime>3000){
+				isShieldOn = false;
+				shield.Delete();
+				shield = null;
+				
+			}
+			
+		}
+		else{
+			if (shield != null){
+				shield.Delete();
+			}
+		}
+	}
+	
+	public void rapidFireOn(){
+		
+		if(rapidFireOn){
+			birthTime2 = System.currentTimeMillis();
+			shootTimeThreshold = 125;
+		}
 
+		if(System.currentTimeMillis()-birthTime2>3000){
+			shootTimeThreshold = 200;
+		}
+		
 	}
 
 }

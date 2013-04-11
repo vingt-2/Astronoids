@@ -104,6 +104,8 @@ public class MainGame
 					new Ressource("game_over","./resources/textures/Game_over.png", RessourceType.Texture),
 					new Ressource("Win","./resources/textures/anti_mind_virus.png", RessourceType.Texture),
 					new Ressource("Empty","./resources/textures/Untitled-1.png", RessourceType.Texture),
+					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture),
+					new Ressource("Shield","./resources/textures/Shield.png", RessourceType.Texture),
 					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture)
 					}
 					);
@@ -155,6 +157,7 @@ public class MainGame
 				if(inPauseGameMode){
 					menuLogic.resumeGame.Delete();
 					menuLogic.backToMenu.Delete();
+					menuLogic.quitPause.Delete();
 					inPauseGameMode = false;
 				}
 			}

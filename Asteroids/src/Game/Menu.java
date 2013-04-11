@@ -27,6 +27,7 @@ public class Menu {
 	GameChar hard;
 	GameChar resumeGame;
 	GameChar backToMenu;
+	GameChar quitPause;
 
 
 	public static int counter2 = 0;
@@ -238,6 +239,7 @@ public class Menu {
 		case 0:
 			resumeGame.objectRenderer.SetTexture("resumeGameOnHover");
 			backToMenu.objectRenderer.SetTexture("mainMenu");
+			quitPause.objectRenderer.SetTexture("quit");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				MainGame.inMenu = false;
 				MainGame.update = true;
@@ -247,15 +249,23 @@ public class Menu {
 		case 1: 
 			resumeGame.objectRenderer.SetTexture("resumeGame");
 			backToMenu.objectRenderer.SetTexture("mainMenuOnHover");
+			quitPause.objectRenderer.SetTexture("quit");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				initStartMenu();
 				inStartMenu = true;
-				
 			}
 			break;
+		case 2:
+			resumeGame.objectRenderer.SetTexture("resumeGame");
+			backToMenu.objectRenderer.SetTexture("mainMenu");
+			quitPause.objectRenderer.SetTexture("quitOnHover");
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				System.exit(0);
+			}
 		}
 		resumeGame.Update();
 		backToMenu.Update();
+		quitPause.Update();
 	} 
 
 	private void updateGameMenu() {
@@ -521,6 +531,7 @@ public class Menu {
 		Controls.menuCounter = 0;
 		resumeGame = new GameChar();
 		backToMenu = new GameChar();
+		quitPause = new GameChar();
 		resumeGame.objectRenderer.SetTexture("resumeGame");
 		backToMenu.objectRenderer.SetTexture("mainMenu");
 		resumeGame.transform.size = new Vector2 (25,10);
@@ -529,6 +540,10 @@ public class Menu {
 		backToMenu.transform.size = new Vector2 (25,10);
 		backToMenu.transform.position = new Vector2 (0,0);
 		backToMenu.rigidBody.frictionCoefficient = 0.1f;
+		quitPause.objectRenderer.SetTexture("quit");
+		quitPause.transform.position = new Vector2 (0,-20);
+		quitPause.rigidBody.frictionCoefficient = 0.1f;
+		quitPause.transform.size = new Vector2 (25,10);
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 		
 	}
@@ -556,7 +571,7 @@ public class Menu {
 		twoPlayer.rigidBody.frictionCoefficient = 0.1f;
 		quit.objectRenderer.SetTexture("quit");
 		quit.transform.position = new Vector2 (0,-10);
-		quit.transform.size = new Vector2 (11,11);
+		quit.transform.size = new Vector2 (30,10);
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
 }
