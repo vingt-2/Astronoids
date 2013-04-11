@@ -105,6 +105,13 @@ public class GameLogic
 						SoundEffect.CRASH.play();
 						GameFail = true;
 						player.Delete();
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						SoundEffect.GAMEOVER.play();
 					} 
 					else 
 					{
