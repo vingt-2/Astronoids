@@ -153,13 +153,13 @@ public class GameLogic
 							lasers.get(j).Delete();
 							lasers.remove(j);
 							
-							if(rand.nextInt(40) == 1){
+							if(rand.nextInt(10) == 1){
 								PickUpList.add(new Shield(currentAsteroid.transform.position));
 							}
-							if(rand.nextInt(40) == 2){
+							if(rand.nextInt(10) == 2){
 								PickUpList.add(new RapidFire(currentAsteroid.transform.position));
 							}
-							if(rand.nextInt(40) == 3){
+							if(rand.nextInt(10) == 3){
 								PickUpList.add(new Life(currentAsteroid.transform.position));
 							}
 							
