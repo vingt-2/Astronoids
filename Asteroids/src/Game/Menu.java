@@ -25,9 +25,12 @@ public class Menu {
 	GameChar easy;
 	GameChar medium;
 	GameChar hard;
+	GameChar resumeGame;
+	GameChar backToMenu;
 
 
 	public static int counter2 = 0;
+	public static int counter = 0;
 
 	public int pressCount = 0;
 	public boolean back = false;
@@ -87,7 +90,15 @@ public class Menu {
 		if(inLevelMenu){
 			updateLevelMenu();
 		}
-
+		if(MainGame.inPauseGameMode){
+			if(counter == 0){
+				System.out.println("pause");
+				initPauseMenu();
+				counter++;
+			}
+			updatePauseMenu();
+		} 
+		
 		if (inEnterUsernameNew){
 			inEnterUsernameNew();
 		} 
@@ -221,6 +232,31 @@ public class Menu {
 		twoPlayer.Update();
 		quit.Update();
 	}
+	
+	private void updatePauseMenu(){
+		switch(Controls.menuCounter){
+		case 0:
+			resumeGame.objectRenderer.SetTexture("resumeGameOnHover");
+			backToMenu.objectRenderer.SetTexture("mainMenu");
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				MainGame.inMenu = false;
+				MainGame.update = true;
+				counter = 0;
+			}
+			break;
+		case 1: 
+			resumeGame.objectRenderer.SetTexture("resumeGame");
+			backToMenu.objectRenderer.SetTexture("mainMenuOnHover");
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				initStartMenu();
+				inStartMenu = true;
+				
+			}
+			break;
+		}
+		resumeGame.Update();
+		backToMenu.Update();
+	} 
 
 	private void updateGameMenu() {
 		switch(Controls.menuCounter){
@@ -234,9 +270,6 @@ public class Menu {
 				inGameMenu = false;
 				initLevelMenu();
 				
-				/*inGameMenu = false;
-				MainGame.inMenu = false;
-				MainGame.enterKeyPressed = true; */
 			}
 			break;
 		case 1: 
@@ -410,7 +443,7 @@ public class Menu {
 		quit.Delete();
 		enterUsername = new GameChar();
 		enterUsername.objectRenderer.SetTexture("enterUsername");
-		enterUsername.transform.size = new Vector2(25,10);
+		enterUsername.transform.size = new Vector2(35,15);
 		enterUsername.transform.position = new Vector2(0,5);
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
@@ -423,16 +456,16 @@ public class Menu {
 		statistics = new GameChar();
 		highScores = new GameChar();
 		startGame.objectRenderer.SetTexture("startGame");
-		startGame.transform.size = new Vector2 (25,10);
+		startGame.transform.size = new Vector2 (20,15);
 		startGame.transform.position = new Vector2 (0,20);
 		startGame.rigidBody.frictionCoefficient = 0.1f;
 		instructions.objectRenderer.SetTexture("instructions");
-		instructions.transform.size = new Vector2 (25,10);
-		instructions.transform.position = new Vector2 (0,10);
+		instructions.transform.size = new Vector2 (25,20);
+		instructions.transform.position = new Vector2 (0,0);
 		instructions.rigidBody.frictionCoefficient = 0.1f;
 		statistics.objectRenderer.SetTexture("statistics");
 		statistics.transform.size = new Vector2 (25,10);
-		statistics.transform.position = new Vector2 (0,-5);
+		statistics.transform.position = new Vector2 (0,-7);
 		statistics.rigidBody.frictionCoefficient = 0.1f;
 		highScores.objectRenderer.SetTexture("highScores");
 		highScores.transform.position = new Vector2 (0,-10);
@@ -469,19 +502,35 @@ public class Menu {
 		easy = new GameChar();
 		medium = new GameChar();
 		hard = new GameChar();
-		easy.objectRenderer.SetTexture("createUser");
+		easy.objectRenderer.SetTexture("easy");
 		easy.transform.size = new Vector2 (25,10);
-		easy.transform.position = new Vector2 (0,20);
+		easy.transform.position = new Vector2 (0,7);
 		easy.rigidBody.frictionCoefficient = 0.1f;
-		medium.objectRenderer.SetTexture("loadUser");
+		medium.objectRenderer.SetTexture("medium");
 		medium.transform.size = new Vector2 (25,10);
-		medium.transform.position = new Vector2 (0,10);
+		medium.transform.position = new Vector2 (0,-5);
 		medium.rigidBody.frictionCoefficient = 0.1f;
-		hard.objectRenderer.SetTexture("twoPlayer");
+		hard.objectRenderer.SetTexture("hard");
 		hard.transform.size = new Vector2 (25,10);
-		hard.transform.position = new Vector2 (0,-5);
+		hard.transform.position = new Vector2 (0,-16);
 		hard.rigidBody.frictionCoefficient = 0.1f;
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
+	}
+	
+	public void initPauseMenu() { 
+		Controls.menuCounter = 0;
+		resumeGame = new GameChar();
+		backToMenu = new GameChar();
+		resumeGame.objectRenderer.SetTexture("resumeGame");
+		backToMenu.objectRenderer.SetTexture("mainMenu");
+		resumeGame.transform.size = new Vector2 (25,10);
+		resumeGame.transform.position = new Vector2 (0,20);
+		resumeGame.rigidBody.frictionCoefficient = 0.1f;
+		backToMenu.transform.size = new Vector2 (25,10);
+		backToMenu.transform.position = new Vector2 (0,0);
+		backToMenu.rigidBody.frictionCoefficient = 0.1f;
+		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
+		
 	}
 
 	public void initStartMenu(){
