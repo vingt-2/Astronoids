@@ -3,6 +3,7 @@ package Game;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 import GameComponents.RigidBody.ForceMode;
 import GameObjects.Alien;
 import GameObjects.Asteroid;
@@ -68,7 +69,7 @@ public class GameLogic
 
 		}
 
-		UpdateObjectVectors();
+		UpdateSceneObjects();
 
 	}
 
@@ -81,26 +82,13 @@ public class GameLogic
 
 		lasers = player.shooter.GetLaserArray();
 
-
+		/*
+		 * Computations on each asteroids 
+		 */
 		for (Asteroid currentAsteroid : asteroidField.asteroidList) 
 		{
-			Vector2 resultingForce = Vector2.zero();
-			for(Asteroid secondAsteroid : asteroidField.asteroidList)
-			{
-				if(currentAsteroid != secondAsteroid && currentAsteroid.rigidBody.isColliding(secondAsteroid))
-				{
-					float deltaTime = MainGame.render.deltaTime;
-					Vector2 secondToCurrent = Vector2.Add(currentAsteroid.transform.position,secondAsteroid.transform.position.negate());
-					
-					resultingForce = Vector2.Add(resultingForce,(Vector2.Scale(-Vector2.Dot(secondToCurrent.Normalized(),currentAsteroid.rigidBody.velocity) / (deltaTime*deltaTime) ,secondToCurrent.Normalized())));
-				}
-				
-			}
-			
-			currentAsteroid.rigidBody.PushForce(resultingForce, ForceMode.Impulse);
-			
-			MainGame.debug.DrawLine(currentAsteroid.transform.position, resultingForce,resultingForce.GetLength());
-			
+
+			// PLAYER COLLISION WITH ASTEROID
 			if (!player.isDeleted) 
 			{
 				if (player.rigidBody.isColliding(currentAsteroid) && !immunity)
@@ -124,7 +112,7 @@ public class GameLogic
 				}
 
 
-
+				// NO IDEA WHAT THIS IS DOING, damien ?
 				if ((System.currentTimeMillis() - immunityTimer) > 3000
 						&& immunity) {
 
@@ -133,21 +121,21 @@ public class GameLogic
 				}
 
 
-				// Check for player lasers collision
+				// ASTEROID LASER/COLISION
 				for (int j = 0; j < lasers.size(); j++) 
 				{
 					if (j<lasers.size()) 
 					{
 						if (lasers.get(j).rigidBody.isColliding(currentAsteroid))
 						{
-							
+
 							currentAsteroid.isBroken = true;
 							HUD.points += 10;
 							SoundEffect.ASTEROIDBREAK.play();
-						
-							
+
+
 							int pwrGen = rand.nextInt(40);
-							
+
 							if( pwrGen==2) 
 							{
 								System.out.println("LIFE");
@@ -168,42 +156,16 @@ public class GameLogic
 							lasers.remove(j);
 						}
 					}
-					
-					for (int i = 0; i<powerUpList.size();i++)
-					{
-
-						PowerUp currentPowerUp = powerUpList.get(i);
-						
-						if (player.rigidBody.isColliding(currentPowerUp))
-						{
-
-							if(currentPowerUp.type.equals("Life"))
-							{
-								player.lives++;
-							}
-
-							else if(currentPowerUp.type.equals("Shield"))
-							{
-								immunity = true;
-								immunityTimer = System.currentTimeMillis();
-								player.objectRenderer.SetTexture("shielded_ship");
-
-							}
-							
-							powerUpList.remove(i);
-							currentPowerUp.Delete();
-						}
-					}
 				}
 			}
+		}
 
-
-			if (asteroidField.asteroidList.size() == 0) 
-			{
-				GameWin = true;
-			}
+		if (asteroidField.asteroidList.size() == 0) 
+		{
+			GameWin = true;
 		}
 	}
+
 
 	private void CheckForEndGame()
 	{
@@ -236,15 +198,48 @@ public class GameLogic
 		}
 	}
 
-	private void UpdateObjectVectors()
+	private void UpdatePowerUps()
+	{
+		for (int i = 0; i<powerUpList.size();i++)
+		{
+
+			PowerUp currentPowerUp = powerUpList.get(i);
+
+			currentPowerUp.Update();
+			
+			if (player.rigidBody.isColliding(currentPowerUp))
+			{
+
+				if(currentPowerUp.type.equals("Life"))
+				{
+					player.lives++;
+				}
+
+				else if(currentPowerUp.type.equals("Shield"))
+				{
+					immunity = true;
+					immunityTimer = System.currentTimeMillis();
+					player.objectRenderer.SetTexture("shielded_ship");
+
+				}
+
+				powerUpList.remove(i);
+				currentPowerUp.Delete();
+			}
+		}
+	}
+	
+	private void UpdateSceneObjects()
 	{	
 		asteroidField.Update();
+		UpdatePowerUps();
 		hud.Update();
 		if (!player.isDeleted) 
 		{
 			player.Update();
 			alien.Update();
 		} 
+
 	}
 }
 

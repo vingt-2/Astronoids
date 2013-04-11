@@ -77,37 +77,6 @@ public class AsteroidField extends GameObject
 
 	public void Update()
 	{
-
-		
-//		
-//		for(int i = 0; i < fieldSize; i++)
-//		{
-//			
-//					astrdField.add(new Asteroid(GameLogic.brokenAsteroid));
-//					astrdField.get(i).rigidBody.PushForce(new Vector2(rand.nextInt(400)-200,rand.nextInt(400)-200),ForceMode.Force);
-//					astrdField.get(i).rigidBody.PushTorque(rand.nextInt(10)%4-2, ForceMode.Force);
-//					astrdField.get(i).transform.size=(new Vector2( GameLogic.brokenSize, GameLogic.brokenSize ));
-//			}
-//		
-//			else{
-//				
-//									
-//				if(!(astrdField.size()<= i)){
-//				if (astrdField.get(i).terminator) {
-//					
-//					astrdField.get(i).Delete();
-//					//astrdField[i] = astrdField[i+1];
-//				}
-//				else{
-//					
-//					astrdField.get(i).Update();
-//									
-//				}
-//			}
-//			}
-//			
-//			
-//		}
 		for(int astIndex = 0; astIndex < asteroidList.size() ; astIndex++)
 		{
 			Asteroid currentAsteroid = asteroidList.get(astIndex);
