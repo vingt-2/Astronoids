@@ -250,6 +250,13 @@ public class GameLogic
 	
 	private void stage2(){
 		
+		for(int j =0; j<PickUpList.size(); j++){
+			
+					PickUpList.get(j).Delete();
+					PickUpList.remove(j);
+			
+		}
+		
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(14,5);
 		asteroidField.GenerateField();
