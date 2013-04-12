@@ -2,6 +2,7 @@ package GameObjects;
 
 import Game.GameLogic;
 import Game.MainGame;
+import Helpers.SoundEffect;
 import Maths.Vector2;
 
 public class Shield extends PickUp {
@@ -19,6 +20,7 @@ public class Shield extends PickUp {
 	public void OnPickUp() {
 		// TODO Auto-generated method stub
 		MainGame.gameLogic.player.isShieldOn = true;
+		SoundEffect.SHIELD.play();
 		
 	}
 	

@@ -1,6 +1,7 @@
 package GameObjects;
 
 import Game.MainGame;
+import Helpers.SoundEffect;
 import Maths.Vector2;
 
 public class Life extends PickUp {
@@ -8,6 +9,7 @@ public class Life extends PickUp {
 	public Life(Vector2 pos) {
 		super(pos);
 		objectRenderer.SetTexture("Life");
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -15,6 +17,7 @@ public class Life extends PickUp {
 	public void OnPickUp() {
 		// TODO Auto-generated method stub
 		MainGame.gameLogic.player.lives++;
+		SoundEffect.NEWLIFE.play();
 	}
 
 }
