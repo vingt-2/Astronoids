@@ -33,6 +33,7 @@ public class Menu {
 	GameChar highScoresFont;
 
 	public int counter2 = 0;
+	public int counter3 = 0;
 	public int counter = 0;
 	public int pressCount = 0;
 	public boolean back = false;
@@ -90,8 +91,8 @@ public class Menu {
 		}
 		if(MainGame.inPauseGameMode){
 			if(counter == 0){
-				System.out.println("pause");
 				initPauseMenu();
+				counter2 = 0;
 				counter++;
 			}
 			updatePauseMenu();
@@ -132,7 +133,12 @@ public class Menu {
 				inEnterUsername = false;
 				inEnterUsernameNew = false;
 				inStartMenu = true;
-				stopShowing = true;
+				back = false;
+			}
+			if(inEnterUsername){
+				initStartMenu();
+				inEnterUsername = false;
+				inStartMenu = true;
 				back = false;
 			}
 			if(inInstructions){
@@ -253,6 +259,8 @@ public class Menu {
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				initStartMenu();
 				inStartMenu = true;
+				MainGame.inPauseGameMode = false;
+				back = false;
 			}
 			break;
 		case 2:
@@ -379,6 +387,7 @@ public class Menu {
 				if(CSV.LoginMenu.login(inputUsername)){
 					if (counter2 == 0){
 						initGameMenu();
+						inEnterUsername = false;
 						MainGame.controls.recordKey = false;
 						inGameMenu = true;
 						stopShowing = false;
@@ -437,11 +446,12 @@ public class Menu {
 		enterUsername.Update();
 
 		if(CSV.LoginMenu.available){
-			if (counter2 == 0){
+			if (counter3 == 0){
 				initGameMenu();
 				inGameMenu = true;
 				stopShowing = false;
-				counter2++;
+				inEnterUsernameNew = false;
+				counter3++;
 			}
 		} else {
 			System.out.println("Not possible");
@@ -457,7 +467,7 @@ public class Menu {
 		enterUsername.objectRenderer.SetTexture("enterUsername");
 		enterUsername.transform.size = new Vector2(35,15);
 		enterUsername.transform.position = new Vector2(0,5);
-		inputUsername = "";
+		//inputUsername = "";
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
 
@@ -570,6 +580,7 @@ public class Menu {
 	public void initStartMenu(){
 		Controls.menuCounter = 0;
 		MainGame.controls.recordString = "";
+		stopShowing = true;
 		CSV.LoginMenu.login = false;
 		counter2 = 0;
 		background = new GameChar();

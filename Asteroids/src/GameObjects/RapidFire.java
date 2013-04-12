@@ -1,6 +1,7 @@
 package GameObjects;
 
 import Game.MainGame;
+import Helpers.SoundEffect;
 import Maths.Vector2;
 
 public class RapidFire extends PickUp {
@@ -14,6 +15,7 @@ public class RapidFire extends PickUp {
 	public void OnPickUp() {
 		// TODO Auto-generated method stub
 		MainGame.gameLogic.player.rapidFireOn = true;
+		SoundEffect.RAPIDFIRE.play();
 	}
 
 }

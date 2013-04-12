@@ -52,7 +52,7 @@ public class Renderer implements GLEventListener
 	public GLAutoDrawable externDrawable;
 	public MainGame mainGame;
 	public ArrayList<ObjectRenderer> renderVector;
-	public Font font = new Font("Courier", Font.BOLD, 36);
+	public Font font = new Font("Courier", Font.BOLD, 40);
 
 	private long lastTime = System.currentTimeMillis();
 	private String windowName = "";

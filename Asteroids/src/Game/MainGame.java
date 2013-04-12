@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.media.opengl.GL2;
 
+import CSV.User;
 import GameObjects.Alien;
 import Game.SharedRessources.RessourceType;
 
@@ -32,7 +33,7 @@ public class MainGame
 	
 	public static boolean winChecker = false;
 	public int counter=0;
-
+	public static User currentUser;
 
 	// Game singletons
 	public static final SharedRessources sharedRessources	= new SharedRessources();
@@ -122,9 +123,6 @@ public class MainGame
 			gameLogic = new GameLogic();
 
 		}
-		
-	
-		
 
 	}
 
