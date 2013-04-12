@@ -24,7 +24,7 @@ public class Player extends GameChar
 	private GameChar shield;
 	private long birthTime;
 	private long birthTime2;
-	public long shootTimeThreshold = 5; // wait 200ms between two shots.
+	public long shootTimeThreshold = 200; // wait 200ms between two shots.
 
 
 	public Player()
@@ -79,7 +79,7 @@ public class Player extends GameChar
 
 
 			Vector2 objectFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1));
-			rigidBody.PushForce(Vector2.Scale(200, objectFrontInWorldCoordinates),ForceMode.Impulse);
+			rigidBody.PushForce(Vector2.Scale(500, objectFrontInWorldCoordinates),ForceMode.Impulse);
 			effect.TurnOn();
 		}
 		else
@@ -163,7 +163,7 @@ public class Player extends GameChar
 
 
 		if(System.currentTimeMillis()-birthTime2 > 3000){
-			shootTimeThreshold = 1;
+			shootTimeThreshold = 200;
 		}
 
 
