@@ -31,6 +31,7 @@ public class GameLogic
 	public int counter = 0;
 
 	public static boolean lostLife = false;
+	public int stageCounter = 1;
 
 
 	public  ArrayList<Laser> lasers = new ArrayList<Laser>();
@@ -48,8 +49,8 @@ public class GameLogic
 	public GameLogic()
 	{
 		player = new Player();
-		player.transform.size = new Vector2(4,4);
-		player.rigidBody.frictionCoefficient = 0.05f;
+		player.transform.size = new Vector2(3,3);
+		player.rigidBody.frictionCoefficient = 0.01f;
 
 		alien = new Alien();
 		alien.transform.size=new Vector2(2,2);
@@ -67,7 +68,7 @@ public class GameLogic
 		if(!GameOver)
 		{
 			ExecuteLogic();
-
+			
 			CheckForEndGame();
 
 		}
@@ -110,7 +111,7 @@ public class GameLogic
 					{
 						immunity = true;
 						immunityTimer = System.currentTimeMillis();
-						System.out.println("TRUE");
+						//System.out.println("TRUE");
 						player.isShieldOn = true;
 						lostLife = true;
 						
@@ -169,15 +170,17 @@ public class GameLogic
 
 		if (asteroidField.asteroidList.size() == 0) 
 		{
+			stageCounter++;
 			GameWin = true;
 		}
 		
 		for(int j =0; j<PickUpList.size(); j++){
-			if(!(PickUpList.get(j).isDeleted)){
+			if(!(PickUpList.get(j).isDeleted) && !(player.isDeleted)){
 				if(player.rigidBody.isColliding((PickUpList.get(j)))){
 					PickUpList.get(j).OnPickUp();
 					PickUpList.get(j).Delete();
 					PickUpList.remove(j);
+
 				}
 			}
 		}
@@ -202,8 +205,14 @@ public class GameLogic
 
 		else if (GameWin) 
 		{
-
+			
+			if(stageCounter ==2){
+			stage2();
+			}
+			else{
+				
 			GameChar gameWin = new GameChar();
+			
 
 			gameWin.objectRenderer.SetTexture("Win");
 			gameWin.transform.size = new Vector2(40, 8);
@@ -212,6 +221,7 @@ public class GameLogic
 			hud.otherInfos.add(gameWin);
 
 			GameOver = true;
+			}
 		}
 	}
 
@@ -236,6 +246,20 @@ public class GameLogic
 			alien.Update();
 		} 
 
+	}
+	
+	private void stage2(){
+		
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(14,5);
+		asteroidField.GenerateField();
+		GameWin = false;
+		
+	}
+	
+	private void stage3(){
+		
+		
 	}
 }
 

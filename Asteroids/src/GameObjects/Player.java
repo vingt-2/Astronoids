@@ -51,11 +51,11 @@ public class Player extends GameChar
 	{
 		if(MainGame.controls.isPressed(KeyEvent.VK_RIGHT))
 		{
-			rigidBody.PushTorque(10,ForceMode.Impulse);
+			rigidBody.PushTorque(5,ForceMode.Impulse);
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_LEFT))
 		{
-			rigidBody.PushTorque(-10,ForceMode.Impulse);
+			rigidBody.PushTorque(-5,ForceMode.Impulse);
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_UP))
 		{
@@ -67,7 +67,7 @@ public class Player extends GameChar
 			}
 			
 			Vector2 objectFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1));
-			rigidBody.PushForce(Vector2.Scale(1000, objectFrontInWorldCoordinates),ForceMode.Impulse);
+			rigidBody.PushForce(Vector2.Scale(200, objectFrontInWorldCoordinates),ForceMode.Impulse);
 			effect.TurnOn();
 		}
 		else
