@@ -14,8 +14,8 @@ public enum SoundEffect
 	SHIELD("shield.wav"),
 	RAPIDFIRE("rapidfire.wav"),
 	NEWLIFE("newlife.wav"),
-	GAMEOVER("gameover.wav");
-
+	GAMEOVER("gameover.wav"),
+	BACKGROUND("Background_Music.wav");
 
 	public static enum Volume
 	{
