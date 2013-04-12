@@ -180,7 +180,6 @@ public class MainGame
 
 			else{ //Pause Game
 				inMenu = true;
-				enterKeyPressed = true;
 				inPauseGameMode = true;
 				menuLogic.inLevelMenu = false;
 			}
