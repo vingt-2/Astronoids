@@ -8,6 +8,7 @@ public class Particles extends GameChar
 {
 	long creationTime;
 	long lifeTime;
+	
 
 	public Particles(int lifetime,Vector2 position)
 	{

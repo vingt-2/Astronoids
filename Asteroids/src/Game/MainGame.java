@@ -114,7 +114,8 @@ public class MainGame
 					new Ressource("Stage2","./resources/textures/Stage2.png", RessourceType.Texture),
 					new Ressource("Stage3","./resources/textures/Stage3.png", RessourceType.Texture),
 					new Ressource("Stage4","./resources/textures/Stage4.png", RessourceType.Texture),
-					new Ressource("Stage5","./resources/textures/Stage5.png", RessourceType.Texture)
+					new Ressource("Stage5","./resources/textures/Stage5.png", RessourceType.Texture),
+					new Ressource("Shrapnel","./resources/textures/Shrapnel.png", RessourceType.Texture)
 					}
 					);
 

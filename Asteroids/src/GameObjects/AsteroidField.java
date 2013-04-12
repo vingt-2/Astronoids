@@ -111,7 +111,7 @@ public class AsteroidField extends GameObject
 						Vector2 newPost = Vector2.Add(currentAsteroid.transform.position,spawnSpot);
 						
 						Asteroid newAst = new Asteroid(newPost);
-						if (newAst.transform.size.x>1) newAst.lives = numberOfLives;
+						if (newAst.transform.size.x>0.5f) newAst.lives = numberOfLives;
 						int x = rand.nextInt(400)-200;
 						int y = rand.nextInt(400)-200;
 						if (x>0) x += speed;

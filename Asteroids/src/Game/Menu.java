@@ -50,6 +50,8 @@ public class Menu {
 	public boolean showHS = true;
 	public static boolean inStartMenu = true;
 	public static boolean inLevelMenu = false;
+	public static boolean isMedium = false;
+	public static boolean isHard = false;
 
 	public Menu(){ 
 		Controls.menuCounter = 0;
@@ -370,6 +372,10 @@ public class Menu {
 			hard.objectRenderer.SetTexture("hard");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				//put medium level code
+				isMedium = true;
+				inGameMenu = false;
+				MainGame.inMenu = false;
+				MainGame.enterKeyPressed = true;
 
 				easy.Delete();
 				medium.Delete();
@@ -381,6 +387,14 @@ public class Menu {
 			medium.objectRenderer.SetTexture("medium");
 			hard.objectRenderer.SetTexture("hardOnHover");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				inGameMenu = false;
+				MainGame.inMenu = false;
+				MainGame.enterKeyPressed = true;
+				isHard = true;
+				
+				easy.Delete();
+				medium.Delete();
+				hard.Delete();
 				//put hard level code
 			}
 			break;
