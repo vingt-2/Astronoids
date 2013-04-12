@@ -14,6 +14,7 @@ import GameObjects.Asteroid;
 import GameObjects.AsteroidField;
 import GameObjects.GameChar;
 import GameObjects.HUD;
+import GameObjects.HudObject;
 import GameObjects.Laser;
 import GameObjects.Life;
 import GameObjects.Player;
@@ -64,6 +65,7 @@ public class GameLogic
 
 		asteroidField = new AsteroidField(12,5);
 		asteroidField.GenerateField();
+
 	}
 
 	public void UpdateLogic() 
@@ -203,8 +205,8 @@ public class GameLogic
 		if(GameFail)
 		{
 
-			GameChar gameFailed = new GameChar();
-
+			HudObject gameFailed = new HudObject(new Vector2(0,0));
+			gameFailed.permanent = true;
 			gameFailed.objectRenderer.SetTexture("game_over");
 			gameFailed.transform.size = new Vector2(50, 13);
 			gameFailed.transform.position = new Vector2(0, -9);
@@ -218,13 +220,22 @@ public class GameLogic
 		{
 			
 			if(stageCounter ==2){
-			stage2();
+				stage2();
+			}
+			else if(stageCounter == 3){
+				stage3();
+			}
+			else if(stageCounter == 4){
+				stage4();
+			}
+			else if(stageCounter == 5){
+				stage5();
 			}
 			else{
 				
-			GameChar gameWin = new GameChar();
+			HudObject gameWin = new HudObject(new Vector2(0,0));
 			
-
+			gameWin.permanent = true;
 			gameWin.objectRenderer.SetTexture("Win");
 			gameWin.transform.size = new Vector2(40, 8);
 			gameWin.transform.position = new Vector2(0, 0);
@@ -259,23 +270,30 @@ public class GameLogic
 			}
 		asteroidField.Update();
 		
-		hud.Update();
-		if (!player.isDeleted) 
+		
+		if (!player.isDeleted && !hud.changingStage) 
 		{
 			player.Update();
 			alien.Update();
 		} 
+		hud.Update();
 
 	}
 	
 	private void stage2(){
 		
 		for(int j =0; j<PickUpList.size(); j++){
-			
+			System.out.println("Delete");
 					PickUpList.get(j).Delete();
-					PickUpList.remove(j);
+					//PickUpList.remove(j);
 			
 		}
+		
+		PickUpList.clear();
+		HudObject stage2 = new HudObject(new Vector2(0,0));
+		stage2.objectRenderer.SetTexture("Stage2");
+		stage2.transform.size = new Vector2(40,15);
+		hud.otherInfos.add(stage2);	
 		
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(14,5);
@@ -286,8 +304,71 @@ public class GameLogic
 	
 	private void stage3(){
 		
+		for(int j =0; j<PickUpList.size(); j++){
+			System.out.println("Delete");
+					PickUpList.get(j).Delete();
+					//PickUpList.remove(j);
+			
+		}
+		
+		PickUpList.clear();
+		HudObject stage3 = new HudObject(new Vector2(0,0));
+		stage3.objectRenderer.SetTexture("Stage3");
+		stage3.transform.size = new Vector2(40,15);
+		hud.otherInfos.add(stage3);	
+		
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(17,5);
+		asteroidField.GenerateField();
+		GameWin = false;
+		
 		
 	}
+	
+private void stage4(){
+		
+		for(int j =0; j<PickUpList.size(); j++){
+			System.out.println("Delete");
+					PickUpList.get(j).Delete();
+					//PickUpList.remove(j);
+			
+		}
+		
+		PickUpList.clear();
+		HudObject stage4 = new HudObject(new Vector2(0,0));
+		stage4.objectRenderer.SetTexture("Stage4");
+		stage4.transform.size = new Vector2(40,15);
+		hud.otherInfos.add(stage4);	
+		
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(19,5);
+		asteroidField.GenerateField();
+		GameWin = false;
+		
+		
+	}
+private void stage5(){
+	
+	for(int j =0; j<PickUpList.size(); j++){
+		System.out.println("Delete");
+				PickUpList.get(j).Delete();
+				//PickUpList.remove(j);
+		
+	}
+	
+	PickUpList.clear();
+	HudObject stage5 = new HudObject(new Vector2(0,0));
+	stage5.objectRenderer.SetTexture("Stage5");
+	stage5.transform.size = new Vector2(40,15);
+	hud.otherInfos.add(stage5);	
+	
+	player.rigidBody.SetPosition(new Vector2(0,0));
+	asteroidField = new AsteroidField(21,5);
+	asteroidField.GenerateField();
+	GameWin = false;
+	
+	
+}
 }
 
 

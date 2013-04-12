@@ -21,7 +21,7 @@ public class Player extends GameChar
 	private GameChar shield;
 	private long birthTime;
 	private long birthTime2;
-	public long shootTimeThreshold = 200; // wait 200ms between two shots.
+	public long shootTimeThreshold = 5; // wait 200ms between two shots.
 
 	public Player()
 	{
@@ -51,11 +51,11 @@ public class Player extends GameChar
 	{
 		if(MainGame.controls.isPressed(KeyEvent.VK_RIGHT))
 		{
-			rigidBody.PushTorque(5,ForceMode.Impulse);
+			rigidBody.PushTorque(15,ForceMode.Impulse);
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_LEFT))
 		{
-			rigidBody.PushTorque(-5,ForceMode.Impulse);
+			rigidBody.PushTorque(-15,ForceMode.Impulse);
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_UP))
 		{
@@ -131,10 +131,11 @@ public class Player extends GameChar
 		if(rapidFireOn){
 			birthTime2 = System.currentTimeMillis();
 			shootTimeThreshold = 125;
+			rapidFireOn = false;
 		}
 
-		if(System.currentTimeMillis()-birthTime2>3000){
-			shootTimeThreshold = 200;
+		if(System.currentTimeMillis()-birthTime2 > 3000){
+			shootTimeThreshold = 1;
 		}
 		
 	}

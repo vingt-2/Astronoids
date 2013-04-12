@@ -9,6 +9,7 @@ public class Life extends PickUp {
 	public Life(Vector2 pos) {
 		super(pos);
 		objectRenderer.SetTexture("Life");
+		
 		// TODO Auto-generated constructor stub
 	}
 
