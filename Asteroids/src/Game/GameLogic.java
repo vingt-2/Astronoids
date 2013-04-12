@@ -1,8 +1,11 @@
 package Game;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import sun.applet.Main;
 
 
 import CSV.Highscore;
@@ -33,7 +36,9 @@ public class GameLogic
 	public boolean immunity;
 	public long immunityTimer;
 	public int counter = 0;
-
+	public static boolean playerOne = false;
+	public boolean playerTwo = false;
+	
 	public static boolean lostLife = false;
 
 
@@ -67,28 +72,36 @@ public class GameLogic
 
 	public void UpdateLogic() 
 	{
-
 		if(!GameOver)
 		{
 			ExecuteLogic();
-
 			CheckForEndGame();
-
 		}
-
+		else if(playerOne){
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				player.Delete();
+				for (Asteroid currentAsteroid : asteroidField.asteroidList){
+					currentAsteroid.Delete();
+				}
+				for (GameChar object : hud.otherInfos){
+					object.Delete();
+				}
+				MainGame.enterKeyPressed = true;
+				hud.otherInfos.clear();
+				HUD.points = 0;
+				playerOne = false;
+				playerTwo = true;
+				GameOver = false;
+			}
+		}
 		UpdateSceneObjects();
-
 	}
-
 
 
 	private void ExecuteLogic()
 	{
-
 		Random rand = new Random();
-
 		lasers = player.shooter.GetLaserArray();
-
 
 		/*
 		 * Computations on each asteroids 
@@ -96,7 +109,6 @@ public class GameLogic
 
 		for (Asteroid currentAsteroid : asteroidField.asteroidList) 
 		{
-
 			// PLAYER COLLISION WITH ASTEROID
 			if (!player.isDeleted) 
 			{
@@ -117,11 +129,10 @@ public class GameLogic
 						System.out.println("TRUE");
 						player.isShieldOn = true;
 						lostLife = true;
-						
+
 					}
 
 				}
-
 
 				// NO IDEA WHAT THIS IS DOING, damien ?
 				//I sets the player immune for 3 seconds after hitting and asteroid
@@ -129,13 +140,10 @@ public class GameLogic
 						&& immunity) {
 
 					immunity = false;
-					
+
 				}
 
-
-				
 				// Check for player lasers collision
-
 
 				// ASTEROID LASER/COLISION
 
@@ -150,10 +158,9 @@ public class GameLogic
 							HUD.points += 10;
 							SoundEffect.ASTEROIDBREAK.play();
 
-						
 							lasers.get(j).Delete();
 							lasers.remove(j);
-							
+
 							if(rand.nextInt(10) == 1){
 								PickUpList.add(new Shield(currentAsteroid.transform.position));
 							}
@@ -162,11 +169,9 @@ public class GameLogic
 							}
 							if(rand.nextInt(10) == 3){
 								PickUpList.add(new Life(currentAsteroid.transform.position));
-							}
-							
+							}							
 						}
-					}
-										
+					}			
 				}
 			}
 		}
@@ -175,7 +180,7 @@ public class GameLogic
 		{
 			GameWin = true;
 		}
-		
+
 		for(int j =0; j<PickUpList.size(); j++){
 			if(!(PickUpList.get(j).isDeleted)){
 				if(player.rigidBody.isColliding((PickUpList.get(j)))){
@@ -194,7 +199,7 @@ public class GameLogic
 		{
 
 			GameChar gameFailed = new GameChar();
-
+			
 			gameFailed.objectRenderer.SetTexture("game_over");
 			gameFailed.transform.size = new Vector2(50, 13);
 			gameFailed.transform.position = new Vector2(0, -9);
@@ -217,8 +222,9 @@ public class GameLogic
 
 			GameOver = true;
 		}
-		
-		if(GameOver)
+
+
+		if(GameOver && !playerOne && !playerTwo)
 			try {
 				Statistics.updateStats(MainGame.currentUser, HUD.points, 0);
 				Highscore.addScore(MainGame.currentUser.getUsername(), HUD.points);
@@ -226,22 +232,25 @@ public class GameLogic
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		
+		if(GameOver && playerOne){
+			
+			
+			double timer = System.currentTimeMillis();
+		}
+		
 	}
 
-	
-	
+
+
 	private void UpdateSceneObjects()
 	{	
 		for(int j =0; j<PickUpList.size(); j++){
 			if(!(PickUpList.get(j).isDeleted)){
-				
 				PickUpList.get(j).Update();
-			
 			}	
-				
-			}
+		}
 		asteroidField.Update();
-		
 		hud.Update();
 		if (!player.isDeleted) 
 		{

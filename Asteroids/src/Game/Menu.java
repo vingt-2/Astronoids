@@ -212,7 +212,13 @@ public class Menu {
 			twoPlayer.objectRenderer.SetTexture("twoPlayerOnHover");
 			quit.objectRenderer.SetTexture("quit");
 			if (MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				System.exit(0);
+				inStartMenu = false;
+				MainGame.inMenu = false;
+				MainGame.twoPlayerMode = true;
+				createUser.Delete();
+				loadUser.Delete();
+				twoPlayer.Delete();
+				quit.Delete();
 			}
 			break;
 
@@ -335,7 +341,12 @@ public class Menu {
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
+
+				easy.Delete();
+				medium.Delete();
+				hard.Delete();
 			}
+			
 			break;
 		case 1: 
 			easy.objectRenderer.SetTexture("easy");
@@ -343,6 +354,10 @@ public class Menu {
 			hard.objectRenderer.SetTexture("hard");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				//put medium level code
+
+				easy.Delete();
+				medium.Delete();
+				hard.Delete();
 			}
 			break;
 		case 2: 
