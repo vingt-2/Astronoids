@@ -10,7 +10,11 @@ public enum SoundEffect
 	AFTERBURN("afterburn.wav"),
 	CRASH("crash.wav"),
 	ASTEROIDBREAK("asteroidbreak.wav"),
-	EXPLOSION("explosion.wav");
+	EXPLOSION("explosion.wav"),
+	SHIELD("shield.wav"),
+	RAPIDFIRE("rapidfire.wav"),
+	NEWLIFE("newlife.wav"),
+	GAMEOVER("gameover.wav");
 
 
 	public static enum Volume

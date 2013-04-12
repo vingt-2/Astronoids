@@ -37,7 +37,7 @@ public class HUD extends GameChar {
 						.add(new LifeDisplay(new Vector2((300 + i * 40), 300)));
 				hudObjects.get(i).transform.size = (new Vector2(2.5f, 2.5f));
 
-				System.out.println("life");
+			
 				hudObjects.get(i).Update();
 			}
 

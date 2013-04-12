@@ -1,9 +1,13 @@
 package Game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 
+import CSV.Highscore;
+import CSV.LoginMenu;
+import CSV.Statistics;
 import GameComponents.RigidBody.ForceMode;
 import GameObjects.Alien;
 import GameObjects.Asteroid;
@@ -31,6 +35,7 @@ public class GameLogic
 	public int counter = 0;
 
 	public static boolean lostLife = false;
+	public int stageCounter = 1;
 
 
 	public  ArrayList<Laser> lasers = new ArrayList<Laser>();
@@ -48,8 +53,8 @@ public class GameLogic
 	public GameLogic()
 	{
 		player = new Player();
-		player.transform.size = new Vector2(4,4);
-		player.rigidBody.frictionCoefficient = 0.05f;
+		player.transform.size = new Vector2(3,3);
+		player.rigidBody.frictionCoefficient = 0.01f;
 
 //		alien = new Alien();
 //		alien.transform.size=new Vector2(2,2);
@@ -67,7 +72,7 @@ public class GameLogic
 		if(!GameOver)
 		{
 			ExecuteLogic();
-
+			
 			CheckForEndGame();
 
 		}
@@ -129,12 +134,19 @@ public class GameLogic
 						SoundEffect.CRASH.play();
 						GameFail = true;
 						player.Delete();
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						SoundEffect.GAMEOVER.play();
 					} 
 					else 
 					{
 						immunity = true;
 						immunityTimer = System.currentTimeMillis();
-						System.out.println("TRUE");
+						//System.out.println("TRUE");
 						player.isShieldOn = true;
 						lostLife = true;
 						
@@ -193,15 +205,17 @@ public class GameLogic
 
 		if (asteroidField.asteroidList.size() == 0) 
 		{
+			stageCounter++;
 			GameWin = true;
 		}
 		
 		for(int j =0; j<PickUpList.size(); j++){
-			if(!(PickUpList.get(j).isDeleted)){
+			if(!(PickUpList.get(j).isDeleted) && !(player.isDeleted)){
 				if(player.rigidBody.isColliding((PickUpList.get(j)))){
 					PickUpList.get(j).OnPickUp();
 					PickUpList.get(j).Delete();
 					PickUpList.remove(j);
+
 				}
 			}
 		}
@@ -226,8 +240,14 @@ public class GameLogic
 
 		else if (GameWin) 
 		{
-
+			
+			if(stageCounter ==2){
+			stage2();
+			}
+			else{
+				
 			GameChar gameWin = new GameChar();
+			
 
 			gameWin.objectRenderer.SetTexture("Win");
 			gameWin.transform.size = new Vector2(40, 8);
@@ -236,7 +256,17 @@ public class GameLogic
 			hud.otherInfos.add(gameWin);
 
 			GameOver = true;
+			}
 		}
+		
+		if(GameOver)
+			try {
+				Statistics.updateStats(MainGame.currentUser, HUD.points, 0);
+				Highscore.addScore(MainGame.currentUser.getUsername(), HUD.points);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	
@@ -260,6 +290,27 @@ public class GameLogic
 			//alien.Update();
 		} 
 
+	}
+	
+	private void stage2(){
+		
+		for(int j =0; j<PickUpList.size(); j++){
+			
+					PickUpList.get(j).Delete();
+					PickUpList.remove(j);
+			
+		}
+		
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(14,5);
+		asteroidField.GenerateField();
+		GameWin = false;
+		
+	}
+	
+	private void stage3(){
+		
+		
 	}
 }
 
