@@ -1,5 +1,6 @@
 package Game;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -75,6 +76,13 @@ public class GameLogic
 			
 			CheckForEndGame();
 
+		} else { 
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				MainGame.inMenu = true;
+				Menu.inGameMenu = true;
+				Menu.initGameMenu();
+				Menu.inLevelMenu = false;
+			}
 		}
 
 		UpdateSceneObjects();
