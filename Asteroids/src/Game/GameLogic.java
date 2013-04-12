@@ -51,9 +51,9 @@ public class GameLogic
 		player.transform.size = new Vector2(4,4);
 		player.rigidBody.frictionCoefficient = 0.05f;
 
-		alien = new Alien();
-		alien.transform.size=new Vector2(2,2);
-		alien.rigidBody.frictionCoefficient= 0.05f;
+//		alien = new Alien();
+//		alien.transform.size=new Vector2(2,2);
+//		alien.rigidBody.frictionCoefficient= 0.05f;
 
 		hud = new HUD();
 
@@ -85,11 +85,35 @@ public class GameLogic
 
 		lasers = player.shooter.GetLaserArray();
 
-
+		if(asteroidField.fieldSize<50){
+			int randPosX;
+			int randPosY;
+			int randSign;
+			
+			if( alien == null){
+				
+				alien = new Alien();
+				alien.transform.size=new Vector2(2,2);
+				alien.rigidBody.frictionCoefficient= 0.05f;
+				randPosX = rand.nextInt(2000)-750;
+				randPosY = rand.nextInt(2000)-500;
+				
+				// Generated random Sign
+				randSign = rand.nextBoolean() ? -1 : 1;
+				alien.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
+			}
+			else{
+				alien.Update();
+		 }
+		}
+		
+		
 		/*
 		 * Computations on each asteroids 
 		 */
 
+		
+		
 		for (Asteroid currentAsteroid : asteroidField.asteroidList) 
 		{
 
@@ -233,7 +257,7 @@ public class GameLogic
 		if (!player.isDeleted) 
 		{
 			player.Update();
-			alien.Update();
+			//alien.Update();
 		} 
 
 	}

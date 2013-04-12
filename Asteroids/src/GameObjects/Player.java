@@ -21,7 +21,7 @@ public class Player extends GameChar
 	private GameChar shield;
 	private long birthTime;
 	private long birthTime2;
-	public long shootTimeThreshold = 200; // wait 200ms between two shots.
+	public long shootTimeThreshold = 1000000; // wait 200ms between two shots.
 
 	public Player()
 	{
@@ -75,7 +75,7 @@ public class Player extends GameChar
 			effect.TurnOff();
 		}
 
-		if(MainGame.controls.isPressed(KeyEvent.VK_X))
+		if(MainGame.controls.isPressed(KeyEvent.VK_L))
 		{
 			shooter.TurnOff();
 			if( time - lastShootTime >  shootTimeThreshold)
@@ -85,7 +85,7 @@ public class Player extends GameChar
 				if(!shooter.isTurnedOn)
 				{
 					shooter.TurnOn();
-					
+					System.out.println("shoot");
 				}
 				Shoot.counter = 0 ;
 				lastShootTime = time;

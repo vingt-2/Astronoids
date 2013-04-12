@@ -1,6 +1,8 @@
 package GameObjects;
 
+
 import java.util.ArrayList;
+
 
 import Game.MainGame;
 import GameComponents.Transform;
@@ -10,11 +12,19 @@ import Maths.Vector2;
 
 
 
+
+
+
 public class Shoot extends GameObject
 {
 
 
+
+
 	public float deltaTime = MainGame.render.deltaTime;
+
+
+
 
 
 
@@ -24,13 +34,18 @@ public class Shoot extends GameObject
 	public boolean isTurnedOn = false;
 	public static int counter = 0;
 	public long watchmen;
-	
+
+
+
 
 	Transform shootTrans;
 
 
+
+
 	public Shoot(Transform transform)
 	{
+
 
 		shootTrans = transform;
 		transform = this.transform;
@@ -38,15 +53,21 @@ public class Shoot extends GameObject
 	}
 
 
+
+
 	public void Update(){
 
-		
+
+
+
 		if(System.currentTimeMillis()-watchmen>deltaTime)
 		{
-			
+
+
 		if(isTurnedOn && counter == 0)
 		{
-			
+
+
 			//temp fix for Texture rendering in middle of screen
 			Laser laser1 = new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/2);
 			lasers.add(laser1);
@@ -57,16 +78,21 @@ public class Shoot extends GameObject
 			else
 				lasers.get(l1Index).objectRenderer.SetTexture("greenLaser");
 			lasers.get(l1Index).transform.size= new Vector2(0.75f,0.75f);
-			
+
+
+
 
 			counter++;
 		}
 
+
 		for (int j = 0; j<lasers.size(); j++)
 		{
 
+
 			if (j<lasers.size())
 			{
+
 
 				if( lasers.get(j).TimeToDie() )
 				{
@@ -77,12 +103,16 @@ public class Shoot extends GameObject
 				else lasers.get(j).Update();
 			}
 
+
 			}
 		}
 		watchmen = System.currentTimeMillis();
 			//i++;
-		
+
+
 		}
+
+
 
 
 	public void TurnOn()
@@ -93,6 +123,7 @@ public class Shoot extends GameObject
 		}
 	}
 
+
 	public void TurnOff()
 	{
 		if( isTurnedOn )
@@ -102,11 +133,14 @@ public class Shoot extends GameObject
 	}
 
 
+
+
 	public ArrayList<Laser> GetLaserArray() {
 		// TODO Auto-generated method stub
 		return lasers;
 	}
-	
+
+
 }
 
 
