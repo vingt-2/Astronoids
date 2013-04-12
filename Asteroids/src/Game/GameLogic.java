@@ -12,6 +12,7 @@ import CSV.Highscore;
 import CSV.LoginMenu;
 import CSV.Statistics;
 import GameComponents.RigidBody.ForceMode;
+import GameComponents.Transform;
 import GameObjects.Alien;
 import GameObjects.Asteroid;
 import GameObjects.AsteroidField;
@@ -20,6 +21,7 @@ import GameObjects.HUD;
 import GameObjects.HudObject;
 import GameObjects.Laser;
 import GameObjects.Life;
+import GameObjects.ParticleEffects;
 import GameObjects.Player;
 import GameObjects.PickUp;
 import GameObjects.RapidFire;
@@ -43,9 +45,16 @@ public class GameLogic
 	public int counter = 0;
 	public static boolean playerOne = false;
 	public boolean playerTwo = false;
+	public ArrayList<ParticleEffects> shrapnel = new ArrayList<ParticleEffects>();
 
 	public static boolean lostLife = false;
 	public int stageCounter = 1;
+	public boolean mediumDifficulty = false;
+	public boolean hardDifficulty = false;
+	int mediumSpeed = 0;
+	int mediumLives = 0;
+	int hardSpeed = 0;
+	int hardLives = 0;
 
 	public  ArrayList<Laser> lasers = new ArrayList<Laser>();
 	public  ArrayList<PickUp> PickUpList = new ArrayList<PickUp>();
@@ -62,7 +71,19 @@ public class GameLogic
 		player.transform.size = new Vector2(3,3);
 		player.rigidBody.frictionCoefficient = 0.03f;
 
+		
 		hud = new HUD();
+		if(Menu.isMedium) mediumDifficulty =true;
+		if(Menu.isHard) hardDifficulty = true;
+		System.out.println(mediumDifficulty + " " + hardDifficulty);
+		if(mediumDifficulty){
+			mediumSpeed =50;
+			mediumLives =1;
+		}
+		if(hardDifficulty){
+			mediumSpeed = 70;
+			mediumLives = 3;
+		}
 
 
 		asteroidField = new AsteroidField(12,5);
@@ -115,7 +136,7 @@ public class GameLogic
 
 
 		lasers = player.shooter.GetLaserArray();
-		System.out.println(asteroidField.fieldSize);
+		
 
 		if(asteroidField.fieldSize < 21){
 			if( alien == null){
@@ -152,7 +173,11 @@ public class GameLogic
 
 		for (Asteroid currentAsteroid : asteroidField.asteroidList) 
 		{
-
+			Transform temporaryTransform = currentAsteroid.transform;
+			ParticleEffects collateral = new ParticleEffects(temporaryTransform, 30);
+			collateral.isShrapnel =true;
+			shrapnel.add(collateral);
+			
 			// PLAYER COLLISION WITH ASTEROID
 			if (!player.isDeleted) 
 			{
@@ -203,18 +228,20 @@ public class GameLogic
 					{
 						if (lasers.get(j).rigidBody.isColliding(currentAsteroid))
 						{
-
+						collateral.TurnOn();
+							
 							currentAsteroid.lives--;
 							if(currentAsteroid.lives ==0){
 								currentAsteroid.isBroken = true;
 								HUD.points += 10;
 								SoundEffect.ASTEROIDBREAK.play();
-
+								
 							}
+							
 
 							lasers.get(j).Delete();
 							lasers.remove(j);
-
+							
 								
 
 								if(rand.nextInt(40) == 1){
@@ -324,6 +351,17 @@ public class GameLogic
 				alien.Update();
 			} 
 			hud.Update();
+			for(int k =0; k<shrapnel.size(); k++){
+				if(!shrapnel.get(k).isDeleted){
+					shrapnel.get(k).Update();
+					if(shrapnel.get(k).TimeToDie()){
+						shrapnel.get(k).TurnOff();
+						//shrapnel.get(k).Delete();
+						//shrapnel.remove(k);
+					}
+				}
+			}
+			
 
 
 		}
@@ -344,8 +382,8 @@ public class GameLogic
 
 			player.rigidBody.SetPosition(new Vector2(0,0));
 			asteroidField = new AsteroidField(14,5);
-			asteroidField.speed = 25;
-			asteroidField.numberOfLives = 1;
+			asteroidField.speed = 25+hardSpeed+mediumSpeed;
+			asteroidField.numberOfLives = 1+hardLives+mediumLives;
 
 			asteroidField.GenerateField();
 			GameWin = false;
@@ -362,6 +400,7 @@ public class GameLogic
 			}
 
 			PickUpList.clear();
+			
 			HudObject stage3 = new HudObject(new Vector2(0,0));
 			stage3.objectRenderer.SetTexture("Stage3");
 			stage3.transform.size = new Vector2(40,15);
@@ -369,8 +408,8 @@ public class GameLogic
 
 			player.rigidBody.SetPosition(new Vector2(0,0));
 			asteroidField = new AsteroidField(17,5);
-			asteroidField.speed = 50;
-			asteroidField.numberOfLives = 2;
+			asteroidField.speed = 50+hardSpeed+mediumSpeed;
+			asteroidField.numberOfLives = 2+hardLives+mediumLives;
 			asteroidField.GenerateField();
 			GameWin = false;
 
@@ -391,7 +430,8 @@ public class GameLogic
 
 			player.rigidBody.SetPosition(new Vector2(0,0));
 			asteroidField = new AsteroidField(19,5);
-			asteroidField.speed = 100;
+			asteroidField.speed = 100+hardSpeed+mediumSpeed;
+			asteroidField.numberOfLives = 2+hardLives+mediumLives;
 			asteroidField.GenerateField();
 			GameWin = false;
 
@@ -413,6 +453,8 @@ public class GameLogic
 
 			player.rigidBody.SetPosition(new Vector2(0,0));
 			asteroidField = new AsteroidField(21,5);
+			asteroidField.numberOfLives = 3+hardLives+mediumLives;
+			asteroidField.speed = 150 +hardSpeed+mediumSpeed;
 			asteroidField.GenerateField();
 			GameWin = false;
 
