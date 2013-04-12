@@ -271,8 +271,6 @@ public class Menu {
 			backToMenu.objectRenderer.SetTexture("mainMenuOnHover");
 			quitPause.objectRenderer.SetTexture("quit");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				//initGameMenu();
-				//inGameMenu = true;
 				initStartMenu();
 				inStartMenu = true;
 				MainGame.inPauseGameMode = false;
@@ -468,6 +466,7 @@ public class Menu {
 
 	private void inEnterUsernameNew() {
 		if(stopShowing){
+			MainGame.controls.recordKey = true;
 			inputUsername = MainGame.controls.recordString;
 			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.White,1f);
 		}
@@ -479,12 +478,12 @@ public class Menu {
 			}
 		}
 		enterUsername.Update();
-
 		if(CSV.LoginMenu.available){
 			if (counter3 == 0){
 				initGameMenu();
 				inGameMenu = true;
 				stopShowing = false;
+				MainGame.controls.recordKey = false;
 				inEnterUsernameNew = false;
 				counter3++;
 			}
@@ -619,6 +618,7 @@ public class Menu {
 		stopShowing = true;
 		CSV.LoginMenu.login = false;
 		counter2 = 0;
+		counter3 = 0;
 		background = new GameChar();
 		createUser = new GameChar();
 		loadUser = new GameChar();

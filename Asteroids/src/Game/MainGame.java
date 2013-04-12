@@ -159,7 +159,7 @@ public class MainGame
 				playerOne = true;
 				playerTwo = true;
 				twoPlayerMode = false;
-			}
+			} 
 
 			// Put Game Logic here
 			if(controls.isPressed(KeyEvent.VK_P) && pressCount==0){
@@ -180,12 +180,9 @@ public class MainGame
 
 			else{ //Pause Game
 				inMenu = true;
-				enterKeyPressed = true;
 				inPauseGameMode = true;
 				menuLogic.inLevelMenu = false;
 			}
-
-
 		}
 
 		//alien.Update();
