@@ -65,7 +65,7 @@ public class GameLogic
 	// GAME LOGIC STATES !
 	public boolean GameFail = false;
 	public boolean GameWin 	= false;
-	public boolean GameOver = false;
+	public static boolean GameOver = false;
 
 	public GameLogic()
 	{
@@ -73,7 +73,7 @@ public class GameLogic
 		player.transform.size = new Vector2(3,3);
 		player.rigidBody.frictionCoefficient = 0.03f;
 
-		
+
 		hud = new HUD();
 		if(Menu.isMedium) mediumDifficulty =true;
 		if(Menu.isHard) hardDifficulty = true;
@@ -161,7 +161,7 @@ public class GameLogic
 
 
 		lasers = player.shooter.GetLaserArray();
-		
+
 
 		if(asteroidField.fieldSize < 21){
 			if( alien == null){
@@ -202,7 +202,7 @@ public class GameLogic
 			ParticleEffects collateral = new ParticleEffects(temporaryTransform, 30);
 			collateral.isShrapnel =true;
 			shrapnel.add(collateral);
-			
+
 			// PLAYER COLLISION WITH ASTEROID
 			if (!player.isDeleted) 
 			{
@@ -216,7 +216,7 @@ public class GameLogic
 						SoundEffect.CRASH.play();
 						GameFail = true;
 						player.Delete();
-					
+
 						SoundEffect.GAMEOVER.play();
 					} 
 					else 
@@ -248,16 +248,16 @@ public class GameLogic
 					{
 						if (lasers.get(j).rigidBody.isColliding(currentAsteroid))
 						{
-						collateral.TurnOn();
-							
+							collateral.TurnOn();
+
 							currentAsteroid.lives--;
 							if(currentAsteroid.lives ==0){
 								currentAsteroid.isBroken = true;
 								HUD.points += 10;
 								SoundEffect.ASTEROIDBREAK.play();
-								
+
 							}
-							
+
 
 							lasers.get(j).Delete();
 							lasers.remove(j);
@@ -355,27 +355,26 @@ public class GameLogic
 				e.printStackTrace();
 			}
 
-			asteroidField.Update();
-			hud.Update();
-			if (!player.isDeleted) 
-			{
-				player.Update();
-				alien.Update();
-			} 
-			hud.Update();
-			for(int k =0; k<shrapnel.size(); k++){
-				if(!shrapnel.get(k).isDeleted && !player.isDeleted){
-					shrapnel.get(k).Update();
-					
-				}
-				if(shrapnel.get(k).TimeToDie()){
-					shrapnel.get(k).TurnOff();
-					//shrapnel.get(k).Delete();
-					//shrapnel.remove(k);
-				}
-			}
-			
+		asteroidField.Update();
+		hud.Update();
+		if (!player.isDeleted) 
+		{
+			player.Update();
+			alien.Update();
+		} 
+		hud.Update();
+		for(int k =0; k<shrapnel.size(); k++){
+			if(!shrapnel.get(k).isDeleted && !player.isDeleted){
+				shrapnel.get(k).Update();
 
+			}
+			if(shrapnel.get(k).TimeToDie()){
+				shrapnel.get(k).TurnOff();
+				//shrapnel.get(k).Delete();
+				//shrapnel.remove(k);
+			}
+		}
+		
 	}
 
 	private void UpdateSceneObjects()
@@ -424,10 +423,10 @@ public class GameLogic
 		}
 
 
-			player.rigidBody.SetPosition(new Vector2(0,0));
-			asteroidField = new AsteroidField(14,5);
-			asteroidField.speed = 25+hardSpeed+mediumSpeed;
-			asteroidField.numberOfLives = 1+hardLives+mediumLives;
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(14,5);
+		asteroidField.speed = 25+hardSpeed+mediumSpeed;
+		asteroidField.numberOfLives = 1+hardLives+mediumLives;
 
 
 		PickUpList.clear();
@@ -458,7 +457,7 @@ public class GameLogic
 		}
 
 		PickUpList.clear();
-		
+
 		HudObject stage3 = new HudObject(new Vector2(0,0));
 		stage3.objectRenderer.SetTexture("Stage3");
 		stage3.transform.size = new Vector2(40,15);
