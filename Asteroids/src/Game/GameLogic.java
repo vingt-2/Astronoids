@@ -24,6 +24,7 @@ import GameObjects.Player;
 import GameObjects.PickUp;
 import GameObjects.RapidFire;
 import GameObjects.Shield;
+import Helpers.Color;
 import Helpers.SoundEffect;
 import Maths.Vector2;
 import java.util.Random;
@@ -41,9 +42,7 @@ public class GameLogic
 	public boolean immunity;
 	public long immunityTimer;
 	public int counter = 0;
-	public static boolean playerOne = false;
-	public boolean playerTwo = false;
-
+	
 	public static boolean lostLife = false;
 	public int stageCounter = 1;
 
@@ -64,10 +63,8 @@ public class GameLogic
 
 		hud = new HUD();
 
-
 		asteroidField = new AsteroidField(12,5);
 		asteroidField.GenerateField();
-
 
 	}
 
@@ -80,21 +77,46 @@ public class GameLogic
 			ExecuteLogic();
 			CheckForEndGame();
 		}
-		else if(playerOne){
+		else if(MainGame.playerOne){
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				player.Delete();
-				for (Asteroid currentAsteroid : asteroidField.asteroidList){
-					currentAsteroid.Delete();
-				}
-				for (GameChar object : hud.otherInfos){
-					object.Delete();
-				}
+				clearGameScreen();
 				MainGame.enterKeyPressed = true;
-				hud.otherInfos.clear();
+				MainGame.scoreOne = HUD.points;
 				HUD.points = 0;
-				playerOne = false;
-				playerTwo = true;
+				MainGame.playerTwo = true;
+				MainGame.playerOne = false;
 				GameOver = false;
+			}
+		}
+		else if(MainGame.playerTwo){
+			clearGameScreen();
+			String winner;
+
+			MainGame.scoreTwo = HUD.points;
+			
+			if(MainGame.scoreOne == MainGame.scoreTwo)
+				winner = "Tie!";
+			else if(MainGame.scoreOne < MainGame.scoreTwo)
+				winner = "Player 2 Wins";
+			else
+				winner = "Player 1 Wins";
+			MainGame.render.DrawText(winner,Vector2.zero(),Color.White,1f);
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				clearGameScreen();
+
+				HUD.points = 0;
+				MainGame.inMenu = true;
+				MainGame.inStartMenu = true;
+			}
+		}
+		else{
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				clearGameScreen();
+				HUD.points = 0;
+				MainGame.inMenu = true;
+				Menu.inGameMenu = true;
+				Menu.initGameMenu();
+				Menu.inLevelMenu = false;
 			}
 		}
 		UpdateSceneObjects();
@@ -289,7 +311,7 @@ public class GameLogic
 			}
 		}
 
-		if(GameOver && !playerOne && !playerTwo)
+		if(GameOver && !MainGame.playerOne && !MainGame.playerTwo)
 			try {
 				Statistics.updateStats(MainGame.currentUser, HUD.points, 0);
 				Highscore.addScore(MainGame.currentUser.getUsername(), HUD.points);
@@ -300,6 +322,26 @@ public class GameLogic
 
 	}
 
+	private void clearGameScreen(){
+		player.Delete();
+		for (Asteroid currentAsteroid : asteroidField.asteroidList){
+			currentAsteroid.Delete();
+		}
+		for (GameChar object : hud.otherInfos){
+			object.Delete();
+		}
+		for (GameChar object : PickUpList){
+			object.Delete();
+		}
+		asteroidField.asteroidList.clear();
+		hud.otherInfos.clear();
+		PickUpList.clear();
+		if(alien != null)
+			alien.Delete();
+		if(alien2 != null)
+			alien2.Delete();
+	}
+	
 	private void UpdateSceneObjects()
 	{	
 		for(int j =0; j<PickUpList.size(); j++){
@@ -383,7 +425,7 @@ public class GameLogic
 		GameWin = false;
 
 	}
-	
+
 	private void stage5(){
 
 		for(int j =0; j<PickUpList.size(); j++){

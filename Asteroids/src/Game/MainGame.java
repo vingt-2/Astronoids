@@ -28,13 +28,19 @@ public class MainGame
 	public static boolean twoPlayerMode 	= false;
 	public static boolean inStartGame 		= true;
 	public static boolean inPauseGameMode 	= false;
-
+	public static boolean inStartMenu		= false;
+	
 	public static boolean  update =true;
 	public int pressCount = 0;
 
 	public static boolean winChecker = false;
 	public int counter=0;
 	public static User currentUser;
+	
+	public static boolean playerOne = false;
+	public static boolean playerTwo = false;
+	public static int scoreOne = 0;
+	public static int scoreTwo = 0;
 
 	// Game singletons
 	public static final SharedRessources sharedRessources	= new SharedRessources();
@@ -150,7 +156,8 @@ public class MainGame
 
 			if(twoPlayerMode){
 				init (gl);
-				GameLogic.playerOne = true;
+				playerOne = true;
+				playerTwo = true;
 				twoPlayerMode = false;
 			}
 
