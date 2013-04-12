@@ -274,6 +274,7 @@ public class Menu {
 				initStartMenu();
 				inStartMenu = true;
 				MainGame.inPauseGameMode = false;
+				MainGame.update = true;
 				back = false;
 			}
 			break;
@@ -614,6 +615,7 @@ public class Menu {
 
 	public void initStartMenu(){
 		Controls.menuCounter = 0;
+		counter = 0;
 		MainGame.controls.recordString = "";
 		stopShowing = true;
 		CSV.LoginMenu.login = false;
