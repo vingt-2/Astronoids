@@ -192,7 +192,11 @@ public class GameLogic
 				if(player.rigidBody.isColliding((PickUpList.get(j)))){
 					PickUpList.get(j).OnPickUp();
 					PickUpList.get(j).Delete();
+
+					//PickUpList.remove(j);
+
 					PickUpList.remove(j);
+
 
 				}
 			}

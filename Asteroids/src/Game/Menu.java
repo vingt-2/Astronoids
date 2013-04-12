@@ -8,6 +8,7 @@ import com.jogamp.graph.curve.opengl.Renderer;
 import GameObjects.GameChar;
 import Helpers.Color;
 import Maths.Vector2;
+
 public class Menu {
 	Renderer render;
 	GameChar createUser;
@@ -28,11 +29,12 @@ public class Menu {
 	GameChar resumeGame;
 	GameChar backToMenu;
 	GameChar quitPause;
+	GameChar statisticsFont;
+	GameChar highScoresFont;
 
-
-	public static int counter2 = 0;
-	public static int counter = 0;
-
+	public int counter2 = 0;
+	public int counter3 = 0;
+	public int counter = 0;
 	public int pressCount = 0;
 	public boolean back = false;
 
@@ -71,12 +73,8 @@ public class Menu {
 		twoPlayer.transform.position = new Vector2 (0,-3);
 		twoPlayer.rigidBody.frictionCoefficient = 0.1f;
 		quit.objectRenderer.SetTexture("quit");
-
 		quit.transform.position = new Vector2 (0,-8);
 		quit.transform.size = new Vector2 (30,10);
-
-
-
 		MainGame.controls.recordKey = true;
 
 	}
@@ -93,8 +91,8 @@ public class Menu {
 		}
 		if(MainGame.inPauseGameMode){
 			if(counter == 0){
-				System.out.println("pause");
 				initPauseMenu();
+				counter2 = 0;
 				counter++;
 			}
 			updatePauseMenu();
@@ -110,10 +108,12 @@ public class Menu {
 		if (inHighScores){
 			showHS = true;
 			inHighScores();
+			highScoresFont.Update();
 		}
 		if (inStatistics){
 			showStats = true;
 			inStatistics();
+			statisticsFont.Update();
 		}
 
 		if(MainGame.controls.isPressed(KeyEvent.VK_BACK_SPACE) && pressCount==0){
@@ -133,7 +133,12 @@ public class Menu {
 				inEnterUsername = false;
 				inEnterUsernameNew = false;
 				inStartMenu = true;
-				stopShowing = true;
+				back = false;
+			}
+			if(inEnterUsername){
+				initStartMenu();
+				inEnterUsername = false;
+				inStartMenu = true;
 				back = false;
 			}
 			if(inInstructions){
@@ -151,6 +156,7 @@ public class Menu {
 				showStats = false;
 				inGameMenu = true;
 				back = false;
+				statisticsFont.Delete();
 				initGameMenu();
 			}
 			if (inHighScores){
@@ -158,6 +164,7 @@ public class Menu {
 				inHighScores = false;
 				inGameMenu = true;
 				Controls.menuCounter = 0;
+				highScoresFont.Delete();
 				showHS = false;
 				back = false;
 			}
@@ -174,7 +181,6 @@ public class Menu {
 
 		}
 	}
-
 
 	private void updateStartMenu() {
 		switch(Controls.menuCounter){
@@ -253,6 +259,8 @@ public class Menu {
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				initStartMenu();
 				inStartMenu = true;
+				MainGame.inPauseGameMode = false;
+				back = false;
 			}
 			break;
 		case 2:
@@ -303,7 +311,7 @@ public class Menu {
 			if (MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				inGameMenu = false;
 				inStatistics = true;
-				initHighScoresAndStatistics();
+				initStatistics();
 			}
 			break;
 		case 3:
@@ -314,7 +322,7 @@ public class Menu {
 			if (MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				inGameMenu = false;
 				inHighScores = true;
-				initHighScoresAndStatistics();
+				initHighScores();
 			}
 			break;
 		}
@@ -369,6 +377,7 @@ public class Menu {
 
 	private void inEnterUsername() {
 		if(stopShowing){
+			MainGame.controls.recordKey = true;
 			inputUsername = MainGame.controls.recordString;
 			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.Blue,1f);
 		}
@@ -378,6 +387,8 @@ public class Menu {
 				if(CSV.LoginMenu.login(inputUsername)){
 					if (counter2 == 0){
 						initGameMenu();
+						inEnterUsername = false;
+						MainGame.controls.recordKey = false;
 						inGameMenu = true;
 						stopShowing = false;
 						counter2++;
@@ -435,11 +446,12 @@ public class Menu {
 		enterUsername.Update();
 
 		if(CSV.LoginMenu.available){
-			if (counter2 == 0){
+			if (counter3 == 0){
 				initGameMenu();
 				inGameMenu = true;
 				stopShowing = false;
-				counter2++;
+				inEnterUsernameNew = false;
+				counter3++;
 			}
 		} else {
 			System.out.println("Not possible");
@@ -455,6 +467,7 @@ public class Menu {
 		enterUsername.objectRenderer.SetTexture("enterUsername");
 		enterUsername.transform.size = new Vector2(35,15);
 		enterUsername.transform.position = new Vector2(0,5);
+		//inputUsername = "";
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
 
@@ -497,11 +510,27 @@ public class Menu {
 		instructionTable.transform.size = new Vector2 (35,25);
 	}
 
-	public void initHighScoresAndStatistics() {
+	public void initHighScores(){
 		startGame.Delete();
 		instructions.Delete();
 		statistics.Delete();
 		highScores.Delete();
+		highScoresFont = new GameChar();
+		highScoresFont.objectRenderer.SetTexture("highScores");
+		highScoresFont.transform.size = new Vector2 (30,10);
+		highScoresFont.transform.position = new Vector2 (0,10);
+	}
+	
+	public void initStatistics() {
+		startGame.Delete();
+		instructions.Delete();
+		statistics.Delete();
+		highScores.Delete();
+		statisticsFont = new GameChar();
+		statisticsFont.objectRenderer.SetTexture("statistics");
+		statisticsFont.transform.size = new Vector2 (30,10);
+		statisticsFont.transform.position = new Vector2 (0,10);
+		
 	}
 	public void initLevelMenu(){ 
 		Controls.menuCounter = 0;
@@ -550,6 +579,10 @@ public class Menu {
 
 	public void initStartMenu(){
 		Controls.menuCounter = 0;
+		MainGame.controls.recordString = "";
+		stopShowing = true;
+		CSV.LoginMenu.login = false;
+		counter2 = 0;
 		background = new GameChar();
 		createUser = new GameChar();
 		loadUser = new GameChar();
