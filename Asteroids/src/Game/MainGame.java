@@ -107,7 +107,8 @@ public class MainGame
 					new Ressource("Empty","./resources/textures/Untitled-1.png", RessourceType.Texture),
 					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture),
 					new Ressource("Shield","./resources/textures/Shield.png", RessourceType.Texture),
-					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture)
+					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture),
+					new Ressource("Alien2", "./resources/textures/Alien2.png", RessourceType.Texture)
 					}
 					);
 			

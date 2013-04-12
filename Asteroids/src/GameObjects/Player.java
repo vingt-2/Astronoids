@@ -75,7 +75,7 @@ public class Player extends GameChar
 			effect.TurnOff();
 		}
 
-		if(MainGame.controls.isPressed(KeyEvent.VK_L))
+		if(MainGame.controls.isPressed(KeyEvent.VK_SPACE))
 		{
 			shooter.TurnOff();
 			if( time - lastShootTime >  shootTimeThreshold)
@@ -91,7 +91,7 @@ public class Player extends GameChar
 				lastShootTime = time;
 			}
 		}
-		
+	
 		
 	}
 	

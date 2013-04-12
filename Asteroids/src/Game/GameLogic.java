@@ -28,6 +28,7 @@ public class GameLogic
 
 	public Player player;
 	public Alien alien;
+	public Alien alien2;
 	public HUD hud;
 
 	public boolean immunity;
@@ -56,9 +57,9 @@ public class GameLogic
 		player.transform.size = new Vector2(3,3);
 		player.rigidBody.frictionCoefficient = 0.01f;
 
-//		alien = new Alien();
-//		alien.transform.size=new Vector2(2,2);
-//		alien.rigidBody.frictionCoefficient= 0.05f;
+		//		alien = new Alien();
+		//		alien.transform.size=new Vector2(2,2);
+		//		alien.rigidBody.frictionCoefficient= 0.05f;
 
 		hud = new HUD();
 
@@ -72,7 +73,7 @@ public class GameLogic
 		if(!GameOver)
 		{
 			ExecuteLogic();
-			
+
 			CheckForEndGame();
 
 		}
@@ -85,40 +86,53 @@ public class GameLogic
 
 	private void ExecuteLogic()
 	{
-
+		int randPosX;
+		int randPosY;
+		int randSign;
 		Random rand = new Random();
+		randPosX = rand.nextInt(1000)-750;
+		randPosY = rand.nextInt(1000)-500;
+		// Generated random Sign
+		randSign = rand.nextBoolean() ? -1 : 1;
+
 
 		lasers = player.shooter.GetLaserArray();
+		System.out.println(asteroidField.fieldSize);
 
-		if(asteroidField.fieldSize<50){
-			int randPosX;
-			int randPosY;
-			int randSign;
-			
+		if(asteroidField.fieldSize < 21){
 			if( alien == null){
-				
-				alien = new Alien();
+
+				alien= new Alien("Alien1");
 				alien.transform.size=new Vector2(2,2);
 				alien.rigidBody.frictionCoefficient= 0.05f;
-				randPosX = rand.nextInt(2000)-750;
-				randPosY = rand.nextInt(2000)-500;
-				
-				// Generated random Sign
-				randSign = rand.nextBoolean() ? -1 : 1;
 				alien.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
+				System.out.println(asteroidField.fieldSize);
+
 			}
 			else{
 				alien.Update();
-		 }
+			}
+			if (asteroidField.fieldSize < 11){
+				
+			if(alien2 == null){
+
+				alien2= new Alien("Alien2");
+				alien2.transform.size=new Vector2(2,2);
+				alien2.rigidBody.frictionCoefficient= 0.05f;
+
+				alien2.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
+			}
+			else
+				alien2.Update();}
 		}
-		
-		
+
+
 		/*
 		 * Computations on each asteroids 
 		 */
 
-		
-		
+
+
 		for (Asteroid currentAsteroid : asteroidField.asteroidList) 
 		{
 
@@ -149,7 +163,7 @@ public class GameLogic
 						//System.out.println("TRUE");
 						player.isShieldOn = true;
 						lostLife = true;
-						
+
 					}
 
 				}
@@ -161,11 +175,11 @@ public class GameLogic
 						&& immunity) {
 
 					immunity = false;
-					
+
 				}
 
 
-				
+
 				// Check for player lasers collision
 
 
@@ -182,10 +196,10 @@ public class GameLogic
 							HUD.points += 10;
 							SoundEffect.ASTEROIDBREAK.play();
 
-						
+
 							lasers.get(j).Delete();
 							lasers.remove(j);
-							
+
 							if(rand.nextInt(10) == 1){
 								PickUpList.add(new Shield(currentAsteroid.transform.position));
 							}
@@ -195,10 +209,10 @@ public class GameLogic
 							if(rand.nextInt(10) == 3){
 								PickUpList.add(new Life(currentAsteroid.transform.position));
 							}
-							
+
 						}
 					}
-										
+
 				}
 			}
 		}
@@ -208,7 +222,7 @@ public class GameLogic
 			stageCounter++;
 			GameWin = true;
 		}
-		
+
 		for(int j =0; j<PickUpList.size(); j++){
 			if(!(PickUpList.get(j).isDeleted) && !(player.isDeleted)){
 				if(player.rigidBody.isColliding((PickUpList.get(j)))){
@@ -240,25 +254,25 @@ public class GameLogic
 
 		else if (GameWin) 
 		{
-			
+
 			if(stageCounter ==2){
-			stage2();
+				stage2();
 			}
 			else{
-				
-			GameChar gameWin = new GameChar();
-			
 
-			gameWin.objectRenderer.SetTexture("Win");
-			gameWin.transform.size = new Vector2(40, 8);
-			gameWin.transform.position = new Vector2(0, 0);
-			gameWin.rigidBody.frictionCoefficient = 0.1f;
-			hud.otherInfos.add(gameWin);
+				GameChar gameWin = new GameChar();
 
-			GameOver = true;
+
+				gameWin.objectRenderer.SetTexture("Win");
+				gameWin.transform.size = new Vector2(40, 8);
+				gameWin.transform.position = new Vector2(0, 0);
+				gameWin.rigidBody.frictionCoefficient = 0.1f;
+				hud.otherInfos.add(gameWin);
+
+				GameOver = true;
 			}
 		}
-		
+
 		if(GameOver)
 			try {
 				Statistics.updateStats(MainGame.currentUser, HUD.points, 0);
@@ -269,20 +283,20 @@ public class GameLogic
 			}
 	}
 
-	
-	
+
+
 	private void UpdateSceneObjects()
 	{	
 		for(int j =0; j<PickUpList.size(); j++){
 			if(!(PickUpList.get(j).isDeleted)){
-				
+
 				PickUpList.get(j).Update();
-			
+
 			}	
-				
-			}
+
+		}
 		asteroidField.Update();
-		
+
 		hud.Update();
 		if (!player.isDeleted) 
 		{
@@ -291,26 +305,26 @@ public class GameLogic
 		} 
 
 	}
-	
+
 	private void stage2(){
-		
+
 		for(int j =0; j<PickUpList.size(); j++){
-			
-					PickUpList.get(j).Delete();
-					PickUpList.remove(j);
-			
+
+			PickUpList.get(j).Delete();
+			PickUpList.remove(j);
+
 		}
-		
+
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(14,5);
 		asteroidField.GenerateField();
 		GameWin = false;
-		
+
 	}
-	
+
 	private void stage3(){
-		
-		
+
+
 	}
 }
 
