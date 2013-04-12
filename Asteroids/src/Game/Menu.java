@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.jogamp.graph.curve.opengl.Renderer;
 
 import GameObjects.GameChar;
+import GameObjects.HUD;
 import Helpers.Color;
 import Maths.Vector2;
 
@@ -280,6 +281,7 @@ public class Menu {
 				MainGame.inPauseGameMode = false;
 				MainGame.update = true;
 				back = false;
+				HUD.points = 0;
 			}
 			break;
 		case 2:
