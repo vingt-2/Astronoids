@@ -111,6 +111,10 @@ public class Menu {
 		if (inEnterUsername){
 			inEnterUsername();
 		}
+		if(inInstructions){
+			instructionFont.Update();
+			instructionTable.Update();
+		}
 
 		if (inHighScores){
 			showHS = true;
@@ -271,8 +275,6 @@ public class Menu {
 			backToMenu.objectRenderer.SetTexture("mainMenuOnHover");
 			quitPause.objectRenderer.SetTexture("quit");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				//initGameMenu();
-				//inGameMenu = true;
 				initStartMenu();
 				inStartMenu = true;
 				MainGame.inPauseGameMode = false;
@@ -543,9 +545,10 @@ public class Menu {
 		instructionFont = new GameChar();
 		instructionFont.objectRenderer.SetTexture("instructionFont");
 		instructionFont.transform.size = new Vector2 (20,5);
-		instructionFont.transform.position = new Vector2 (25,45);
+		instructionFont.transform.position = new Vector2 (0,15);
 		instructionTable.objectRenderer.SetTexture("instructionTable");
 		instructionTable.transform.size = new Vector2 (35,25);
+		instructionTable.transform.position = new Vector2 (0,-2);
 	}
 
 	public void initHighScores(){
