@@ -364,7 +364,7 @@ public class Menu {
 				MainGame.enterKeyPressed = true;
 				isMedium = false;
 				isHard = false;
-
+				GameLogic.GameOver = false;
 				easy.Delete();
 				medium.Delete();
 				hard.Delete();
@@ -382,7 +382,7 @@ public class Menu {
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
-
+				GameLogic.GameOver = false;
 				easy.Delete();
 				medium.Delete();
 				hard.Delete();
@@ -398,7 +398,7 @@ public class Menu {
 				MainGame.enterKeyPressed = true;
 				isHard = true;
 				isMedium =false;
-				
+				GameLogic.GameOver = false;
 				easy.Delete();
 				medium.Delete();
 				hard.Delete();
