@@ -448,7 +448,7 @@ public class Menu {
 	private void inEnterUsernameNew() {
 		if(stopShowing){
 			inputUsername = MainGame.controls.recordString;
-			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.Blue,1f);
+			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.White,1f);
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 			try {
