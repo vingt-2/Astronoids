@@ -10,23 +10,9 @@ import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import Maths.Vector2;
 
-
-
-
-
-
 public class Shoot extends GameObject
 {
-
-
-
-
 	public float deltaTime = MainGame.render.deltaTime;
-
-
-
-
-
 
 	public Transform transform;
 	public int i = 0;
@@ -37,35 +23,20 @@ public class Shoot extends GameObject
 	public boolean isAlien1 = false;
 	public boolean isAlien2 = false;
 
-
-
-
 	Transform shootTrans;
-
-
-
 
 	public Shoot(Transform transform)
 	{
-
 
 		shootTrans = transform;
 		transform = this.transform;
 		lasers = new ArrayList<Laser>();
 	}
 
-
-
-
 	public void Update(){
-
-
-
-
 		if(System.currentTimeMillis()-watchmen>deltaTime)
 		{
-
-
+			
 		if(isTurnedOn && counter == 0)
 		{
 
@@ -92,38 +63,35 @@ public class Shoot extends GameObject
 
 
 
-			counter++;
-		}
+	
 
-
-		for (int j = 0; j<lasers.size(); j++)
-		{
-
-
-			if (j<lasers.size())
-			{
-				
-
-				if( lasers.get(j).TimeToDie() )
-				{
-					lasers.get(j).Delete();
-					lasers.remove(j);
-					TurnOff();
-				}
-				else lasers.get(j).Update();
+				counter++;
 			}
+
+			for (int j = 0; j<lasers.size(); j++)
+			{
+	
+
+				if (j<lasers.size())
+
+				{
+					if( lasers.get(j).TimeToDie() )
+					{
+						lasers.get(j).Delete();
+						lasers.remove(j);
+						TurnOff();
+					}
+					else lasers.get(j).Update();
+				}
 
 
 			}
 		}
 		watchmen = System.currentTimeMillis();
-			//i++;
+		//i++;
 
 
-		}
-
-
-
+	}
 
 	public void TurnOn()
 	{
@@ -133,7 +101,6 @@ public class Shoot extends GameObject
 		}
 	}
 
-
 	public void TurnOff()
 	{
 		if( isTurnedOn )
@@ -142,9 +109,6 @@ public class Shoot extends GameObject
 		}
 	}
 
-
-
-
 	public ArrayList<Laser> GetLaserArray() {
 		// TODO Auto-generated method stub
 		return lasers;
@@ -152,5 +116,3 @@ public class Shoot extends GameObject
 
 
 }
-
-

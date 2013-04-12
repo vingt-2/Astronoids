@@ -64,8 +64,10 @@ public class GameLogic
 	// GAME LOGIC STATES !
 	public boolean GameFail = false;
 	public boolean GameWin 	= false;
-	public boolean GameOver = false;
+
 	public int numberOfAsteroidsDestroyed = 0;
+
+	public static boolean GameOver = false;
 
 	public GameLogic()
 	{
@@ -73,7 +75,7 @@ public class GameLogic
 		player.transform.size = new Vector2(3,3);
 		player.rigidBody.frictionCoefficient = 0.03f;
 
-		
+
 		hud = new HUD();
 		if(Menu.isMedium) mediumDifficulty =true;
 		else mediumDifficulty = false;
@@ -157,7 +159,7 @@ public class GameLogic
 
 
 		lasers = player.shooter.GetLaserArray();
-		
+
 
 		if(numberOfAsteroidsDestroyed  > 10 &&(stageCounter ==2 ||stageCounter ==4||stageCounter ==5)){
 			if( alien == null){
@@ -198,6 +200,7 @@ public class GameLogic
 			for(int i = 0; i <alienLaser1.size(); i++){
 				if(player.rigidBody.isColliding(alienLaser1.get(i))){
 					player.lives --;
+					
 					if (player.lives == 0) 
 					{
 						SoundEffect.CRASH.play();
@@ -241,22 +244,22 @@ public class GameLogic
 			ParticleEffects collateral = new ParticleEffects(temporaryTransform, 30);
 			collateral.isShrapnel =true;
 			shrapnel.add(collateral);
-			
+
 			// PLAYER COLLISION WITH ASTEROID
 			if (!player.isDeleted) 
 			{
 				if (player.rigidBody.isColliding(currentAsteroid) && !immunity)
 				{
-					if(currentAsteroid.transform.position.x-player.transform.position.x < 5){
+					
 					player.lives--;
-					}
+					
 
 					if (player.lives == 0) 
 					{
 						SoundEffect.CRASH.play();
 						GameFail = true;
 						player.Delete();
-					
+
 						SoundEffect.GAMEOVER.play();
 					} 
 					else 
@@ -288,16 +291,19 @@ public class GameLogic
 					{
 						if (lasers.get(j).rigidBody.isColliding(currentAsteroid))
 						{
+
 						collateral.TurnOn();
 						numberOfAsteroidsDestroyed ++;
+
+
 							currentAsteroid.lives--;
 							if(currentAsteroid.lives ==0){
 								currentAsteroid.isBroken = true;
 								HUD.points += 10;
 								SoundEffect.ASTEROIDBREAK.play();
-								
+
 							}
-							
+
 
 							lasers.get(j).Delete();
 							lasers.remove(j);
@@ -416,31 +422,27 @@ public class GameLogic
 				e.printStackTrace();
 			}
 
-			asteroidField.Update();
-			hud.Update();
-			if (!player.isDeleted) 
-			{
-				player.Update();
 
-			} 
-			
-//			if(alien != null){
-//				if(!alien.isDeleted) alien.Update();
-//			}
-			hud.Update();
-			for(int k =0; k<shrapnel.size(); k++){
-				if(!shrapnel.get(k).isDeleted && !player.isDeleted){
-					shrapnel.get(k).Update();
-					
-				}
-				if(shrapnel.get(k).TimeToDie()){
-					shrapnel.get(k).TurnOff();
-					//shrapnel.get(k).Delete();
-					//shrapnel.remove(k);
-				}
+		asteroidField.Update();
+		hud.Update();
+		if (!player.isDeleted) 
+		{
+			player.Update();
+
+		} 
+		hud.Update();
+		for(int k =0; k<shrapnel.size(); k++){
+			if(!shrapnel.get(k).isDeleted && !player.isDeleted){
+				shrapnel.get(k).Update();
+
 			}
-			
-
+			if(shrapnel.get(k).TimeToDie()){
+				shrapnel.get(k).TurnOff();
+				//shrapnel.get(k).Delete();
+				//shrapnel.remove(k);
+			}
+		}
+		
 	}
 
 	private void UpdateSceneObjects()
@@ -463,6 +465,10 @@ public class GameLogic
 
 	private void clearGameScreen(){
 		player.Delete();
+		for (ParticleEffects object : shrapnel){
+			if(object != null)
+				object.Delete();
+		}
 		for (Asteroid currentAsteroid : asteroidField.asteroidList){
 			currentAsteroid.Delete();
 		}
@@ -471,6 +477,11 @@ public class GameLogic
 		}
 		for (GameChar object : PickUpList){
 			object.Delete();
+		}
+		lasers = player.shooter.GetLaserArray();
+		for (Laser object : lasers){
+			if(object != null)
+				object.Delete();
 		}
 		asteroidField.asteroidList.clear();
 		hud.otherInfos.clear();
@@ -488,6 +499,7 @@ public class GameLogic
 
 			PickUpList.get(j).Delete();
 		}
+
 
 
 			player.rigidBody.SetPosition(new Vector2(0,0));
@@ -535,7 +547,7 @@ public class GameLogic
 		}
 
 		PickUpList.clear();
-		
+
 		HudObject stage3 = new HudObject(new Vector2(0,0));
 		stage3.objectRenderer.SetTexture("Stage3");
 		stage3.transform.size = new Vector2(40,15);

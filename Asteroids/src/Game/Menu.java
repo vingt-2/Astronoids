@@ -111,6 +111,10 @@ public class Menu {
 		if (inEnterUsername){
 			inEnterUsername();
 		}
+		if(inInstructions){
+			instructionFont.Update();
+			instructionTable.Update();
+		}
 
 		if (inHighScores){
 			showHS = true;
@@ -271,9 +275,10 @@ public class Menu {
 			backToMenu.objectRenderer.SetTexture("mainMenuOnHover");
 			quitPause.objectRenderer.SetTexture("quit");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				initGameMenu();
-				inGameMenu = true;
+				initStartMenu();
+				inStartMenu = true;
 				MainGame.inPauseGameMode = false;
+				MainGame.update = true;
 				back = false;
 			}
 			break;
@@ -470,6 +475,7 @@ public class Menu {
 
 	private void inEnterUsernameNew() {
 		if(stopShowing){
+			MainGame.controls.recordKey = true;
 			inputUsername = MainGame.controls.recordString;
 			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.White,1f);
 		}
@@ -481,12 +487,12 @@ public class Menu {
 			}
 		}
 		enterUsername.Update();
-
 		if(CSV.LoginMenu.available){
 			if (counter3 == 0){
 				initGameMenu();
 				inGameMenu = true;
 				stopShowing = false;
+				MainGame.controls.recordKey = false;
 				inEnterUsernameNew = false;
 				counter3++;
 			}
@@ -509,7 +515,9 @@ public class Menu {
 
 	public static void initGameMenu(){
 		Controls.menuCounter = 0;
-		enterUsername.Delete();
+		if(!enterUsername.isDeleted){
+			enterUsername.Delete();
+		}
 		startGame = new GameChar();
 		instructions = new GameChar();
 		statistics = new GameChar();
@@ -541,9 +549,10 @@ public class Menu {
 		instructionFont = new GameChar();
 		instructionFont.objectRenderer.SetTexture("instructionFont");
 		instructionFont.transform.size = new Vector2 (20,5);
-		instructionFont.transform.position = new Vector2 (25,45);
+		instructionFont.transform.position = new Vector2 (0,15);
 		instructionTable.objectRenderer.SetTexture("instructionTable");
 		instructionTable.transform.size = new Vector2 (35,25);
+		instructionTable.transform.position = new Vector2 (0,-2);
 	}
 
 	public void initHighScores(){
@@ -615,10 +624,12 @@ public class Menu {
 
 	public void initStartMenu(){
 		Controls.menuCounter = 0;
+		counter = 0;
 		MainGame.controls.recordString = "";
 		stopShowing = true;
 		CSV.LoginMenu.login = false;
 		counter2 = 0;
+		counter3 = 0;
 		background = new GameChar();
 		createUser = new GameChar();
 		loadUser = new GameChar();
