@@ -357,6 +357,8 @@ public class Menu {
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
+				isMedium = false;
+				isHard = false;
 
 				easy.Delete();
 				medium.Delete();
@@ -371,6 +373,7 @@ public class Menu {
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				//put medium level code
 				isMedium = true;
+				isHard =false;
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
@@ -389,6 +392,7 @@ public class Menu {
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
 				isHard = true;
+				isMedium =false;
 				
 				easy.Delete();
 				medium.Delete();
@@ -396,14 +400,14 @@ public class Menu {
 				//put hard level code
 			}
 			break;
-		/*case 3: 
+		case 3: 
 			easy.objectRenderer.SetTexture("createUser");
 			easy.objectRenderer.SetTexture("createUser");
 			easy.objectRenderer.SetTexture("createUser");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				//put level KFC
+				
 			}
-			break; */
+			break; 
 		}
 		easy.Update();
 		medium.Update();

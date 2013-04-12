@@ -54,6 +54,7 @@ public class MainGame
 
 	public void init(GL2 gl)
 	{
+		
 		if (inMenu) { 
 			sharedRessources.LoadRessources
 			(new Ressource [] {
@@ -91,6 +92,7 @@ public class MainGame
 					);
 			menuLogic = new Menu();
 		} 
+		
 		else 
 		{ 
 			sharedRessources.LoadRessources
@@ -125,15 +127,16 @@ public class MainGame
 			SoundEffect.CRASH.ordinal();
 			SoundEffect.ASTEROIDBREAK.ordinal();
 			SoundEffect.EXPLOSION.ordinal();
-			SoundEffect.BACKGROUND.ordinal();
+			
 			
 			render.CheatTime();
 
 			gameLogic = new GameLogic();
 			
-			SoundEffect.BACKGROUND.play();
+			
 
 		}
+		
 
 	}
 
@@ -201,7 +204,8 @@ public class MainGame
 
 		render.mainGame = game;									// Associate this Game to the renderer.
 		render.CreateWindow(new Vector2(1024,780),controls);	// Create a new Frame object and returns its reference.
-
+		SoundEffect.BACKGROUND.ordinal();
+		SoundEffect.BACKGROUND.play();
 	}
 
 

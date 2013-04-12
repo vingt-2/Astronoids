@@ -53,12 +53,11 @@ public class GameLogic
 	public int stageCounter = 1;
 	public boolean mediumDifficulty = false;
 	public boolean hardDifficulty = false;
-	int mediumSpeed = 0;
-	int mediumLives = 0;
-	int hardSpeed = 0;
-	int hardLives = 0;
+	
 
 	public  ArrayList<Laser> lasers = new ArrayList<Laser>();
+	public  ArrayList<Laser> alienLaser1 = new ArrayList<Laser>();
+	public  ArrayList<Laser> alienLaser2 = new ArrayList<Laser>();
 	public  ArrayList<PickUp> PickUpList = new ArrayList<PickUp>();
 	public AsteroidField asteroidField;
 
@@ -66,6 +65,7 @@ public class GameLogic
 	public boolean GameFail = false;
 	public boolean GameWin 	= false;
 	public boolean GameOver = false;
+	public int numberOfAsteroidsDestroyed = 0;
 
 	public GameLogic()
 	{
@@ -76,17 +76,13 @@ public class GameLogic
 		
 		hud = new HUD();
 		if(Menu.isMedium) mediumDifficulty =true;
+		else mediumDifficulty = false;
 		if(Menu.isHard) hardDifficulty = true;
-		System.out.println(mediumDifficulty + " " + hardDifficulty);
-		if(mediumDifficulty){
-			mediumSpeed =50;
-			mediumLives =1;
-		}
-		if(hardDifficulty){
-			mediumSpeed = 70;
-			mediumLives = 3;
-		}
+		else hardDifficulty = false;
+		
+		
 
+		System.out.println(mediumDifficulty + " " + hardDifficulty);
 		asteroidField = new AsteroidField(12,5);
 		asteroidField.GenerateField();
 
@@ -95,7 +91,7 @@ public class GameLogic
 
 	public void UpdateLogic() 
 	{
-
+		
 		if(!GameOver)
 		{
 			ExecuteLogic();
@@ -163,20 +159,22 @@ public class GameLogic
 		lasers = player.shooter.GetLaserArray();
 		
 
-		if(asteroidField.fieldSize < 21){
+		if(numberOfAsteroidsDestroyed  > 10 &&(stageCounter ==2 ||stageCounter ==4||stageCounter ==5)){
 			if( alien == null){
 
 				alien= new Alien("Alien1");
 				alien.transform.size=new Vector2(2,2);
 				alien.rigidBody.frictionCoefficient= 0.05f;
 				alien.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
-				System.out.println(asteroidField.fieldSize);
+				
+				
 
 			}
 			else{
+				if(!alien.isDeleted)
 				alien.Update();
 			}
-			if (asteroidField.fieldSize < 15){
+			if(numberOfAsteroidsDestroyed  > 15 &&(stageCounter == 3 ||stageCounter ==5)){
 
 				if(alien2 == null){
 
@@ -185,17 +183,58 @@ public class GameLogic
 					alien2.rigidBody.frictionCoefficient= 0.05f;
 
 					alien2.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
+					
 				}
 				else
-					alien2.Update();}
+					if (!alien2.isDeleted){
+						alien2.Update();}
+					}
 		}
 
 		lasers = player.shooter.GetLaserArray();
+		
+		if(alien!= null ){
+			alienLaser1 = alien.alienCannon1.GetLaserArray();
+			for(int i = 0; i <alienLaser1.size(); i++){
+				if(player.rigidBody.isColliding(alienLaser1.get(i))){
+					player.lives --;
+					if (player.lives == 0) 
+					{
+						SoundEffect.CRASH.play();
+						GameFail = true;
+						player.Delete();
+					
+						SoundEffect.GAMEOVER.play();
+					} 
+					
+				}
+			}
+		}
+		
+
+		if(alien2 != null){
+			alienLaser2 = alien2.alienCannon2.GetLaserArray();
+			for(int i = 0; i <alienLaser2.size(); i++){
+				if(player.rigidBody.isColliding(alienLaser2.get(i))){
+					player.lives --;
+					if (player.lives == 0) 
+					{
+						SoundEffect.CRASH.play();
+						GameFail = true;
+						player.Delete();
+					
+						SoundEffect.GAMEOVER.play();
+					} 
+					
+				}
+			}
+		}
+		
 
 		/*
 		 * Computations on each asteroids 
 		 */
-
+		
 		for (Asteroid currentAsteroid : asteroidField.asteroidList) 
 		{
 			Transform temporaryTransform = currentAsteroid.transform;
@@ -208,8 +247,9 @@ public class GameLogic
 			{
 				if (player.rigidBody.isColliding(currentAsteroid) && !immunity)
 				{
+					if(currentAsteroid.transform.position.x-player.transform.position.x < 5){
 					player.lives--;
-
+					}
 
 					if (player.lives == 0) 
 					{
@@ -249,7 +289,7 @@ public class GameLogic
 						if (lasers.get(j).rigidBody.isColliding(currentAsteroid))
 						{
 						collateral.TurnOn();
-							
+						numberOfAsteroidsDestroyed ++;
 							currentAsteroid.lives--;
 							if(currentAsteroid.lives ==0){
 								currentAsteroid.isBroken = true;
@@ -275,16 +315,37 @@ public class GameLogic
 								PickUpList.add(new Life(currentAsteroid.transform.position));
 							}							
 
-						}			
+						}
+						
+						if (alien != null) {
+							if (!alien.isDeleted) {
+									if(j<lasers.size()){
+										if (lasers.get(j).rigidBody.isColliding(alien)) {
+											alien.Delete();
+										}
+								}
+							}
+						}
+						if (alien2 != null) {
+							if (!alien2.isDeleted) {
+									if(j<lasers.size()){
+										if (lasers.get(j).rigidBody.isColliding(alien2)) {
+											alien2.Delete();
+										}
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 
-
+		
+		
 		if (asteroidField.asteroidList.size() == 0) 
 		{
 			stageCounter++;
+			numberOfAsteroidsDestroyed = 0;
 			GameWin = true;
 		}
 
@@ -360,8 +421,12 @@ public class GameLogic
 			if (!player.isDeleted) 
 			{
 				player.Update();
-				alien.Update();
+
 			} 
+			
+//			if(alien != null){
+//				if(!alien.isDeleted) alien.Update();
+//			}
 			hud.Update();
 			for(int k =0; k<shrapnel.size(); k++){
 				if(!shrapnel.get(k).isDeleted && !player.isDeleted){
@@ -390,8 +455,9 @@ public class GameLogic
 		if (!player.isDeleted) 
 		{
 			player.Update();
-			alien.Update();
+			
 		} 
+//		
 		hud.Update();
 	}
 
@@ -426,9 +492,20 @@ public class GameLogic
 
 			player.rigidBody.SetPosition(new Vector2(0,0));
 			asteroidField = new AsteroidField(14,5);
-			asteroidField.speed = 25+hardSpeed+mediumSpeed;
-			asteroidField.numberOfLives = 1+hardLives+mediumLives;
+			if(hardDifficulty){
+				asteroidField.speed = 45;
+				asteroidField.numberOfLives = 3;
+			}
+			else if(mediumDifficulty){
+				asteroidField.speed = 30;
+				asteroidField.numberOfLives = 1;
+			}
+			else{
+				asteroidField.speed = 15;
+				asteroidField.numberOfLives = 1;
 
+			}
+			
 
 		PickUpList.clear();
 		HudObject stage2 = new HudObject(new Vector2(0,0));
@@ -439,7 +516,7 @@ public class GameLogic
 
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(14,5);
-		asteroidField.speed = 25;
+		asteroidField.speed =10;
 		asteroidField.numberOfLives = 1;
 
 		asteroidField.GenerateField();
@@ -466,8 +543,19 @@ public class GameLogic
 
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(17,5);
-		asteroidField.speed = 50+hardSpeed+mediumSpeed;
-		asteroidField.numberOfLives = 2+hardLives+mediumLives;
+		if(hardDifficulty){
+			asteroidField.speed = 65;
+			asteroidField.numberOfLives = 3;
+		}
+		else if(mediumDifficulty){
+			asteroidField.speed = 45;
+			asteroidField.numberOfLives = 1;
+		}
+		else{
+			asteroidField.speed = 20;
+			asteroidField.numberOfLives = 1;
+
+		}
 		asteroidField.GenerateField();
 		GameWin = false;
 	}
@@ -489,8 +577,19 @@ public class GameLogic
 
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(19,5);
-		asteroidField.speed = 100+hardSpeed+mediumSpeed;
-		asteroidField.numberOfLives = 2+hardLives+mediumLives;
+		if(hardDifficulty){
+			asteroidField.speed = 75;
+			asteroidField.numberOfLives = 3;
+		}
+		else if(mediumDifficulty){
+			asteroidField.speed = 50;
+			asteroidField.numberOfLives = 1;
+		}
+		else{
+			asteroidField.speed = 25;
+			asteroidField.numberOfLives = 1;
+
+		}
 		asteroidField.GenerateField();
 		GameWin = false;
 
@@ -506,6 +605,7 @@ public class GameLogic
 			//PickUpList.remove(j);
 		}
 		PickUpList.clear();
+		
 		HudObject stage5 = new HudObject(new Vector2(0,0));
 		stage5.objectRenderer.SetTexture("Stage5");
 		stage5.transform.size = new Vector2(40,15);
@@ -513,8 +613,19 @@ public class GameLogic
 
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(21,5);
-		asteroidField.numberOfLives = 3+hardLives+mediumLives;
-		asteroidField.speed = 150 +hardSpeed+mediumSpeed;
+		if(hardDifficulty){
+			asteroidField.speed = 90;
+			asteroidField.numberOfLives = 3;
+		}
+		else if(mediumDifficulty){
+			asteroidField.speed = 60;
+			asteroidField.numberOfLives = 1;
+		}
+		else{
+			asteroidField.speed = 30;
+			asteroidField.numberOfLives = 1;
+
+		}
 		asteroidField.GenerateField();
 		GameWin = false;
 	}

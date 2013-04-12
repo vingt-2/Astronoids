@@ -34,6 +34,8 @@ public class Shoot extends GameObject
 	public boolean isTurnedOn = false;
 	public static int counter = 0;
 	public long watchmen;
+	public boolean isAlien1 = false;
+	public boolean isAlien2 = false;
 
 
 
@@ -70,6 +72,14 @@ public class Shoot extends GameObject
 
 			//temp fix for Texture rendering in middle of screen
 			Laser laser1 = new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/2);
+			if(isAlien1) {
+				laser1.rigidBody.mass = 100f;
+				laser1.lifeTime = 500;
+			}
+			if(isAlien2) {
+				laser1.rigidBody.mass = 0.0005f;
+				laser1.lifeTime = 500;
+			}
 			lasers.add(laser1);
 			int l1Index = lasers.indexOf(laser1);
 			lasers.get(l1Index).objectRenderer.shape= Shape.Square;
@@ -92,7 +102,7 @@ public class Shoot extends GameObject
 
 			if (j<lasers.size())
 			{
-
+				
 
 				if( lasers.get(j).TimeToDie() )
 				{

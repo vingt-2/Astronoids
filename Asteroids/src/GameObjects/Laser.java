@@ -17,7 +17,7 @@ public class Laser extends GameChar {
 	public float deltaTime = MainGame.render.deltaTime;
 	public long watchmen;
 	public boolean hasCollided = false;
-	long lifeTime = 400;
+	public long lifeTime = 400;
 	Transform shooterTrans;
 	float direction;
 
@@ -42,7 +42,7 @@ public class Laser extends GameChar {
 			}
 		
 			rigidBody.frictionCoefficient = 0.0f;
-			rigidBody.mass = 0.001f;
+			rigidBody.mass = 0.003f;
 			rigidBody.acceleration = new Vector2(0,0);
 			rigidBody.PushForce(new Vector2(-5*(float)Math.cos((shooterTrans.rotation+(direction))),
 					5*(float)Math.sin((shooterTrans.rotation+(direction)))), ForceMode.Impulse);
