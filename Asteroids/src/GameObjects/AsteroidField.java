@@ -15,6 +15,10 @@ public class AsteroidField extends GameObject
 	int randPosX;
 	int randPosY;
 	int randSign;
+	public int speed;
+	public int numberOfLives = 1;
+	int directionCounter = 1;
+	
 	
 	
 	public AsteroidField(int nbAsteroids, int speed)
@@ -44,12 +48,18 @@ public class AsteroidField extends GameObject
 		
 			Asteroid newAsteroid = new Asteroid(new Vector2((float) randPosX, (float) randPosY));
 			newAsteroid.transform.size=(new Vector2( randSize, randSize));
+			newAsteroid.lives = numberOfLives;
 			newAsteroid.Update();
 			
 			if(!AsteroidCollidingWithField(newAsteroid, generatedField))
 			{
-				
-				newAsteroid.rigidBody.PushForce(new Vector2(rand.nextInt(60)-30,rand.nextInt(60)-30),ForceMode.Force);
+				int x = rand.nextInt(200)-100;
+				int y = rand.nextInt(200)-100;
+				if (x>0) x += speed;
+				else x -= speed;
+				if(y>0) y+= speed;
+				else y -=speed;
+				newAsteroid.rigidBody.PushForce(new Vector2(x,y),ForceMode.Force);
 				newAsteroid.rigidBody.PushTorque(rand.nextInt(10)%4-2, ForceMode.Force);
 				generatedField.add(newAsteroid);
 			}
@@ -81,6 +91,7 @@ public class AsteroidField extends GameObject
 		{
 			Asteroid currentAsteroid = asteroidList.get(astIndex);
 			currentAsteroid.Update();
+			
 			if(currentAsteroid.isBroken)
 			{
 				Random rand = new Random();
@@ -100,7 +111,14 @@ public class AsteroidField extends GameObject
 						Vector2 newPost = Vector2.Add(currentAsteroid.transform.position,spawnSpot);
 						
 						Asteroid newAst = new Asteroid(newPost);
-						newAst.rigidBody.PushForce(new Vector2(rand.nextInt(400)-200,rand.nextInt(400)-200),ForceMode.Force);
+						if (newAst.transform.size.x>1) newAst.lives = numberOfLives;
+						int x = rand.nextInt(400)-200;
+						int y = rand.nextInt(400)-200;
+						if (x>0) x += speed;
+						else x -= speed;
+						if(y>0) y+= speed;
+						else y -=speed;
+						newAst.rigidBody.PushForce(new Vector2(x,y),ForceMode.Force);
 						newAst.rigidBody.PushTorque(rand.nextInt(10)%4-2, ForceMode.Force);
 						newAst.transform.size=(new Vector2( currentAsteroid.transform.size.x/2, currentAsteroid.transform.size.y/2 ));
 						asteroidList.add(newAst);

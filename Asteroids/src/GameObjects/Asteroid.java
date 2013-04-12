@@ -11,6 +11,7 @@ public class Asteroid extends GameChar
 {
 
 	public boolean isBroken = false;
+	public int lives = 1;
 	
 	public Asteroid(Vector2 pos){
 		super(pos);
@@ -23,10 +24,7 @@ public class Asteroid extends GameChar
 		super.Update();
 		Random rand = new Random();
 				
-	//	rigidBody.PushForce(new Vector2(RandomThrustX,RandomThrustY),ForceMode.Impulse);
-		//rigidBody.PushTorque(RandomRotate, ForceMode.Impulse);
-		
-		//if(terminator) Delete();
+	
 	}
 	
 

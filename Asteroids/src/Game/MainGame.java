@@ -95,7 +95,6 @@ public class MainGame
 			(new Ressource[]
 					{
 					new Ressource("rocket_ship","./resources/textures/awesome_space_ship.png",RessourceType.Texture),
-					new Ressource("shielded_ship","./resources/textures/awesome_space_ship_shielded.png",RessourceType.Texture),
 					new Ressource("smoke","./resources/textures/SmokeParticle.png",RessourceType.Texture),
 					new Ressource("Alien","./resources/textures/Alien.png", RessourceType.Texture ),
 					new Ressource("asteroid", "./resources/textures/Asteroid_2.png", RessourceType.Texture),
@@ -127,7 +126,7 @@ public class MainGame
 			render.CheatTime();
 			
 			gameLogic = new GameLogic();
-			SoundEffect.BACKGROUND.volume = SoundEffect.volume.LOW;
+			
 			SoundEffect.BACKGROUND.play();
 
 		}

@@ -55,7 +55,7 @@ public class GameLogic
 	{
 		player = new Player();
 		player.transform.size = new Vector2(3,3);
-		player.rigidBody.frictionCoefficient = 0.01f;
+		player.rigidBody.frictionCoefficient = 0.03f;
 
 		alien = new Alien();
 		alien.transform.size=new Vector2(2,2);
@@ -155,22 +155,24 @@ public class GameLogic
 					{
 						if (lasers.get(j).rigidBody.isColliding(currentAsteroid))
 						{
-
+							
+							currentAsteroid.lives--;
+							if(currentAsteroid.lives ==0){
 							currentAsteroid.isBroken = true;
 							HUD.points += 10;
 							SoundEffect.ASTEROIDBREAK.play();
-
+							}
 						
 							lasers.get(j).Delete();
 							lasers.remove(j);
 							
-							if(rand.nextInt(10) == 1){
+							if(rand.nextInt(40) == 1){
 								PickUpList.add(new Shield(currentAsteroid.transform.position));
 							}
-							if(rand.nextInt(10) == 2){
+							if(rand.nextInt(40) == 2){
 								PickUpList.add(new RapidFire(currentAsteroid.transform.position));
 							}
-							if(rand.nextInt(10) == 3){
+							if(rand.nextInt(40) == 3){
 								PickUpList.add(new Life(currentAsteroid.transform.position));
 							}
 							
@@ -192,8 +194,6 @@ public class GameLogic
 				if(player.rigidBody.isColliding((PickUpList.get(j)))){
 					PickUpList.get(j).OnPickUp();
 					PickUpList.get(j).Delete();
-
-					//PickUpList.remove(j);
 
 					PickUpList.remove(j);
 
@@ -287,7 +287,7 @@ public class GameLogic
 	private void stage2(){
 		
 		for(int j =0; j<PickUpList.size(); j++){
-			System.out.println("Delete");
+			
 					PickUpList.get(j).Delete();
 					//PickUpList.remove(j);
 			
@@ -301,6 +301,9 @@ public class GameLogic
 		
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(14,5);
+		asteroidField.speed = 25;
+		asteroidField.numberOfLives = 2;
+		
 		asteroidField.GenerateField();
 		GameWin = false;
 		
@@ -309,7 +312,7 @@ public class GameLogic
 	private void stage3(){
 		
 		for(int j =0; j<PickUpList.size(); j++){
-			System.out.println("Delete");
+		
 					PickUpList.get(j).Delete();
 					//PickUpList.remove(j);
 			
@@ -323,6 +326,7 @@ public class GameLogic
 		
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(17,5);
+		asteroidField.speed = 50;
 		asteroidField.GenerateField();
 		GameWin = false;
 		
@@ -332,7 +336,7 @@ public class GameLogic
 private void stage4(){
 		
 		for(int j =0; j<PickUpList.size(); j++){
-			System.out.println("Delete");
+		
 					PickUpList.get(j).Delete();
 					//PickUpList.remove(j);
 			
@@ -346,6 +350,7 @@ private void stage4(){
 		
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(19,5);
+		asteroidField.speed = 100;
 		asteroidField.GenerateField();
 		GameWin = false;
 		
@@ -354,7 +359,7 @@ private void stage4(){
 private void stage5(){
 	
 	for(int j =0; j<PickUpList.size(); j++){
-		System.out.println("Delete");
+		
 				PickUpList.get(j).Delete();
 				//PickUpList.remove(j);
 		
@@ -368,6 +373,7 @@ private void stage5(){
 	
 	player.rigidBody.SetPosition(new Vector2(0,0));
 	asteroidField = new AsteroidField(21,5);
+	asteroidField.speed = 150;
 	asteroidField.GenerateField();
 	GameWin = false;
 	

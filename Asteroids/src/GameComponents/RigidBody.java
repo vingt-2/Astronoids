@@ -325,8 +325,8 @@ public boolean isColliding(GameChar char1)
 		shape2 = makeBox(char1);
 	}
 		
-	debugIt(shape1);
-	debugIt(shape2);
+	//debugIt(shape1);
+	//debugIt(shape2);
 	
 	return IntersectorLoop(shape1, shape2);
 		

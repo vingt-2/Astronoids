@@ -20,7 +20,7 @@ public class HudObject  extends GameChar{
 		
 		super.Update();
 				
-		Random rand = new Random();
+	
 		HUD.changingStage = true;
 		if(TimeToDie()){
 			if(!permanent)
