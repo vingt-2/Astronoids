@@ -1,3 +1,5 @@
+
+
 package GameObjects;
 
 
@@ -11,7 +13,6 @@ import Maths.Vector2;
 
 public class Player extends GameChar 
 {
-
 
 	ParticleEffects effect = new ParticleEffects(transform,2000);
 	public Shoot shooter = new Shoot(transform);
@@ -35,14 +36,12 @@ public class Player extends GameChar
 		this.lives = 3;
 	}
 
-
+	
 	public void Update()
 	{
 		super.Update();
 
-
 		time = System.currentTimeMillis();
-
 
 		// Player Stuff
 		effect.Update();
@@ -50,9 +49,6 @@ public class Player extends GameChar
 		shooter.Update();
 		rapidFireOn();
 		PlayerControls();
-
-
-
 
 	}
 
@@ -99,16 +95,11 @@ public class Player extends GameChar
 				if(!shooter.isTurnedOn)
 				{
 					shooter.TurnOn();
-
-
 				}
 				Shoot.counter = 0 ;
 				lastShootTime = time;
 			}
 		}
-
-
-
 
 	}
 
@@ -167,6 +158,13 @@ public class Player extends GameChar
 		}
 
 
+	}
+	
+	@Override
+	public void Delete()
+	{
+		super.Delete();
+		effect.Delete();
 	}
 
 

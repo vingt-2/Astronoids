@@ -2,6 +2,7 @@ package GameObjects;
 
 import java.util.Random;
 
+import Game.GameLogic;
 import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import GameComponents.Transform;
@@ -30,7 +31,7 @@ public class ParticleEffects extends GameObject
 		Vector2 back = transform.LocalDirectionToWorld(new Vector2(0,-1)).Normalized();
 		int shipLength = 15;
 		int offset = ran.nextInt(10)-5;
-		
+
 		if(isShrapnel){
 			particlePos = transform.LocalPositionToWorld(new Vector2(0+offset,0+offset));
 		}
@@ -45,9 +46,9 @@ public class ParticleEffects extends GameObject
 				{
 					if( isTurnedOn )
 					{	
-						
+
 						particleArray[i] = new Particles(ran.nextInt(2000), particlePos);
-						
+
 						if(isShrapnel){
 							particleArray[i].objectRenderer.SetTexture("Shrapnel");
 							particleArray[i].rigidBody.frictionCoefficient = 0.01f;
@@ -64,7 +65,7 @@ public class ParticleEffects extends GameObject
 							particleArray[i].rigidBody.PushTorque((ran.nextInt(20) -10) * 10, ForceMode.Impulse);
 							particleArray[i].objectRenderer.opacity = 0.8f;
 						}
-						
+
 					}
 				}
 			}
@@ -81,6 +82,8 @@ public class ParticleEffects extends GameObject
 				}
 			}
 		}
+
+		
 	}
 
 	public void TurnOn()
@@ -111,4 +114,14 @@ public class ParticleEffects extends GameObject
 		return false;
 	}
 
+	@Override
+	public void Delete(){
+		for(int i = 0; i < particleArray.length; i++)
+		{
+			if( particleArray[i] != null )
+			{
+				particleArray[i].Delete();
+			}
+		}
+	}
 }

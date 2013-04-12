@@ -396,6 +396,10 @@ public class GameLogic
 
 	private void clearGameScreen(){
 		player.Delete();
+		for (ParticleEffects object : shrapnel){
+			if(object != null)
+				object.Delete();
+		}
 		for (Asteroid currentAsteroid : asteroidField.asteroidList){
 			currentAsteroid.Delete();
 		}
@@ -404,6 +408,11 @@ public class GameLogic
 		}
 		for (GameChar object : PickUpList){
 			object.Delete();
+		}
+		lasers = player.shooter.GetLaserArray();
+		for (Laser object : lasers){
+			if(object != null)
+				object.Delete();
 		}
 		asteroidField.asteroidList.clear();
 		hud.otherInfos.clear();
