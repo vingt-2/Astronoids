@@ -1,9 +1,13 @@
 package Game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 
+import CSV.Highscore;
+import CSV.LoginMenu;
+import CSV.Statistics;
 import GameComponents.RigidBody.ForceMode;
 import GameObjects.Alien;
 import GameObjects.Asteroid;
@@ -106,6 +110,13 @@ public class GameLogic
 						SoundEffect.CRASH.play();
 						GameFail = true;
 						player.Delete();
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						SoundEffect.GAMEOVER.play();
 					} 
 					else 
 					{
@@ -223,6 +234,15 @@ public class GameLogic
 			GameOver = true;
 			}
 		}
+		
+		if(GameOver)
+			try {
+				Statistics.updateStats(MainGame.currentUser, HUD.points, 0);
+				Highscore.addScore(MainGame.currentUser.getUsername(), HUD.points);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	

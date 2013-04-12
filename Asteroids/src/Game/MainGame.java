@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.media.opengl.GL2;
 
+import CSV.User;
 import GameObjects.Alien;
 import Game.SharedRessources.RessourceType;
 
@@ -25,13 +26,14 @@ public class MainGame
 	public static boolean inPauseGame		= false;
 	public static boolean enterKeyPressed 	= false;
 	public static boolean inStartGame = true;
+	public static boolean inPauseGameMode = false;
 
-	public boolean update=true;
+	public static boolean  update =true;
 	public int pressCount = 0;
 	
 	public static boolean winChecker = false;
 	public int counter=0;
-
+	public static User currentUser;
 
 	// Game singletons
 	public static final SharedRessources sharedRessources	= new SharedRessources();
@@ -48,12 +50,16 @@ public class MainGame
 		if (inMenu) { 
 			sharedRessources.LoadRessources
 			(new Ressource [] {
-						new Ressource("hardOnHover","./resources/textures/startGameOnHover.png",RessourceType.Texture),
-						new Ressource("hard","./resources/textures/startGame.png",RessourceType.Texture),
-						new Ressource("mediumOnHover","./resources/textures/startGameOnHover.png",RessourceType.Texture),
-						new Ressource("medium","./resources/textures/startGame.png",RessourceType.Texture),
-						new Ressource("easyOnHover","./resources/textures/startGameOnHover.png",RessourceType.Texture),
-						new Ressource("easy","./resources/textures/startGame.png",RessourceType.Texture),
+						new Ressource("resumeGameOnHover","./resources/textures/resumeGameOnHover.png",RessourceType.Texture),
+						new Ressource("resumeGame","./resources/textures/resumeGame.png",RessourceType.Texture),
+						new Ressource("mainMenuOnHover","./resources/textures/mainMenuOnHover.png",RessourceType.Texture),
+						new Ressource("mainMenu","./resources/textures/mainMenu.png",RessourceType.Texture),
+						new Ressource("hardOnHover","./resources/textures/hardOnHover.png",RessourceType.Texture),
+						new Ressource("hard","./resources/textures/hard.png",RessourceType.Texture),
+						new Ressource("mediumOnHover","./resources/textures/mediumOnHover.png",RessourceType.Texture),
+						new Ressource("medium","./resources/textures/medium.png",RessourceType.Texture),
+						new Ressource("easyOnHover","./resources/textures/easyOnHover.png",RessourceType.Texture),
+						new Ressource("easy","./resources/textures/easy.png",RessourceType.Texture),
 						new Ressource("instructionTable","./resources/textures/instructionTable.png",RessourceType.Texture),
 						new Ressource("instructionFont","./resources/textures/instructionFont.png",RessourceType.Texture),
 						new Ressource("startGame","./resources/textures/startGame.png",RessourceType.Texture),
@@ -65,7 +71,7 @@ public class MainGame
 						new Ressource("statisticsOnHover","./resources/textures/statisticsOnHover.png",RessourceType.Texture),
 						new Ressource("highScoresOnHover","./resources/textures/highScoresOnHover.png",RessourceType.Texture),
 						new Ressource("enterUsername","./resources/textures/enterUsername.png", RessourceType.Texture),
-						new Ressource("quitOnHover","./resources/textures/quitOnHover.png", RessourceType.Texture),
+						new Ressource("quitOnHover","./resources/textures/quitOnhover.png", RessourceType.Texture),
 						new Ressource("quit","./resources/textures/quit.png", RessourceType.Texture),
 						new Ressource("twoPlayerOnHover","./resources/textures/two_player_hover.png",RessourceType.Texture),
 						new Ressource("twoPlayer","./resources/textures/two_player.png", RessourceType.Texture),
@@ -117,9 +123,6 @@ public class MainGame
 			gameLogic = new GameLogic();
 
 		}
-		
-	
-		
 
 	}
 
@@ -139,12 +142,6 @@ public class MainGame
 			init (gl);
 			enterKeyPressed = false;
 		}
-		
-			if (enterKeyPressed) 
-			{ 
-				init (gl);
-				enterKeyPressed = false;
-			}
 
 			// Put Game Logic here
 			if(controls.isPressed(KeyEvent.VK_P) && pressCount==0){
@@ -153,11 +150,20 @@ public class MainGame
 			}
 			if(!controls.isPressed(KeyEvent.VK_P))
 				pressCount = 0;
-			if(update)
+			if(update){
 				gameLogic.UpdateLogic();
+				if(inPauseGameMode){
+					menuLogic.resumeGame.Delete();
+					menuLogic.backToMenu.Delete();
+					menuLogic.quitPause.Delete();
+					inPauseGameMode = false;
+				}
+			}
 
 			else{ //Pause Game
-				
+				inMenu = true;
+				inPauseGameMode = true;
+				menuLogic.inLevelMenu = false;
 			}
 
 
