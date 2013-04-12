@@ -269,8 +269,10 @@ public class Menu {
 			backToMenu.objectRenderer.SetTexture("mainMenuOnHover");
 			quitPause.objectRenderer.SetTexture("quit");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				initGameMenu();
-				inGameMenu = true;
+				//initGameMenu();
+				//inGameMenu = true;
+				initStartMenu();
+				inStartMenu = true;
 				MainGame.inPauseGameMode = false;
 				back = false;
 			}
@@ -491,7 +493,9 @@ public class Menu {
 
 	public static void initGameMenu(){
 		Controls.menuCounter = 0;
-		enterUsername.Delete();
+		if(!enterUsername.isDeleted){
+			enterUsername.Delete();
+		}
 		startGame = new GameChar();
 		instructions = new GameChar();
 		statistics = new GameChar();
