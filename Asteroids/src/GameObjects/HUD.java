@@ -58,7 +58,7 @@ public class HUD extends GameChar {
 		}
 
 		MainGame.render.DrawText(inputTest + points, new Vector2(270, 230),
-				Color.Blue, 1f);
+				Color.White, 1f);
 		
 		for(GameChar infos : otherInfos)
 		{

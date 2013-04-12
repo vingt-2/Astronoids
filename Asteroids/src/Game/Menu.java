@@ -16,11 +16,11 @@ public class Menu {
 	GameChar twoPlayer;
 	GameChar quit;
 	GameChar background;
-	GameChar enterUsername;
-	GameChar startGame;
-	GameChar instructions;
-	GameChar statistics;
-	GameChar highScores;
+	static GameChar enterUsername;
+	static GameChar startGame;
+	static GameChar instructions;
+	static GameChar statistics;
+	static GameChar highScores;
 	GameChar instructionTable;
 	GameChar instructionFont;
 	GameChar easy;
@@ -41,7 +41,7 @@ public class Menu {
 	String inputUsername = "";
 	public boolean inEnterUsernameNew = false;
 	public boolean inEnterUsername = false;
-	public boolean inGameMenu = false;
+	public static boolean inGameMenu = false;
 	public boolean inInstructions = false;
 	public boolean stopShowing = true;
 	public boolean showStats = true;
@@ -49,7 +49,7 @@ public class Menu {
 	public boolean inStatistics = false;
 	public boolean showHS = true;
 	public boolean inStartMenu = true;
-	public boolean inLevelMenu = false;
+	public static boolean inLevelMenu = false;
 
 	public Menu(){ 
 		Controls.menuCounter = 0;
@@ -135,12 +135,13 @@ public class Menu {
 				inStartMenu = true;
 				back = false;
 			}
+			/*
 			if(inEnterUsername){
 				initStartMenu();
 				inEnterUsername = false;
 				inStartMenu = true;
 				back = false;
-			}
+			} */
 			if(inInstructions){
 				Controls.menuCounter = 0;
 				inInstructions = false;
@@ -218,7 +219,13 @@ public class Menu {
 			twoPlayer.objectRenderer.SetTexture("twoPlayerOnHover");
 			quit.objectRenderer.SetTexture("quit");
 			if (MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				System.exit(0);
+				inStartMenu = false;
+				MainGame.inMenu = false;
+				MainGame.twoPlayerMode = true;
+				createUser.Delete();
+				loadUser.Delete();
+				twoPlayer.Delete();
+				quit.Delete();
 			}
 			break;
 
@@ -343,7 +350,12 @@ public class Menu {
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
+
+				easy.Delete();
+				medium.Delete();
+				hard.Delete();
 			}
+			
 			break;
 		case 1: 
 			easy.objectRenderer.SetTexture("easy");
@@ -351,6 +363,10 @@ public class Menu {
 			hard.objectRenderer.SetTexture("hard");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				//put medium level code
+
+				easy.Delete();
+				medium.Delete();
+				hard.Delete();
 			}
 			break;
 		case 2: 
@@ -379,7 +395,7 @@ public class Menu {
 		if(stopShowing){
 			MainGame.controls.recordKey = true;
 			inputUsername = MainGame.controls.recordString;
-			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.Blue,1f);
+			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.White,1f);
 		}
 		enterUsername.Update();
 		if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
@@ -404,15 +420,13 @@ public class Menu {
 	private void inStatistics() {
 		if (showStats){
 			MainGame.render.DrawText("Username: " + CSV.LoginMenu.player.getUsername(),
-					new Vector2(-100, 80),Color.Blue,1f);
+					new Vector2(-100, 80),Color.White,1f);
 			MainGame.render.DrawText("Average Score: "+CSV.LoginMenu.player.getAvgScore(),
-					new Vector2(-100, 50),Color.Blue,1f);
+					new Vector2(-100, 50),Color.White,1f);
 			MainGame.render.DrawText("Games Played: "+CSV.LoginMenu.player.getNbGamesPlayed(),
-					new Vector2(-100, 20),Color.Blue,1f);
-			MainGame.render.DrawText("Play Time: "+CSV.LoginMenu.player.getPlayTime(),
-					new Vector2(-100, -10),Color.Blue,1f);
+					new Vector2(-100, 20),Color.White,1f);
 			MainGame.render.DrawText("Best Score: "+CSV.LoginMenu.player.getBestScore(),
-					new Vector2(-100, -40),Color.Blue,1f);
+					new Vector2(-100,-10),Color.White,1f);
 		}
 	}
 	private void inHighScores() {
@@ -424,9 +438,9 @@ public class Menu {
 		if (showHS){
 			for(int i =0; i < 10; i++){
 				MainGame.render.DrawText(CSV.Highscore.highscores.get(i)[0],
-						new Vector2(-100, 80 - i*30),Color.Blue,1f);
+						new Vector2(-100, 80 - i*30),Color.White,1f);
 				MainGame.render.DrawText(CSV.Highscore.highscores.get(i)[1],
-						new Vector2(40, 80 - i*30),Color.Blue,1f);
+						new Vector2(40, 80 - i*30),Color.White,1f);
 			}
 		}
 	}
@@ -434,7 +448,7 @@ public class Menu {
 	private void inEnterUsernameNew() {
 		if(stopShowing){
 			inputUsername = MainGame.controls.recordString;
-			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.Blue,1f);
+			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.White,1f);
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 			try {
@@ -467,11 +481,10 @@ public class Menu {
 		enterUsername.objectRenderer.SetTexture("enterUsername");
 		enterUsername.transform.size = new Vector2(35,15);
 		enterUsername.transform.position = new Vector2(0,5);
-		//inputUsername = "";
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
 
-	public void initGameMenu(){
+	public static void initGameMenu(){
 		Controls.menuCounter = 0;
 		enterUsername.Delete();
 		startGame = new GameChar();
