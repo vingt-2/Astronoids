@@ -107,7 +107,13 @@ public class MainGame
 					new Ressource("Empty","./resources/textures/Untitled-1.png", RessourceType.Texture),
 					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture),
 					new Ressource("Shield","./resources/textures/Shield.png", RessourceType.Texture),
-					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture)
+					new Ressource("Life","./resources/textures/Life.png", RessourceType.Texture),
+					new Ressource("Alien2", "./resources/textures/Alien2.png", RessourceType.Texture),
+					new Ressource("RapidFire","./resources/textures/rapidFire.png", RessourceType.Texture),
+					new Ressource("Stage2","./resources/textures/Stage2.png", RessourceType.Texture),
+					new Ressource("Stage3","./resources/textures/Stage3.png", RessourceType.Texture),
+					new Ressource("Stage4","./resources/textures/Stage4.png", RessourceType.Texture),
+					new Ressource("Stage5","./resources/textures/Stage5.png", RessourceType.Texture)
 					}
 					);
 			
@@ -117,10 +123,13 @@ public class MainGame
 			SoundEffect.CRASH.ordinal();
 			SoundEffect.ASTEROIDBREAK.ordinal();
 			SoundEffect.EXPLOSION.ordinal();
+			SoundEffect.BACKGROUND.ordinal();
 			
 			render.CheatTime();
 			
 			gameLogic = new GameLogic();
+			SoundEffect.BACKGROUND.volume = SoundEffect.volume.LOW;
+			SoundEffect.BACKGROUND.play();
 
 		}
 

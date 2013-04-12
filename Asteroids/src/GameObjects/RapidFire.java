@@ -8,6 +8,7 @@ public class RapidFire extends PickUp {
 
 	public RapidFire(Vector2 pos) {
 		super(pos);
+		objectRenderer.SetTexture("RapidFire");
 		// TODO Auto-generated constructor stub
 	}
 
