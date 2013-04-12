@@ -48,7 +48,7 @@ public class Menu {
 	public boolean inHighScores = false;
 	public boolean inStatistics = false;
 	public boolean showHS = true;
-	public boolean inStartMenu = true;
+	public static boolean inStartMenu = true;
 	public static boolean inLevelMenu = false;
 	public static boolean isMedium = false;
 	public static boolean isHard = false;
@@ -81,7 +81,12 @@ public class Menu {
 
 	}
 	public void Update() { 
-
+		if(MainGame.inStartMenu){
+			initStartMenu();
+			MainGame.inStartMenu = false;
+			inStartMenu = true;
+		}
+		
 		if (inStartMenu){
 			updateStartMenu();
 		}
@@ -266,8 +271,8 @@ public class Menu {
 			backToMenu.objectRenderer.SetTexture("mainMenuOnHover");
 			quitPause.objectRenderer.SetTexture("quit");
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				initStartMenu();
-				inStartMenu = true;
+				initGameMenu();
+				inGameMenu = true;
 				MainGame.inPauseGameMode = false;
 				back = false;
 			}

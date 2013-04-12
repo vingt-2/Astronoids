@@ -26,6 +26,7 @@ import GameObjects.Player;
 import GameObjects.PickUp;
 import GameObjects.RapidFire;
 import GameObjects.Shield;
+import Helpers.Color;
 import Helpers.SoundEffect;
 import Maths.Vector2;
 import java.util.Random;
@@ -46,6 +47,7 @@ public class GameLogic
 	public static boolean playerOne = false;
 	public boolean playerTwo = false;
 	public ArrayList<ParticleEffects> shrapnel = new ArrayList<ParticleEffects>();
+
 
 	public static boolean lostLife = false;
 	public int stageCounter = 1;
@@ -85,10 +87,8 @@ public class GameLogic
 			mediumLives = 3;
 		}
 
-
 		asteroidField = new AsteroidField(12,5);
 		asteroidField.GenerateField();
-
 
 	}
 
@@ -101,21 +101,46 @@ public class GameLogic
 			ExecuteLogic();
 			CheckForEndGame();
 		}
-		else if(playerOne){
+		else if(MainGame.playerOne){
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				player.Delete();
-				for (Asteroid currentAsteroid : asteroidField.asteroidList){
-					currentAsteroid.Delete();
-				}
-				for (GameChar object : hud.otherInfos){
-					object.Delete();
-				}
+				clearGameScreen();
 				MainGame.enterKeyPressed = true;
-				hud.otherInfos.clear();
+				MainGame.scoreOne = HUD.points;
 				HUD.points = 0;
-				playerOne = false;
-				playerTwo = true;
+				MainGame.playerTwo = true;
+				MainGame.playerOne = false;
 				GameOver = false;
+			}
+		}
+		else if(MainGame.playerTwo){
+			clearGameScreen();
+			String winner;
+
+			MainGame.scoreTwo = HUD.points;
+
+			if(MainGame.scoreOne == MainGame.scoreTwo)
+				winner = "Tie!";
+			else if(MainGame.scoreOne < MainGame.scoreTwo)
+				winner = "Player 2 Wins";
+			else
+				winner = "Player 1 Wins";
+			MainGame.render.DrawText(winner,Vector2.zero(),Color.White,1f);
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				clearGameScreen();
+
+				HUD.points = 0;
+				MainGame.inMenu = true;
+				MainGame.inStartMenu = true;
+			}
+		}
+		else{
+			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+				clearGameScreen();
+				HUD.points = 0;
+				MainGame.inMenu = true;
+				Menu.inGameMenu = true;
+				Menu.initGameMenu();
+				Menu.inLevelMenu = false;
 			}
 		}
 		UpdateSceneObjects();
@@ -191,12 +216,7 @@ public class GameLogic
 						SoundEffect.CRASH.play();
 						GameFail = true;
 						player.Delete();
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+					
 						SoundEffect.GAMEOVER.play();
 					} 
 					else 
@@ -241,20 +261,20 @@ public class GameLogic
 
 							lasers.get(j).Delete();
 							lasers.remove(j);
-							
-								
 
-								if(rand.nextInt(40) == 1){
 
-									PickUpList.add(new Shield(currentAsteroid.transform.position));
-								}
-								if(rand.nextInt(40) == 2){
-									PickUpList.add(new RapidFire(currentAsteroid.transform.position));
-								}
-								if(rand.nextInt(40) == 3){
-									PickUpList.add(new Life(currentAsteroid.transform.position));
-								}							
-							
+
+							if(rand.nextInt(40) == 1){
+
+								PickUpList.add(new Shield(currentAsteroid.transform.position));
+							}
+							if(rand.nextInt(40) == 2){
+								PickUpList.add(new RapidFire(currentAsteroid.transform.position));
+							}
+							if(rand.nextInt(40) == 3){
+								PickUpList.add(new Life(currentAsteroid.transform.position));
+							}							
+
 						}			
 					}
 				}
@@ -262,87 +282,79 @@ public class GameLogic
 		}
 
 
-			if (asteroidField.asteroidList.size() == 0) 
-			{
-				stageCounter++;
-				GameWin = true;
-			}
-
-
-			for(int j =0; j<PickUpList.size(); j++){
-				if(!(PickUpList.get(j).isDeleted) && !(player.isDeleted)){
-					if(player.rigidBody.isColliding((PickUpList.get(j)))){
-						PickUpList.get(j).OnPickUp();
-						PickUpList.get(j).Delete();
-
-						PickUpList.remove(j);
-					}
-				}
-			}
+		if (asteroidField.asteroidList.size() == 0) 
+		{
+			stageCounter++;
+			GameWin = true;
 		}
 
 
-		private void CheckForEndGame()
+		for(int j =0; j<PickUpList.size(); j++){
+			if(!(PickUpList.get(j).isDeleted) && !(player.isDeleted)){
+				if(player.rigidBody.isColliding((PickUpList.get(j)))){
+					PickUpList.get(j).OnPickUp();
+					PickUpList.get(j).Delete();
+
+					PickUpList.remove(j);
+				}
+			}
+		}
+	}
+
+
+	private void CheckForEndGame()
+	{
+		if(GameFail)
 		{
-			if(GameFail)
-			{
-				HudObject gameFailed = new HudObject(new Vector2(0,0));
-				gameFailed.permanent = true;
-				gameFailed.objectRenderer.SetTexture("game_over");
-				gameFailed.transform.size = new Vector2(50, 13);
-				gameFailed.transform.position = new Vector2(0, -9);
-				gameFailed.rigidBody.frictionCoefficient = 0.1f;
-				hud.otherInfos.add(gameFailed);
+			HudObject gameFailed = new HudObject(new Vector2(0,0));
+			gameFailed.permanent = true;
+			gameFailed.objectRenderer.SetTexture("game_over");
+			gameFailed.transform.size = new Vector2(50, 13);
+			gameFailed.transform.position = new Vector2(0, -9);
+			gameFailed.rigidBody.frictionCoefficient = 0.1f;
+			hud.otherInfos.add(gameFailed);
+
+			GameOver = true;
+		}
+
+		else if (GameWin) 
+		{
+			if(stageCounter ==2){
+				stage2();
+			}
+			else if(stageCounter == 3){
+				stage3();
+			}
+			else if(stageCounter == 4){
+				stage4();
+			}
+			else if(stageCounter == 5){
+				stage5();
+			}
+			else{
+				HudObject gameWin = new HudObject(new Vector2(0,0));
+
+				gameWin.permanent = true;
+				gameWin.objectRenderer.SetTexture("Win");
+				gameWin.transform.size = new Vector2(40, 8);
+				gameWin.transform.position = new Vector2(0, 0);
+				gameWin.rigidBody.frictionCoefficient = 0.1f;
+				hud.otherInfos.add(gameWin);
 
 				GameOver = true;
 			}
-
-			else if (GameWin) 
-			{
-				if(stageCounter ==2){
-					stage2();
-				}
-				else if(stageCounter == 3){
-					stage3();
-				}
-				else if(stageCounter == 4){
-					stage4();
-				}
-				else if(stageCounter == 5){
-					stage5();
-				}
-				else{
-					HudObject gameWin = new HudObject(new Vector2(0,0));
-
-					gameWin.permanent = true;
-					gameWin.objectRenderer.SetTexture("Win");
-					gameWin.transform.size = new Vector2(40, 8);
-					gameWin.transform.position = new Vector2(0, 0);
-					gameWin.rigidBody.frictionCoefficient = 0.1f;
-					hud.otherInfos.add(gameWin);
-
-					GameOver = true;
-				}
-			}
-
-			if(GameOver && !playerOne && !playerTwo)
-				try {
-					Statistics.updateStats(MainGame.currentUser, HUD.points, 0);
-					Highscore.addScore(MainGame.currentUser.getUsername(), HUD.points);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 		}
 
-		private void UpdateSceneObjects()
-		{	
-			for(int j =0; j<PickUpList.size(); j++){
-				if(!(PickUpList.get(j).isDeleted)){
-					PickUpList.get(j).Update();
-				}	
+
+		if(GameOver && !MainGame.playerOne && !MainGame.playerTwo)
+			try {
+				Statistics.updateStats(MainGame.currentUser, HUD.points, 0);
+				Highscore.addScore(MainGame.currentUser.getUsername(), HUD.points);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+
 			asteroidField.Update();
 			hud.Update();
 			if (!player.isDeleted) 
@@ -352,32 +364,64 @@ public class GameLogic
 			} 
 			hud.Update();
 			for(int k =0; k<shrapnel.size(); k++){
-				if(!shrapnel.get(k).isDeleted){
+				if(!shrapnel.get(k).isDeleted && !player.isDeleted){
 					shrapnel.get(k).Update();
-					if(shrapnel.get(k).TimeToDie()){
-						shrapnel.get(k).TurnOff();
-						//shrapnel.get(k).Delete();
-						//shrapnel.remove(k);
-					}
+					
+				}
+				if(shrapnel.get(k).TimeToDie()){
+					shrapnel.get(k).TurnOff();
+					//shrapnel.get(k).Delete();
+					//shrapnel.remove(k);
 				}
 			}
 			
 
+	}
 
+	private void UpdateSceneObjects()
+	{	
+		for(int j =0; j<PickUpList.size(); j++){
+			if(!(PickUpList.get(j).isDeleted)){
+				PickUpList.get(j).Update();
+			}	
 		}
+		asteroidField.Update();
+		hud.Update();
+		if (!player.isDeleted) 
+		{
+			player.Update();
+			alien.Update();
+		} 
+		hud.Update();
+	}
 
-		private void stage2(){
-			for(int j =0; j<PickUpList.size(); j++){
+	private void clearGameScreen(){
+		player.Delete();
+		for (Asteroid currentAsteroid : asteroidField.asteroidList){
+			currentAsteroid.Delete();
+		}
+		for (GameChar object : hud.otherInfos){
+			object.Delete();
+		}
+		for (GameChar object : PickUpList){
+			object.Delete();
+		}
+		asteroidField.asteroidList.clear();
+		hud.otherInfos.clear();
+		PickUpList.clear();
+		if(alien != null)
+			alien.Delete();
+		if(alien2 != null)
+			alien2.Delete();
+	}
 
-				PickUpList.get(j).Delete();
-			}
 
 
-			PickUpList.clear();
-			HudObject stage2 = new HudObject(new Vector2(0,0));
-			stage2.objectRenderer.SetTexture("Stage2");
-			stage2.transform.size = new Vector2(40,15);
-			hud.otherInfos.add(stage2);	
+	private void stage2(){
+		for(int j =0; j<PickUpList.size(); j++){
+
+			PickUpList.get(j).Delete();
+		}
 
 
 			player.rigidBody.SetPosition(new Vector2(0,0));
@@ -385,80 +429,95 @@ public class GameLogic
 			asteroidField.speed = 25+hardSpeed+mediumSpeed;
 			asteroidField.numberOfLives = 1+hardLives+mediumLives;
 
-			asteroidField.GenerateField();
-			GameWin = false;
 
-		}
-
-
-		private void stage3(){
-			for(int j =0; j<PickUpList.size(); j++){
-
-				PickUpList.get(j).Delete();
-				//PickUpList.remove(j);
-
-			}
-
-			PickUpList.clear();
-			
-			HudObject stage3 = new HudObject(new Vector2(0,0));
-			stage3.objectRenderer.SetTexture("Stage3");
-			stage3.transform.size = new Vector2(40,15);
-			hud.otherInfos.add(stage3);	
-
-			player.rigidBody.SetPosition(new Vector2(0,0));
-			asteroidField = new AsteroidField(17,5);
-			asteroidField.speed = 50+hardSpeed+mediumSpeed;
-			asteroidField.numberOfLives = 2+hardLives+mediumLives;
-			asteroidField.GenerateField();
-			GameWin = false;
-
-		}
+		PickUpList.clear();
+		HudObject stage2 = new HudObject(new Vector2(0,0));
+		stage2.objectRenderer.SetTexture("Stage2");
+		stage2.transform.size = new Vector2(40,15);
+		hud.otherInfos.add(stage2);	
 
 
-		private void stage4(){
-			for(int j =0; j<PickUpList.size(); j++){
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(14,5);
+		asteroidField.speed = 25;
+		asteroidField.numberOfLives = 1;
 
-				PickUpList.get(j).Delete();
-			}
-
-			PickUpList.clear();
-			HudObject stage4 = new HudObject(new Vector2(0,0));
-			stage4.objectRenderer.SetTexture("Stage4");
-			stage4.transform.size = new Vector2(40,15);
-			hud.otherInfos.add(stage4);	
-
-			player.rigidBody.SetPosition(new Vector2(0,0));
-			asteroidField = new AsteroidField(19,5);
-			asteroidField.speed = 100+hardSpeed+mediumSpeed;
-			asteroidField.numberOfLives = 2+hardLives+mediumLives;
-			asteroidField.GenerateField();
-			GameWin = false;
-
-		}
-
-		private void stage5(){
-
-			for(int j =0; j<PickUpList.size(); j++){
-				System.out.println("Delete");
-				PickUpList.get(j).Delete();
-				//PickUpList.remove(j);
-
-			}
-			PickUpList.clear();
-			HudObject stage5 = new HudObject(new Vector2(0,0));
-			stage5.objectRenderer.SetTexture("Stage5");
-			stage5.transform.size = new Vector2(40,15);
-			hud.otherInfos.add(stage5);	
-
-			player.rigidBody.SetPosition(new Vector2(0,0));
-			asteroidField = new AsteroidField(21,5);
-			asteroidField.numberOfLives = 3+hardLives+mediumLives;
-			asteroidField.speed = 150 +hardSpeed+mediumSpeed;
-			asteroidField.GenerateField();
-			GameWin = false;
-
-		}
+		asteroidField.GenerateField();
+		GameWin = false;
 
 	}
+
+
+	private void stage3(){
+		for(int j =0; j<PickUpList.size(); j++){
+
+			PickUpList.get(j).Delete();
+			//PickUpList.remove(j);
+
+
+		}
+
+		PickUpList.clear();
+		
+		HudObject stage3 = new HudObject(new Vector2(0,0));
+		stage3.objectRenderer.SetTexture("Stage3");
+		stage3.transform.size = new Vector2(40,15);
+		hud.otherInfos.add(stage3);	
+
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(17,5);
+		asteroidField.speed = 50+hardSpeed+mediumSpeed;
+		asteroidField.numberOfLives = 2+hardLives+mediumLives;
+		asteroidField.GenerateField();
+		GameWin = false;
+	}
+
+
+
+	private void stage4(){
+		for(int j =0; j<PickUpList.size(); j++){
+
+
+			PickUpList.get(j).Delete();
+		}
+
+		PickUpList.clear();
+		HudObject stage4 = new HudObject(new Vector2(0,0));
+		stage4.objectRenderer.SetTexture("Stage4");
+		stage4.transform.size = new Vector2(40,15);
+		hud.otherInfos.add(stage4);	
+
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(19,5);
+		asteroidField.speed = 100+hardSpeed+mediumSpeed;
+		asteroidField.numberOfLives = 2+hardLives+mediumLives;
+		asteroidField.GenerateField();
+		GameWin = false;
+
+	}
+
+
+	private void stage5(){
+
+
+		for(int j =0; j<PickUpList.size(); j++){
+			System.out.println("Delete");
+			PickUpList.get(j).Delete();
+			//PickUpList.remove(j);
+		}
+		PickUpList.clear();
+		HudObject stage5 = new HudObject(new Vector2(0,0));
+		stage5.objectRenderer.SetTexture("Stage5");
+		stage5.transform.size = new Vector2(40,15);
+		hud.otherInfos.add(stage5);
+
+		player.rigidBody.SetPosition(new Vector2(0,0));
+		asteroidField = new AsteroidField(21,5);
+		asteroidField.numberOfLives = 3+hardLives+mediumLives;
+		asteroidField.speed = 150 +hardSpeed+mediumSpeed;
+		asteroidField.GenerateField();
+		GameWin = false;
+	}
+
+}
 
