@@ -176,7 +176,7 @@ public class GameLogic
 				if(!alien.isDeleted)
 				alien.Update();
 			}
-			if(numberOfAsteroidsDestroyed  > 15 &&(stageCounter == 3 ||stageCounter ==5)){
+			if(numberOfAsteroidsDestroyed  > 15 &&(stageCounter == 3 ||stageCounter ==5 || stageCounter == 2)){
 
 				if(alien2 == null){
 
@@ -218,6 +218,7 @@ public class GameLogic
 		if(alien2 != null){
 			alienLaser2 = alien2.alienCannon2.GetLaserArray();
 			for(int i = 0; i <alienLaser2.size(); i++){
+				if(alienLaser2 != null){
 				if(player.rigidBody.isColliding(alienLaser2.get(i))){
 					player.lives --;
 					if (player.lives == 0) 
@@ -230,6 +231,7 @@ public class GameLogic
 					} 
 					
 				}
+			}
 			}
 		}
 		
@@ -328,6 +330,11 @@ public class GameLogic
 									if(j<lasers.size()){
 										if (lasers.get(j).rigidBody.isColliding(alien)) {
 											alien.Delete();
+											for(int i = 0; i< alien.alienCannon1.GetLaserArray().size();i++){
+												alien.alienCannon1.GetLaserArray().get(i).Delete();
+											}
+											alien.alienCannon1.GetLaserArray().clear();
+											
 										}
 								}
 							}
@@ -337,6 +344,11 @@ public class GameLogic
 									if(j<lasers.size()){
 										if (lasers.get(j).rigidBody.isColliding(alien2)) {
 											alien2.Delete();
+											for(int i = 0; i< alien2.alienCannon2.GetLaserArray().size();i++){
+												
+												alien2.alienCannon2.GetLaserArray().get(i).Delete();
+											}
+											alien2.alienCannon2.GetLaserArray().clear();
 										}
 								}
 							}
@@ -513,7 +525,7 @@ public class GameLogic
 				asteroidField.numberOfLives = 1;
 			}
 			else{
-				asteroidField.speed = 15;
+				asteroidField.speed = 10;
 				asteroidField.numberOfLives = 1;
 
 			}
@@ -528,9 +540,7 @@ public class GameLogic
 
 		player.rigidBody.SetPosition(new Vector2(0,0));
 		asteroidField = new AsteroidField(14,5);
-		asteroidField.speed =10;
-		asteroidField.numberOfLives = 1;
-
+		
 		asteroidField.GenerateField();
 		GameWin = false;
 

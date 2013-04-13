@@ -154,7 +154,7 @@ public class Player extends GameChar
 
 
 		if(System.currentTimeMillis()-birthTime2 > 3000){
-			shootTimeThreshold = 5;
+			shootTimeThreshold = 2;
 		}
 
 
