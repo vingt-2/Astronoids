@@ -3,12 +3,13 @@ package Game;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import com.jogamp.graph.curve.opengl.Renderer;
 
 import GameObjects.GameChar;
 import GameObjects.HUD;
 import Helpers.Color;
 import Maths.Vector2;
+
+import com.jogamp.graph.curve.opengl.Renderer;
 
 public class Menu {
 	Renderer render;

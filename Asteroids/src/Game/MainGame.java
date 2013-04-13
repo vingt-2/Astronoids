@@ -1,21 +1,15 @@
 package Game;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+
 import javax.media.opengl.GL2;
 
 import CSV.User;
-import GameObjects.Alien;
 import Game.SharedRessources.RessourceType;
-
-import GameObjects.GameChar;
-import GameObjects.HUD;
-import GameObjects.Laser;
-import GameObjects.Player;
 import Helpers.Debug;
 import Helpers.SoundEffect;
-import Maths.*;
-import Renderer.*;
+import Maths.Vector2;
+import Renderer.Renderer;
 
 public class MainGame 
 {
@@ -29,14 +23,14 @@ public class MainGame
 	public static boolean inStartGame 		= true;
 	public static boolean inPauseGameMode 	= false;
 	public static boolean inStartMenu		= false;
-	
+
 	public static boolean  update =true;
 	public int pressCount = 0;
 
 	public static boolean winChecker = false;
 	public int counter=0;
 	public static User currentUser;
-	
+
 	public static boolean playerOne = false;
 	public static boolean playerTwo = false;
 	public static int scoreOne = 0;
@@ -54,7 +48,7 @@ public class MainGame
 
 	public void init(GL2 gl)
 	{
-		
+
 		if (inMenu) { 
 			sharedRessources.LoadRessources
 			(new Ressource [] {
@@ -92,7 +86,7 @@ public class MainGame
 					);
 			menuLogic = new Menu();
 		} 
-		
+
 		else 
 		{ 
 			sharedRessources.LoadRessources
@@ -127,20 +121,12 @@ public class MainGame
 			SoundEffect.CRASH.ordinal();
 			SoundEffect.ASTEROIDBREAK.ordinal();
 			SoundEffect.EXPLOSION.ordinal();
-			
-			
+
 			render.CheatTime();
 
 			gameLogic = new GameLogic();
-			
-			
-
 		}
-		
-
 	}
-
-
 
 
 	public void Update(GL2 gl)
@@ -156,7 +142,7 @@ public class MainGame
 				init (gl);
 				enterKeyPressed = false;
 			}
-
+			// Two Player mode
 			if(twoPlayerMode){
 				init (gl);
 				playerOne = true;
@@ -164,7 +150,6 @@ public class MainGame
 				twoPlayerMode = false;
 			} 
 
-			// Put Game Logic here
 			if(controls.isPressed(KeyEvent.VK_P) && pressCount==0){
 				update =!(update);
 				pressCount++;
@@ -187,11 +172,6 @@ public class MainGame
 				menuLogic.inLevelMenu = false;
 			}
 		}
-
-		//alien.Update();
-
-		//	player.rigidBody.isColliding(alien);
-
 
 	}
 
