@@ -30,7 +30,7 @@ public class LoginMenu {
 	 * @throws IOException
 	 */
 	public static boolean login(String username) throws IOException{
-
+		login = false;
 		// Set User type
 		ColumnPositionMappingStrategy<User> strat = new ColumnPositionMappingStrategy<User>();
 		strat.setType(User.class);
