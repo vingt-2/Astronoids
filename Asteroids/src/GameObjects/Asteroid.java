@@ -7,6 +7,14 @@ import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import Maths.Vector2;
 
+/**
+ * Asteroid specific GameChar, with isbroken boolean
+ * to check if the Asteroid has been destroyed
+ * as well as the ASteroid texture
+ *  
+ * @author Damien Doucet-Girard
+ *
+ */
 public class Asteroid extends GameChar
 {
 
@@ -25,10 +33,7 @@ public class Asteroid extends GameChar
 	public void Update(){
 		
 		super.Update();
-		
-		Random rand = new Random();
-				
-	
+			
 	}
 	
 

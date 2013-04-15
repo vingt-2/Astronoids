@@ -42,10 +42,10 @@ public class Laser extends GameChar {
 			}
 		
 			rigidBody.frictionCoefficient = 0.0f;
-			rigidBody.mass = 0.003f;
+			rigidBody.mass = 0.001f;
 			rigidBody.acceleration = new Vector2(0,0);
-			rigidBody.PushForce(new Vector2(-5*(float)Math.cos((shooterTrans.rotation+(direction))),
-					5*(float)Math.sin((shooterTrans.rotation+(direction)))), ForceMode.Impulse);
+			rigidBody.PushForce(new Vector2(-10*(float)Math.cos((shooterTrans.rotation+(direction))),
+					10*(float)Math.sin((shooterTrans.rotation+(direction)))), ForceMode.Impulse);
 			
 			//if (TimeToDie()) Delete();
 			if(hasCollided){

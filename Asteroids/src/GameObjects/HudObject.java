@@ -5,6 +5,13 @@ import java.util.Random;
 import GameComponents.ObjectRenderer.Shape;
 import Maths.Vector2;
 
+/**
+ * Objects to be passed to the HUD and displayed.
+ * Used specifically for displaying Stage numbers.
+ *  
+ * @author Damien Doucet-Girard
+ *
+ */
 public class HudObject  extends GameChar{
 
 	long creationTime;
@@ -20,8 +27,10 @@ public class HudObject  extends GameChar{
 		
 		super.Update();
 				
-	
+		//Checking if stage is over
 		HUD.changingStage = true;
+		
+		//Deleting stage number display after a pre-determined time
 		if(TimeToDie()){
 			if(!permanent)
 				Delete();
@@ -31,6 +40,7 @@ public class HudObject  extends GameChar{
 	
 	}
 	
+	//Time to die set to 1000ms in this case. Same function used in Particles.java
 	public boolean TimeToDie()
 	{
 		long currentTime = System.currentTimeMillis();

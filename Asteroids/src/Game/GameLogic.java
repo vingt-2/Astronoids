@@ -163,84 +163,7 @@ public class GameLogic
 
 
 		lasers = player.shooter.GetLaserArray();
-
-		// Generates an alien on specific stages and after 10 asteroids are destroyed
-		if(numberOfAsteroidsDestroyed  > 10 &&(stageCounter ==2 ||stageCounter ==4||stageCounter ==5)){
-			if( alien == null){
-
-				alien= new Alien("Alien1");
-				alien.transform.size=new Vector2(2,2);
-				alien.rigidBody.frictionCoefficient= 0.05f;
-				alien.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
-
-			}
-			else{
-				if(!alien.isDeleted)
-					alien.Update();
-			}
-			
-			// Generates an alien2 on specific stages and after 15 asteroids are destroyed
-			if(numberOfAsteroidsDestroyed  > 15 &&(stageCounter == 3 ||stageCounter ==5 || stageCounter == 2)){
-
-				if(alien2 == null){
-
-					alien2= new Alien("Alien2");
-					alien2.transform.size=new Vector2(2,2);
-					alien2.rigidBody.frictionCoefficient= 0.05f;
-
-					alien2.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
-
-				}
-				else
-					if (!alien2.isDeleted){
-						alien2.Update();}
-			}
-		}
-
-		lasers = player.shooter.GetLaserArray();
-
-		// Collision detection with alien
-		if(alien!= null ){
-			alienLaser1 = alien.alienCannon1.GetLaserArray();
-			for(int i = 0; i <alienLaser1.size(); i++){
-				if(player.rigidBody.isColliding(alienLaser1.get(i))){
-					player.lives --;
-
-					if (player.lives == 0) 
-					{
-						SoundEffect.CRASH.play();
-						GameFail = true;
-						player.Delete();
-
-						SoundEffect.GAMEOVER.play();
-					} 
-
-				}
-			}
-		}
-
-		// Collision detection with alien2
-		if(alien2 != null){
-			alienLaser2 = alien2.alienCannon2.GetLaserArray();
-			for(int i = 0; i <alienLaser2.size(); i++){
-				if(alienLaser2 != null){
-					if(player.rigidBody.isColliding(alienLaser2.get(i))){
-						player.lives --;
-						if (player.lives == 0) 
-						{
-							SoundEffect.CRASH.play();
-							GameFail = true;
-							player.Delete();
-
-							SoundEffect.GAMEOVER.play();
-						} 
-
-					}
-				}
-			}
-		}
-
-
+		
 		/*
 		 * Computations on each asteroids 
 		 */
@@ -359,6 +282,88 @@ public class GameLogic
 			}
 		}
 
+		// Generates an alien on specific stages and after 10 asteroids are destroyed
+		if(numberOfAsteroidsDestroyed  > 10 &&(stageCounter ==2 ||stageCounter ==4||stageCounter ==5)){
+			if( alien == null){
+
+				alien= new Alien("Alien1");
+				alien.transform.size=new Vector2(2,2);
+				alien.rigidBody.frictionCoefficient= 0.05f;
+				alien.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
+
+			}
+			else{
+				if(!alien.isDeleted)
+					alien.Update();
+			}
+			
+			// Generates an alien2 on specific stages and after 15 asteroids are destroyed
+			if(numberOfAsteroidsDestroyed  > 15 &&(stageCounter == 3 ||stageCounter ==5 || stageCounter == 2)){
+
+				if(alien2 == null){
+
+					alien2= new Alien("Alien2");
+					alien2.transform.size=new Vector2(2,2);
+					alien2.rigidBody.frictionCoefficient= 0.05f;
+
+					alien2.rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
+
+				}
+				else
+					if (!alien2.isDeleted){
+						alien2.Update();}
+			}
+		}
+
+		lasers = player.shooter.GetLaserArray();
+
+		// Collision detection with alien
+		if(alien!= null ){
+			alienLaser1 = alien.alienCannon1.GetLaserArray();
+			for(int i = 0; i <alienLaser1.size(); i++){
+				if (!player.isDeleted) {
+					if (player.rigidBody.isColliding(alienLaser1.get(i))) {
+						player.lives--;
+
+						if (player.lives == 0) {
+							SoundEffect.CRASH.play();
+							GameFail = true;
+							player.Delete();
+
+							SoundEffect.GAMEOVER.play();
+						}
+
+					}
+				}
+			}
+		}
+
+		// Collision detection with alien2
+		if(alien2 != null){
+			alienLaser2 = alien2.alienCannon2.GetLaserArray();
+			for(int i = 0; i <alienLaser2.size(); i++){
+				if(alienLaser2 != null){
+					
+					if (!player.isDeleted) {
+						if (player.rigidBody.isColliding(alienLaser2.get(i))) {
+							player.lives--;
+							if (player.lives == 0) {
+								SoundEffect.CRASH.play();
+								GameFail = true;
+								player.Delete();
+
+								SoundEffect.GAMEOVER.play();
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+
+		
+
 
 
 		if (asteroidField.asteroidList.size() == 0) 
@@ -403,6 +408,7 @@ public class GameLogic
 		// Destroyed all the asteroids on the screen
 		else if (GameWin) 
 		{
+			//stage progression until end of game
 			if(stageCounter ==2){
 				stage2();
 			}
@@ -439,15 +445,32 @@ public class GameLogic
 				e.printStackTrace();
 			}
 
+		
 
-		asteroidField.Update();
-		hud.Update();
-		if (!player.isDeleted) 
+
+	}
+
+	/**
+	 * Updates the asteroidField and the HUD
+	 */
+	private void UpdateSceneObjects()
+	{	
+		if (!player.isDeleted) // if player not deleted updates player
 		{
 			player.Update();
 
-		} 
-		hud.Update();
+		}
+		
+		hud.Update(); // Updates HUD
+		
+		//updates PickUps on field
+		for(int j =0; j<PickUpList.size(); j++){
+			if(!(PickUpList.get(j).isDeleted)){
+				PickUpList.get(j).Update();
+			}	
+		}
+	
+		//updates particles effects when asteroids explode
 		for(int k =0; k<shrapnel.size(); k++){
 			if(!shrapnel.get(k).isDeleted && !player.isDeleted){
 				shrapnel.get(k).Update();
@@ -457,26 +480,8 @@ public class GameLogic
 				shrapnel.get(k).TurnOff();
 			}
 		}
-
-	}
-
-	/**
-	 * Updates the asteroidField and the HUD
-	 */
-	private void UpdateSceneObjects()
-	{	
-		for(int j =0; j<PickUpList.size(); j++){
-			if(!(PickUpList.get(j).isDeleted)){
-				PickUpList.get(j).Update();
-			}	
-		}
+		
 		asteroidField.Update(); // Updates asteroids
-		hud.Update(); // Updates HUD
-		if (!player.isDeleted) // if player not deleted updates player
-		{
-			player.Update();
-
-		}
 	}
 
 	/**
@@ -518,11 +523,23 @@ public class GameLogic
 		hud.otherInfos.clear();
 		PickUpList.clear();
 		
-		// Deletes the aliens if any
+		// Deletes the aliens and their bullets if any
 		if(alien != null)
 			alien.Delete();
+			if(alien.alienCannon1!=null){
+				for (Laser object : alien.alienCannon1.GetLaserArray()){
+					if(object != null)
+						object.Delete();
+				}
+			}
 		if(alien2 != null)
 			alien2.Delete();
+		if(alien2.alienCannon2!=null){
+			for (Laser object : alien2.alienCannon2.GetLaserArray()){
+				if(object != null)
+					object.Delete();
+			}
+		}
 	}
 
 
