@@ -39,10 +39,10 @@ public class StatisticsTest {
 			// Test Alice's statistics
 	        String[] nextLine = reader.readNext();
 	        assertEquals("Alice", nextLine[0]);	// Username
-	        assertEquals("300", nextLine[1]);	// Best score is 200
-	        assertEquals("2", nextLine[2]);		// Number of Games played is 1
-	        assertEquals("250", nextLine[3]);	// Average score is 200
-	        assertEquals("2000", nextLine[4]); 	// Playtime is 1000
+	        assertEquals("200", nextLine[1]);	// Best score is 200
+	        assertEquals("1", nextLine[2]);		// Number of Games played is 1
+	        assertEquals("200", nextLine[3]);	// Average score is 200
+	        assertEquals("1000", nextLine[4]); 	// Playtime is 1000
 			
 			Statistics.updateStats(Alice, 300, 1000);
 			// Test Alice's statistics
