@@ -21,6 +21,7 @@ public class Alien extends GameChar{
 	public long shootTimeThreshold = 200; 
 	
 	long time = System.currentTimeMillis();
+	//Alien constructor
 		public Alien(String aiType)
 		{
 			super();
@@ -28,12 +29,14 @@ public class Alien extends GameChar{
 			transform.size = new Vector2(2,2);
 			this.aiType=aiType;
 			objectRenderer.shape= Shape.Square;
+			//If the alien has the AI1 then set texture (green alien)
 			if (aiType.equals("Alien1")){
 			objectRenderer.SetTexture("Alien");
 			alienCannon1 = new Shoot(transform);
 			
 			alienCannon1.isAlien1 =true;
 			}
+			//If the alien has the AI2 then set texture (red alien)
 			if (aiType.equals("Alien2")){
 				objectRenderer.SetTexture("Alien2");
 				alienCannon2 = new Shoot(transform);
@@ -44,17 +47,18 @@ public class Alien extends GameChar{
 			
 		}
 		
+		
 		public void Update()
 		{
 			super.Update();
 			
 			time = System.currentTimeMillis();
 			
-			// Alien Stuff
+			// Updates the AI1 if the alien is type 1
 			if (aiType.equals("Alien1")){
 				AlienAI();	
 			}
-			
+			// Updates the AI2 if the alien is type 2
 			if (aiType.equals("Alien2")){
 				AlienAI2();
 				
@@ -63,6 +67,7 @@ public class Alien extends GameChar{
 			
 		}
 		
+		//First AI, PathFinder
 		private void AlienAI()
 		{
 			Vector2 forward= transform.LocalDirectionToWorld(new Vector2(0,1)).Normalized();
@@ -83,7 +88,7 @@ public class Alien extends GameChar{
 				alienCannon1.isAlien1 =true;
 				}
 				else alienCannon1.Update();
-			
+			//If the alignment between the player and alien is smaller than 0.90 then alien starts shooting
 			if ( alignment < 0.90f)
 			{
 				
@@ -105,22 +110,23 @@ public class Alien extends GameChar{
 					else alienCannon1.TurnOff();
 					
 				}
+				//If the alignment between player and alien is smaller than 0.70 then pushes a torque
 				if(alignment < 0.70f)
 				{
 					rigidBody.PushTorque(rotationSign*10*(1-alignment),ForceMode.Impulse);
-					//MainGame.debug.DrawLine(transform.position, direction, direction.GetLength(),Color.Blue);	
+					
 				}
 				else
 				{
 					rigidBody.PushTorque(rotationSign*10* ((1-alignment)), ForceMode.Impulse);
 					
-					
+					//If the distance between the player and the alien is greater than a threshold value then the alien pushes a force forward
 					if(direction.GetLength() > distanceThreshold)
 					{
 						rigidBody.PushForce(Vector2.Scale(100,forward), ForceMode.Impulse);
 					}
 					
-					//MainGame.debug.DrawLine(transform.position, direction, direction.GetLength(),Color.Red);
+					
 				}
 			}
 			else
@@ -133,19 +139,20 @@ public class Alien extends GameChar{
 				if(alienCannon1 != null && alienCannon1.isTurnedOn){
 					alienCannon1.TurnOff();
 				}
-				//MainGame.debug.DrawLine(transform.position, direction, direction.GetLength(),Color.Green);
+				
 				
 			}		
 		}
 		
-private void AlienAI2(){
+		//AI type 2, pushes a torque at a random value while constantly shooting and moving torwards the player
+		private void AlienAI2(){
 			
 		if(alienCannon2 == null){
 			alienCannon2 = new Shoot(transform);
 			alienCannon2.isAlien2 =true;
 			
 			
-			//System.out.println("Shoot created");
+			
 		}
 		
 		if( time - lastShootTime >  shootTimeThreshold)
@@ -174,16 +181,16 @@ private void AlienAI2(){
 			randPosY = rand.nextInt(1000)-500;
 			// Generated random Sign
 			randSign = rand.nextBoolean() ? -1 : 1;
-			//rigidBody.SetPosition(new Vector2(randPosX*randSign, randPosY* randSign ));
+			
 			Vector2 direction = Vector2.Add(MainGame.gameLogic.player.transform.position, transform.position.negate());
-			Vector2 testAI= Vector2.Add(MainGame.gameLogic.player.transform.position, transform.position.negate());
-			rigidBody.PushForce(testAI, ForceMode.Impulse);
+			rigidBody.PushForce(direction, ForceMode.Impulse);
 			rigidBody.PushTorque(randPosX/10, ForceMode.Impulse);
-			//rigidBody.PushTorque(randPosY*randSign, ForceMode.Impulse);
+			
 			
 			
 		}
 			
+	//Returns the sign for rotation
 		public float sign(float sign)
 		{
 
