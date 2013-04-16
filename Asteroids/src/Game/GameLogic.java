@@ -30,6 +30,7 @@ import Maths.Vector2;
  *
  * @author Damien Doucet-Girard
  * @author Chi-Wing Sit
+ * @author Vincent Petrella
  */
 public class GameLogic
 {

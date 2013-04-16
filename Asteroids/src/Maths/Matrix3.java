@@ -1,10 +1,10 @@
 package Maths;
 
 /**
- * Matrix3:
- * 		A Matrix3 Class that implements Matrix3x3 stuff
- * 		Method names are pretty straightforward I think.
- *
+ * 	Implements Matrix3x3 stuff
+ * 		
+ * <p>Method names are pretty straightforward I think.</p>
+ * @author Vincent Petrella
  */
 
 public class Matrix3 

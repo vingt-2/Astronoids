@@ -1,13 +1,4 @@
-/**
- * @author Vincent Petrella
- * 
- * Renderer Class Handles creating a Render object that's going to create an awt Frame window,
- * and assign it a new OpenGL context to draw stuff on.
- * THE GAME LOOP ACTUALLY HAPPENS HERE. 
- * The GLEeventListener is the game thread, and will call init at it's first frame,
- * then display every frame.
- * 
- */
+
 package Renderer;
 
 //Graphics specific imports
@@ -53,6 +44,19 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 ////
 
+/**
+ * 
+ * Handles the creation of a Render object that's going to create an awt Frame window, and assign it a new OpenGL context to draw stuff on.
+ * 
+ * <p>
+ * THE GAME LOOP ACTUALLY HAPPENS HERE. 
+ * </p>
+ * <p>
+ * The GLEeventListener is the game thread, and will call init at it's first frame,
+ * then display every frame.
+ * </p>
+ * @author Vincent Petrella
+ */
 public class Renderer implements GLEventListener
 {	
 	public static final int FIXED_REFRESH_RATE = 60 ; // Refresh rate fixed at (1/60)hz, leading to 60frame/s

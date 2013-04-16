@@ -1,10 +1,3 @@
-/**
- * @author Vincent Petrella
- * 
- * Generates The smoke trail composed of many random Particles!
- * 
- */
-
 package GameObjects;
 
 import java.util.Random;
@@ -12,6 +5,13 @@ import java.util.Random;
 import GameComponents.RigidBody.ForceMode;
 import GameComponents.Transform;
 import Maths.Vector2;
+
+/**
+ * 
+ * Generates The smoke trail composed of many random Particles!
+ * 
+ * @author Vincent Petrella
+ */
 
 public class ParticleEffects extends GameObject
 {

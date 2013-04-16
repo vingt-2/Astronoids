@@ -1,22 +1,3 @@
-/**
- * @author Vincent Petrella
- * 
- * MainGame:
- *     Here we instantiate all of our game singletons, as well as the menu and game logics.
- *     The main method is also located here.
- *     
- *    
- *    The static Singletons that can be accessed everywhere in the program are:
- *      sharedRessources -> The lookup table of ressources
- *      render  -> The One and only Renderer object of the program, holds info concerning the gl Context.
- *      controls -> A key listener thread. One can know if a key is pressed using isPressed(int key)     
- *      debug  -> a debug object that can be summoned to do cool debug stuff for us. 
- *
- *     Careful! The Main Game Loop is not explicitly here (even though it LOGICALLY is here):
- *     JOGL GLEventListener thread calls display() in the render Singleton Object, which then call's this Update() function (where the game loop actually happens).
- *
- */
-
 package Game;
 
 import java.awt.event.KeyEvent;
@@ -29,6 +10,29 @@ import Helpers.Debug;
 import Helpers.SoundEffect;
 import Maths.Vector2;
 import Renderer.Renderer;
+
+/**
+ * Holds the architecture main loop.
+ * @author Vincent Petrella
+ *
+ *  <p>
+ *	Here we instantiate all of our game singletons, as well as the menu and game logics.
+ *  The main method is also located here.
+ *  </p>   
+ *  <p> 
+ *  The static Singletons that can be accessed everywhere in the program are:
+ *  <ul>
+ *  <li> sharedRessources -> The lookup table of ressources </li>
+ *  <li>render  -> The One and only Renderer object of the program, holds info concerning the gl Context.</li>
+ *  <li>controls -> A key listener thread. One can know if a key is pressed using isPressed(int key) </li>
+ *  <li>debug  -> a debug object that can be summoned to do cool debug stuff for us. </li>
+ *	</ul></p>
+ *	<p>
+ *	Careful! The Main Game Loop is not explicitly here (even though it LOGICALLY is here):
+ *  JOGL GLEventListener thread calls display() in the render Singleton Object, which then call's this Update() function (where the game loop actually happens).
+ *  </p>   
+ *  @see Renderer
+ */
 
 public class MainGame 
 {

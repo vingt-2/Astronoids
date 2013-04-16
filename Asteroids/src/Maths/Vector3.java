@@ -1,11 +1,11 @@
-/**
- * Vector3:
- * 		A Vector3 Class that implements Vector 3D stuff
- * 		See method comments for Vector2.
- *
- */
 package Maths;
 
+/**
+ * 	Implements Vector 3D stuff
+ * 
+ * @see Vector2
+ * @author Vincent Petrella
+ */
 public class Vector3 
 {
 		public float x;

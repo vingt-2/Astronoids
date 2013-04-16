@@ -1,14 +1,3 @@
-/**
- * @author Vincent Petrella
- * 
- * ObjectRenderer:
- * 		An Object component that holds all the infos related to Drawing the object.
- * 		It is linked to it's parent. so that It can access the transform information to draw at the right spot.
- * 		The renderer Display pipeline goes through all ObjectRenderer to be displays
- * 		and call their Draw() methods, according to: 
- * 		shape (of the primitive), the texture to be projected in this shape, and an opacity coefficient
- * 
- */
 
 package GameComponents;
 
@@ -19,7 +8,17 @@ import Maths.*;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-
+/**
+ * 
+ *  Holds all the infos related to Drawing the object.
+ *  <p>
+ * 		It is linked to it's parent. so that It can access the transform information to draw at the right spot.
+ * 		The renderer Display pipeline goes through all ObjectRenderer to be displays
+ * 		and call their Draw() methods, according to: 
+ * 		shape (of the primitive), the texture to be projected in this shape, and an opacity coefficient
+ *  </p>
+ * @author Vincent Petrella
+ */
 public class ObjectRenderer 
 {
 	public Vector2[] objectUVs;

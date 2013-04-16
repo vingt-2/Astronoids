@@ -1,20 +1,15 @@
-/**
- * @author Vincent Petrella
- * 
- * SharedRessources:
- * 		This class implements a ressource table.
- * 
- * 		Ressources are load in memory with their filepath, given a name and type.
- * 		The table is: name / ressourceID
- * 		and Can be accessed via the special functions for each type using the name. 
- * 
- * 
- */
-
 package Game;
 
 import java.util.HashMap;
 
+/**
+ * 	This class implements a ressource table.
+ * 
+ * 	<p>	Ressources are load in memory with their filepath, given a name and type.
+ * 		The table is: <name / ressourceID> and can be accessed via the special functions for each type using the name. 
+ *  </p>
+ * @author Vincent Petrella
+ */
 public class SharedRessources 
 {
 

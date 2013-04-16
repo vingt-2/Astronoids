@@ -1,10 +1,10 @@
-/**
- * Color:
- * 		Simple enough, that's some Color enum.
- * 
- */
-
 package Helpers;
+
+/**
+ * 
+ *	Simple enough, that's some Color enum.
+ * @author Vincent Petrella
+ */
 
 public enum Color 
 {

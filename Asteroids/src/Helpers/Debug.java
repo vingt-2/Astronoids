@@ -1,13 +1,13 @@
-/**
- * @author Vincent Petrella
- * Debug:
- * 		A debug Class to access some useful infos:
- * 			Drawing rays, vectors, shape, that kind of stuff.
- * 
- * 
- */
 package Helpers;
 
+/**
+ * 		A debug Class to access some useful infos:
+ * 
+ * 		<p>
+ * 		Drawing rays, vectors, shape, that kind of stuff.
+ * 		</p>
+ * @author Vincent Petrella
+ */
 import javax.media.opengl.GL2;
 
 import Game.MainGame;

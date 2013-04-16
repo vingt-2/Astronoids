@@ -1,21 +1,20 @@
-/**
- * @author Vincent Petrella, Damien Girard (collisions)
- * 
- * RigidBody:
- * 		An Object component that holds the physic state of an Object.
- * 		A RigidBody keeps is linked to a it's parent and access and modify it's transform
- * 		according to it's physic state (i.e, velocity and angularVelocity).
- * 		The movement is initiated by pushing forces on the rigidbody, and is calculated using
- * 		mass, frictionCoefficient attributes
- * 
- */
-
 package GameComponents;
 
 import java.util.ArrayList;
 import Game.MainGame;
 import GameObjects.GameChar;
 import Maths.*;
+/**
+ * 		Holds the physic state of an GameObject.
+ * <p>
+ * 		A RigidBody keeps is linked to a it's parent and access and modify it's transform
+ * 		according to it's physic state (i.e, velocity and angularVelocity).
+ * 		The movement is initiated by pushing forces on the rigidbody, and is calculated using
+ * 		mass, frictionCoefficient attributes
+ * </p>
+ *  @author Vincent Petrella, 
+ *  @author Damien Girard (collisions)
+ */
 
 public class RigidBody 
 {

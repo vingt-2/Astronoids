@@ -1,17 +1,17 @@
-/**
- * @author Vincent Petrella
- * 
- * Manages files reading. Initially for reading Shader files. Not used anymore I think.
- * Could still come in handy.
- * 
- */
-
 package Helpers;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * 
+ * Manages files reading. 
+ * <p>Initially for reading Shader files. Not used anymore I think.
+ * Could still come in handy.
+ * </p>
+ * @author Vincent Petrella
+ */
 public class Files 
 {
 	public final static int EOF = -1;

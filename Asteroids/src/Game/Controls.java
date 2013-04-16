@@ -1,18 +1,15 @@
-/**
- * @author Vincent Petrella
- * 
- * Controls:
- * 		Key Listener.
- * 		
- * 		Summon isPressed(key) from everywhere in the program to know if one particular key is Pressed.
- * 
- */
-
 package Game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * 		Control Listener
+ * 	<p>	Summon isPressed(key) from everywhere in the program to know if one particular key is Pressed.
+ *  </p>
+ * @author Vincent Petrella
+ * 
+ */
 
 public class Controls implements KeyListener
 {
@@ -66,6 +63,13 @@ public class Controls implements KeyListener
 	{
 		// TODO Auto-generated method stub
 	}
+	
+	/**
+	 * Is the key "keyCode" being pressed on the keyboard ?
+	 * 
+	 * @param keyCode
+	 * @return true if key pressed, false otherwise.
+	 */
 	
 	public boolean isPressed(int keyCode)
 	{	

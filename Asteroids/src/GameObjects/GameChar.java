@@ -1,14 +1,3 @@
-/**
- * @author Vincent Petrella
- * 
- * GameChar:
- * 		A special type of GameObject that holds:
- * 		 - a Transform: To keep track of space coordinates matters.
- * 		 - a RigidBody: To keep track of physic state matters.
- * 		 - an ObjectRenderer: To keep track of "Drawing to screen" matters
- * 
- */
-
 package GameObjects;
 
 import Game.MainGame;
@@ -16,6 +5,19 @@ import GameComponents.ObjectRenderer;
 import GameComponents.RigidBody;
 import GameComponents.Transform;
 import Maths.Vector2;
+
+/**
+ * 
+ * 	A more specific type of GameObject, see description
+ *  
+ * 	<p>
+ * 	This holds:
+ * 		 <ul> <li> a Transform: To keep track of space coordinates matters.</li>
+ * 		 <li>a RigidBody: To keep track of physic state matters.</li>
+ * 		 <li>an ObjectRenderer: To keep track of "Drawing to screen" matters.</li>
+ *
+ * @author Vincent Petrella
+ */
 
 public class GameChar extends GameObject 
 {

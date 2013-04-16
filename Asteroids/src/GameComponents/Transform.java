@@ -1,18 +1,16 @@
-/**
- * @author Vincent Petrella
- * 
- * Transform:
- * 		An Object component that holds the world representation of an object.
- * 		An object is then placed in the world according to it's Position, Size, and Rotation,
- * 		which are the main attributes of a Transform.
- * 		These 3 attribute are concatenated into 1 matrix, the transformMatrix
- * 
- */
-
 package GameComponents;
 
 import Maths.*;
-
+/**
+ * 
+ *	Holds the world representation of an object.
+ * 		
+ * 	<p>	An object is then placed in the world according to it's Position, Size, and Rotation,
+ * 		which are the main attributes of a Transform.
+ * 		These 3 attribute are concatenated into 1 matrix, the transformMatrix
+ *  </p>
+ * @author Vincent Petrella	
+ */
 public class Transform 
 {
 	public Vector2 size;

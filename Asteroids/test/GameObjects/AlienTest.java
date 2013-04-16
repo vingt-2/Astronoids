@@ -16,7 +16,11 @@ import Game.SharedRessources.RessourceType;
 import Renderer.Renderer;
 import au.com.bytecode.opencsv.CSVWriter;
 
-
+/**
+ * 
+ * Alien Test class
+ *
+ */
 public class AlienTest {
 	public static String Window_Name		= "Asteroids";
 	public static final Renderer render = new Renderer(Window_Name);

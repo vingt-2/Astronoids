@@ -1,6 +1,11 @@
 package GameComponents;
 
-
+/**
+ * Unit test for Rigidbodys
+ * 
+ * @author Damien Girard
+ * 
+ */
 import static org.junit.Assert.*;
 
 import org.junit.Before;

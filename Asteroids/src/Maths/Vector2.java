@@ -1,13 +1,11 @@
-/**
- * @author Vincent Petrella
- * Vector2:
- * 		A Vector2 Class that implements Vector 2D stuff
- * 		Methods signatures stand also for Vector3
- *
- */
-
 package Maths;
 
+/**
+ *	Implements Vector 2D stuff
+ * 	
+ * <p> Methods signatures stand also for Vector3 </p>
+ * @author Vincent Petrella
+ */
 public class Vector2 
 {
 		public float x;

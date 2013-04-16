@@ -1,17 +1,19 @@
-/**
- * @author Vincent Petrella
- * 
- * Ressource:
- * 		Defines what a ressource is:
- * 			It has a name,
- * 				   a filepath,
- * 				   and a type.
- * 
- */
 package Game;
 
 import Game.SharedRessources.RessourceType;
 
+/**
+ * Implements Resources type
+ * 
+ * @author Vincent Petrella
+ * 
+ * </p>
+ * 		Defines what a ressource is:
+ * 			<ul><li>It has a name,</li>
+ * 			<li>a filepath,</li>
+ * 			<li>and a type.</li> </ul>
+ * 
+ */
 public class Ressource
 {
 	public RessourceType type;

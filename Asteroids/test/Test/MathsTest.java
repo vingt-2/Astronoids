@@ -9,6 +9,9 @@ import org.junit.Test;
 import Game.MainGame;
 import Maths.*;
 
+/**
+ * Linear Algebra test class
+ */
 public class MathsTest 
 {
 	

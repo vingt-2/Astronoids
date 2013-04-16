@@ -9,11 +9,13 @@ import org.junit.Test;
 import GameComponents.Transform;
 import Maths.Matrix3;
 import Maths.Vector2;
-
+/**
+ * Transform test class
+ */
 public class TransformTest 
 {
 	/**
-	 * Test transform attributes using random numbers.
+	 * Tests transform attributes using random numbers.
 	 * 
 	 */
 	
