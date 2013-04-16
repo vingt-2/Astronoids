@@ -401,7 +401,10 @@ public class Menu {
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
-
+				isMedium = false;
+				isHard = false;
+				GameLogic.GameOver = false;
+				
 				easy.Delete();
 				medium.Delete();
 				hard.Delete();
@@ -417,6 +420,9 @@ public class Menu {
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				//put medium level code
 				isMedium = true;
+				isHard = false;
+				GameLogic.GameOver = false;
+				
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
@@ -437,6 +443,8 @@ public class Menu {
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
 				isHard = true;
+				isMedium = false;
+				GameLogic.GameOver = false;
 				
 				easy.Delete();
 				medium.Delete();
