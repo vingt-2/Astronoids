@@ -1,4 +1,9 @@
-
+/**
+ * @author Vincent Petrella
+ * 
+ * Player Controls and stuff.
+ * 
+ */
 
 package GameObjects;
 
@@ -64,11 +69,14 @@ public class Player extends GameChar
 
 	}
 
+
+
 	/**
-	 * Dictates behavior according to key inputs. 
-	 * Pattern currently is up, down, left, right for respective directions
-	 * and x to shoot
+	 * Player controls, check for input and implements the gameplay behaviour
+	 * 
 	 */
+
+
 	private void PlayerControls()
 	{
 		if(MainGame.controls.isPressed(KeyEvent.VK_RIGHT))

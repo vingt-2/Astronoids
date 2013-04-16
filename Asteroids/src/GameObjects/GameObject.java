@@ -1,7 +1,9 @@
 /**
+ * @author Vincent Petrella
+ * 
  * GameObjects:
  * 		The simplest form of Game entities within the game.
- * 		Every game entitie should inherit from it
+ * 		Every game entity should inherit from it
  * 
  */
 

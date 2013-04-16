@@ -1,4 +1,5 @@
 /**
+ * @author Vincent Petrella
  * Debug:
  * 		A debug Class to access some useful infos:
  * 			Drawing rays, vectors, shape, that kind of stuff.
@@ -20,7 +21,12 @@ public class Debug
 {
 	public static GL2 gl;
 
-	
+	/**
+	 * Draw Ray between to 2D vertices "origin","end", in Red
+	 * 
+	 * @param origin
+	 * @param end
+	 */
 	public void DrawRay(Vector2 origin,Vector2 end)
 	{
 		GL2 gl = MainGame.render.externDrawable.getGL().getGL2();
@@ -33,6 +39,14 @@ public class Debug
 		gl.glEnd();
 	}
 	
+	/**
+	 * Draw Ray between to 2D vertices "origin","end", in "color"
+	 * 
+	 * @param origin
+	 * @param end
+	 * @param color
+	 */
+	
 	public void DrawRay(Vector2 origin,Vector2 end,Color color)
 	{
 		GL2 gl = MainGame.render.externDrawable.getGL().getGL2();
@@ -43,6 +57,14 @@ public class Debug
 			gl.glVertex2f(end.x,end.y);
 		gl.glEnd();
 	}
+	
+	/**
+	 * Draw a Line from "origin" in the direction "direction" with length "length". In Red
+	 * 
+	 * @param origin
+	 * @param direction
+	 * @param length
+	 */
 
 	public void DrawLine(Vector2 origin,Vector2 direction,float length)
 	{
@@ -61,6 +83,15 @@ public class Debug
 		gl.glEnd();
 	}
 	
+	/**
+	 * Draw a Line from "origin" in the direction "direction" with length "length". In "color"
+	 * 
+	 * @param origin
+	 * @param direction
+	 * @param length
+	 * @param color
+	 */
+	
 	public void DrawLine(Vector2 origin,Vector2 direction,float length,Color color)
 	{
 		GL2 gl = MainGame.render.externDrawable.getGL().getGL2();
@@ -78,6 +109,14 @@ public class Debug
 			gl.glVertex2f(a,b);
 		gl.glEnd();
 	}
+	
+	/**
+	 * Draw "shape" transformed by "transform" in "color"
+	 * 
+	 * @param shape
+	 * @param transform
+	 * @param color
+	 */
 	
 	public void DrawShape(CollisionShape shape,Transform transform,Color color)
 	{

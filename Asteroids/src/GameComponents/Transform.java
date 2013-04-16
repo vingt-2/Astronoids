@@ -1,4 +1,6 @@
 /**
+ * @author Vincent Petrella
+ * 
  * Transform:
  * 		An Object component that holds the world representation of an object.
  * 		An object is then placed in the world according to it's Position, Size, and Rotation,
@@ -68,6 +70,7 @@ public class Transform
 	
 	/**
 	 * Transform the direction vector "vector" from Local space to World Space
+	 * (Discard Translations)
 	 * 
 	 * @param vector
 	 * @return
@@ -81,7 +84,8 @@ public class Transform
 	}
 	
 	/**
-	 * Transform the direction vector "vector" from Local space to World Space
+	 * Transform the Position vector "vector" from Local space to World Space
+	 * (Keeps track of translations)
 	 * 
 	 * @param vector
 	 * @return

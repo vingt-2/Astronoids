@@ -1,6 +1,7 @@
 /**
  * Vector3:
  * 		A Vector3 Class that implements Vector 3D stuff
+ * 		See method comments for Vector2.
  *
  */
 package Maths;
@@ -79,6 +80,14 @@ public class Vector3
 		{
 			return new Vector3(scalar * vec1.x, scalar * vec1.y, scalar * vec1.z);
 		}
+		
+		/**
+		 * Returns the 2 first entries in a new Vector2.
+		 * Useful to get rid of the homogeneous coordinate.
+		 * Actually don't use this for anything else...
+		 * 
+		 * @return vec2Entries
+		 */
 		
 		public Vector2 GetVec2()
 		{

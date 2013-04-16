@@ -1,4 +1,6 @@
 /**
+ * @author Vincent Petrella
+ * 
  * GameChar:
  * 		A special type of GameObject that holds:
  * 		 - a Transform: To keep track of space coordinates matters.
@@ -79,6 +81,10 @@ public class GameChar extends GameObject
 			rigidBody.SetPosition(new Vector2(transform.position.x,MainGame.Screen_Size.y/2));
 		}
 	}
+	
+	/**
+	 * Assigns null pointer to all components to help Java's Garbage collector do it's stuff
+	 */
 	
 	@Override
 	public void Delete()

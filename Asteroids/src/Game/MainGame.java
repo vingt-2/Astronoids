@@ -1,3 +1,22 @@
+/**
+ * @author Vincent Petrella
+ * 
+ * MainGame:
+ *     Here we instantiate all of our game singletons, as well as the menu and game logics.
+ *     The main method is also located here.
+ *     
+ *    
+ *    The static Singletons that can be accessed everywhere in the program are:
+ *      sharedRessources -> The lookup table of ressources
+ *      render  -> The One and only Renderer object of the program, holds info concerning the gl Context.
+ *      controls -> A key listener thread. One can know if a key is pressed using isPressed(int key)     
+ *      debug  -> a debug object that can be summoned to do cool debug stuff for us. 
+ *
+ *     Careful! The Main Game Loop is not explicitly here (even though it LOGICALLY is here):
+ *     JOGL GLEventListener thread calls display() in the render Singleton Object, which then call's this Update() function (where the game loop actually happens).
+ *
+ */
+
 package Game;
 
 import java.awt.event.KeyEvent;
@@ -182,8 +201,8 @@ public class MainGame
 
 		render.mainGame = game;									// Associate this Game to the renderer.
 		render.CreateWindow(new Vector2(1024,780),controls);	// Create a new Frame object and returns its reference.
-		SoundEffect.BACKGROUND.ordinal();
-		SoundEffect.BACKGROUND.play();
+		//SoundEffect.BACKGROUND.ordinal();
+		//SoundEffect.BACKGROUND.play();
 	}
 
 

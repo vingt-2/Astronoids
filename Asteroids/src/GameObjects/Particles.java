@@ -1,4 +1,13 @@
+/**
+ *@author Vincent Petrella
+ *
+ *	Particle extends just float into the air until it's time for them to die.
+ *	They also are affected by the player movement so that the smoke will spreads out when the player
+ *	moves into it.
+ * 
+ */
 package GameObjects;
+
 
 import Game.MainGame;
 import GameComponents.RigidBody.ForceMode;

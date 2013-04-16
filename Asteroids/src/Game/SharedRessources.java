@@ -1,4 +1,6 @@
 /**
+ * @author Vincent Petrella
+ * 
  * SharedRessources:
  * 		This class implements a ressource table.
  * 
@@ -35,6 +37,15 @@ public class SharedRessources
 		textures = new HashMap<String,Integer>();
 	}
 	
+	/**
+	 * Asks for the Renderer to load a texture at "filePath" in the GL context,
+	 * store the textureID in the ressource map along with it's "name"
+	 * 
+	 * @param name
+	 * @param filePath
+	 * @return
+	 */
+	
 	private boolean LoadTexture(String name,String filePath)
 	{
 		int newTexture = MainGame.render.CreateTexture(filePath);
@@ -45,6 +56,13 @@ public class SharedRessources
 		}
 		return false;
 	}
+	
+	/**
+	 * Load a ressource according to the specified RessourceType.
+	 * 
+	 * @param ressources
+	 * @return success
+	 */
 	
 	public boolean LoadRessources(Ressource[] ressources)
 	{
@@ -59,6 +77,13 @@ public class SharedRessources
 		}
 		return allGood;
 	}
+	
+	/**
+	 * Return the integer code associated with the texture "name"
+	 * 
+	 * @param name
+	 * @return textureID
+	 */
 	
 	public int GetTexture(String name)
 	{

@@ -3,6 +3,7 @@ package Maths;
 /**
  * Matrix2:
  * 		A Matrix2 Class that implements Matrix2x2 stuff
+ * 		Method names are pretty straightforward I think.
  *
  */
 

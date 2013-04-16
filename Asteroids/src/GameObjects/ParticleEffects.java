@@ -1,9 +1,14 @@
+/**
+ * @author Vincent Petrella
+ * 
+ * Generates The smoke trail composed of many random Particles!
+ * 
+ */
+
 package GameObjects;
 
 import java.util.Random;
 
-import Game.GameLogic;
-import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import GameComponents.Transform;
 import Maths.Vector2;
@@ -24,6 +29,11 @@ public class ParticleEffects extends GameObject
 		creationTime = System.currentTimeMillis();
 		particleArray = new Particles[maxParticles];
 	}
+	
+	/**
+	 * If turnedOn and particle array not full, generate particles !
+	 * (Shrapnel or Smoke)
+	 */
 
 	public void Update()
 	{

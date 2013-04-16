@@ -1,17 +1,24 @@
 package Game;
 
 import java.awt.event.KeyEvent;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import com.jogamp.graph.curve.opengl.Renderer;
 
 import GameObjects.GameChar;
-import GameObjects.HUD;
 import Helpers.Color;
 import Maths.Vector2;
 
-import com.jogamp.graph.curve.opengl.Renderer;
-
+/**
+ * Updates the Menu 
+ * @author Thuy-Anh Le
+ * @author Chi-Wing Sit
+ *
+ */
 public class Menu {
+	
+	//Instantiates all the titles 
 	Renderer render;
 	GameChar createUser;
 	GameChar loadUser;
@@ -34,18 +41,19 @@ public class Menu {
 	GameChar statisticsFont;
 	GameChar highScoresFont;
 
-	public int counter2 = 0;
-	public int counter3 = 0;
+	public int loginSuccessful = 0;
+	public int usernameAvailable = 0;
 	public int counter = 0;
 	public int pressCount = 0;
 	public boolean back = false;
 
+	//Instantiates all the boolean variables required to indicate the state of the menu 
 	String inputUsername = "";
 	public boolean inEnterUsernameNew = false;
 	public boolean inEnterUsername = false;
 	public static boolean inGameMenu = false;
 	public boolean inInstructions = false;
-	public boolean stopShowing = true;
+	public boolean showing = true;
 	public boolean showStats = true;
 	public boolean inHighScores = false;
 	public boolean inStatistics = false;
@@ -82,7 +90,12 @@ public class Menu {
 		MainGame.controls.recordKey = true;
 
 	}
+	/** 
+	 * Updates all the states of the menu: the StartMenu, the GameMenu, the LevelMenu, the
+	 * the instructions, the statistics, the high scores and the enterUsername page. 
+	 */
 	public void Update() { 
+		
 		if(MainGame.inStartMenu){
 			initStartMenu();
 			MainGame.inStartMenu = false;
@@ -98,10 +111,12 @@ public class Menu {
 		if(inLevelMenu){
 			updateLevelMenu();
 		}
+		
+		//Instantiates the Pause Menu and then updates it
 		if(MainGame.inPauseGameMode){
 			if(counter == 0){
 				initPauseMenu();
-				counter2 = 0;
+				loginSuccessful = 0;
 				counter++;
 			}
 			updatePauseMenu();
@@ -138,6 +153,8 @@ public class Menu {
 			back = false;
 		}
 
+		//Instantiates all the necessary menus when the back button is pressed according to which 
+		//state you are. 
 		if (back){
 
 			if(inGameMenu){
@@ -148,13 +165,7 @@ public class Menu {
 				inStartMenu = true;
 				back = false;
 			}
-			/*
-			if(inEnterUsername){
-				initStartMenu();
-				inEnterUsername = false;
-				inStartMenu = true;
-				back = false;
-			} */
+		
 			if(inInstructions){
 				Controls.menuCounter = 0;
 				inInstructions = false;
@@ -195,7 +206,10 @@ public class Menu {
 
 		}
 	}
-
+	
+	/**
+	 * Updates the game objects (createUser, loadUser, twoPlayer and quit) of the StartMenu.
+	 */
 	private void updateStartMenu() {
 		switch(Controls.menuCounter){
 
@@ -260,8 +274,13 @@ public class Menu {
 		quit.Update();
 	}
 	
+	/**
+	 * Updates the game objects(resumeGame, backToMenu, quitPause) of the PauseMenu
+	 */
 	private void updatePauseMenu(){
 		switch(Controls.menuCounter){
+		
+		//Resume Game
 		case 0:
 			resumeGame.objectRenderer.SetTexture("resumeGameOnHover");
 			backToMenu.objectRenderer.SetTexture("mainMenu");
@@ -272,6 +291,8 @@ public class Menu {
 				counter = 0;
 			}
 			break;
+			
+		//Back to Main Menu
 		case 1: 
 			resumeGame.objectRenderer.SetTexture("resumeGame");
 			backToMenu.objectRenderer.SetTexture("mainMenuOnHover");
@@ -282,9 +303,10 @@ public class Menu {
 				MainGame.inPauseGameMode = false;
 				MainGame.update = true;
 				back = false;
-				HUD.points = 0;
 			}
 			break;
+			
+		//Quit
 		case 2:
 			resumeGame.objectRenderer.SetTexture("resumeGame");
 			backToMenu.objectRenderer.SetTexture("mainMenu");
@@ -297,9 +319,13 @@ public class Menu {
 		backToMenu.Update();
 		quitPause.Update();
 	} 
-
+	/**
+	 * Updates the game objects(startGame, instructions, statistics and highScores) of the GameMenu
+	 */
 	private void updateGameMenu() {
 		switch(Controls.menuCounter){
+		
+		//Start Game
 		case 0:
 			startGame.objectRenderer.SetTexture("startGameOnHover");
 			instructions.objectRenderer.SetTexture("instructions");
@@ -312,6 +338,8 @@ public class Menu {
 				
 			}
 			break;
+			
+		//Instructions
 		case 1: 
 			startGame.objectRenderer.SetTexture("startGame");
 			instructions.objectRenderer.SetTexture("instructionsOnHover");
@@ -325,6 +353,8 @@ public class Menu {
 				instructionFont.Update();
 			}
 			break;
+			
+		//Statistics 
 		case 2:
 			startGame.objectRenderer.SetTexture("startGame");
 			instructions.objectRenderer.SetTexture("instructions");
@@ -336,6 +366,8 @@ public class Menu {
 				initStatistics();
 			}
 			break;
+			
+		//High Scores
 		case 3:
 			startGame.objectRenderer.SetTexture("startGame");
 			instructions.objectRenderer.SetTexture("instructions");
@@ -354,9 +386,13 @@ public class Menu {
 		statistics.Update();
 		highScores.Update();
 	}
-	
+	/**
+	 * Updates the game objects (easy, medium and hard) of the LevelMenu
+	 */
 	private void updateLevelMenu() {
 		switch(Controls.menuCounter){
+		
+		//Easy
 		case 0: 
 			easy.objectRenderer.SetTexture("easyOnHover");
 			medium.objectRenderer.SetTexture("medium");
@@ -365,15 +401,15 @@ public class Menu {
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
-				isMedium = false;
-				isHard = false;
-				GameLogic.GameOver = false;
+
 				easy.Delete();
 				medium.Delete();
 				hard.Delete();
 			}
 			
 			break;
+		
+		//Medium
 		case 1: 
 			easy.objectRenderer.SetTexture("easy");
 			medium.objectRenderer.SetTexture("mediumOnHover");
@@ -381,16 +417,17 @@ public class Menu {
 			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 				//put medium level code
 				isMedium = true;
-				isHard =false;
 				inGameMenu = false;
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
-				GameLogic.GameOver = false;
+
 				easy.Delete();
 				medium.Delete();
 				hard.Delete();
 			}
 			break;
+			
+		//Hard
 		case 2: 
 			easy.objectRenderer.SetTexture("easy");
 			medium.objectRenderer.SetTexture("medium");
@@ -400,30 +437,25 @@ public class Menu {
 				MainGame.inMenu = false;
 				MainGame.enterKeyPressed = true;
 				isHard = true;
-				isMedium =false;
-				GameLogic.GameOver = false;
+				
 				easy.Delete();
 				medium.Delete();
 				hard.Delete();
 				//put hard level code
 			}
 			break;
-		case 3: 
-			easy.objectRenderer.SetTexture("createUser");
-			easy.objectRenderer.SetTexture("createUser");
-			easy.objectRenderer.SetTexture("createUser");
-			if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
-				
-			}
-			break; 
 		}
 		easy.Update();
 		medium.Update();
 		hard.Update();
 	}
-
+	/**
+	 * Instantiates the recordString function to get the username of the already existing player 
+	 */
 	private void inEnterUsername() {
-		if(stopShowing){
+		
+		//Shows the inputUsername if the boolean Showing is set to true
+		if(showing){
 			MainGame.controls.recordKey = true;
 			inputUsername = MainGame.controls.recordString;
 			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.White,1f);
@@ -431,16 +463,20 @@ public class Menu {
 		enterUsername.Update();
 		if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
 			try {
+				
+				//Checks the CSV files for the inputUsername entered
 				if(CSV.LoginMenu.login(inputUsername)){
-					if (counter2 == 0){
+					
+					//Instantiates the GameMenu if the username is correct
+					if (loginSuccessful == 0){
 						initGameMenu();
 						inEnterUsername = false;
 						MainGame.controls.recordKey = false;
 						inGameMenu = true;
-						stopShowing = false;
-						counter2++;
+						showing = false;
+						loginSuccessful++;
 					}
-
+				
 				} else {
 					System.out.println("Not possible");
 				}
@@ -448,7 +484,13 @@ public class Menu {
 			}
 		}
 	}
+	
+	/**
+	 * Instantiates the statistics of the user 
+	 */
 	private void inStatistics() {
+		
+		//Instantiates the statistics if the the variable showStarts is set to true
 		if (showStats){
 			MainGame.render.DrawText("Username: " + CSV.LoginMenu.player.getUsername(),
 					new Vector2(-100, 80),Color.White,1f);
@@ -460,12 +502,17 @@ public class Menu {
 					new Vector2(-100,-10),Color.White,1f);
 		}
 	}
+	/**
+	 * Instantiates the High Scores table
+	 */
 	private void inHighScores() {
 		try {
 			CSV.Highscore.getHighscores();
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
 		}
+		
+		//Show HighScores if the boolean showHs is set to true
 		if (showHS){
 			for(int i =0; i < 10; i++){
 				MainGame.render.DrawText(CSV.Highscore.highscores.get(i)[0],
@@ -476,13 +523,20 @@ public class Menu {
 		}
 	}
 
+	/**
+	 * Instantiates the recordString function to get the username of a new player 
+	 */
 	private void inEnterUsernameNew() {
-		if(stopShowing){
+		
+		//Show the username input if showing is set to true
+		if(showing){
 			MainGame.controls.recordKey = true;
 			inputUsername = MainGame.controls.recordString;
 			MainGame.render.DrawText(inputUsername,Vector2.zero(),Color.White,1f);
 		}
 		if(MainGame.controls.isPressed(KeyEvent.VK_ENTER)){
+			
+			//Adds the new user to the CSV files 
 			try {
 				CSV.LoginMenu.addUser(inputUsername);
 				CSV.LoginMenu.login(inputUsername);
@@ -490,20 +544,25 @@ public class Menu {
 			}
 		}
 		enterUsername.Update();
+		
+		//Instantiates the GameMenu if the username is not already taken 
 		if(CSV.LoginMenu.available){
-			if (counter3 == 0){
+			if (usernameAvailable == 0){
 				initGameMenu();
 				inGameMenu = true;
-				stopShowing = false;
+				showing = false;
 				MainGame.controls.recordKey = false;
 				inEnterUsernameNew = false;
-				counter3++;
+				usernameAvailable++;
 			}
 		} else {
 			System.out.println("Not possible");
 		}
 	}
 
+	/**
+	 * Instantiates the new game objects of the EnterUsername page
+	 */
 	public void initEnterUsername() { 
 		createUser.Delete();
 		loadUser.Delete();
@@ -515,7 +574,9 @@ public class Menu {
 		enterUsername.transform.position = new Vector2(0,5);
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
-
+	/**
+	 * Instantiates the game objects of the GameMenu
+	 */
 	public static void initGameMenu(){
 		Controls.menuCounter = 0;
 		if(!enterUsername.isDeleted){
@@ -543,6 +604,9 @@ public class Menu {
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
 
+	/**
+	 * Instantiates the game object of the Instructions: instruction table and the title
+	 */
 	public void initInstructions(){ 
 		startGame.Delete();
 		instructions.Delete();
@@ -558,6 +622,9 @@ public class Menu {
 		instructionTable.transform.position = new Vector2 (0,-2);
 	}
 
+	/**
+	 * Instantiates the elements of the High Score table 
+	 */
 	public void initHighScores(){
 		startGame.Delete();
 		instructions.Delete();
@@ -568,7 +635,9 @@ public class Menu {
 		highScoresFont.transform.size = new Vector2 (30,10);
 		highScoresFont.transform.position = new Vector2 (0,10);
 	}
-	
+	/**
+	 * Instantiates the title of the statistics page
+	 */
 	public void initStatistics() {
 		startGame.Delete();
 		instructions.Delete();
@@ -580,6 +649,10 @@ public class Menu {
 		statisticsFont.transform.position = new Vector2 (0,10);
 		
 	}
+	
+	/**
+	 * Instantiates the titles of the LevelMenu 
+	 */
 	public void initLevelMenu(){ 
 		Controls.menuCounter = 0;
 		startGame.Delete();
@@ -604,6 +677,9 @@ public class Menu {
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 	}
 	
+	/**
+	 * Instantiates the game objects of the Pause Menu 
+	 */
 	public void initPauseMenu() { 
 		Controls.menuCounter = 0;
 		resumeGame = new GameChar();
@@ -624,15 +700,17 @@ public class Menu {
 		MainGame.controls.keyPressed[KeyEvent.VK_ENTER] = false;
 		
 	}
-
+	/**
+	 * Instantiates the titles of the StartMenu 
+	 */
 	public void initStartMenu(){
 		Controls.menuCounter = 0;
 		counter = 0;
 		MainGame.controls.recordString = "";
-		stopShowing = true;
+		showing = true;
 		CSV.LoginMenu.login = false;
-		counter2 = 0;
-		counter3 = 0;
+		loginSuccessful = 0;
+		usernameAvailable = 0;
 		background = new GameChar();
 		createUser = new GameChar();
 		loadUser = new GameChar();

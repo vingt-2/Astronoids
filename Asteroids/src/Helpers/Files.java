@@ -1,3 +1,11 @@
+/**
+ * @author Vincent Petrella
+ * 
+ * Manages files reading. Initially for reading Shader files. Not used anymore I think.
+ * Could still come in handy.
+ * 
+ */
+
 package Helpers;
 
 import java.io.FileNotFoundException;
