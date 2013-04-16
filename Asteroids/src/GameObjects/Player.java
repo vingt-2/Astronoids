@@ -1,4 +1,9 @@
-
+/**
+ * @author Vincent Petrella
+ * 
+ * Player Controls and stuff.
+ * 
+ */
 
 package GameObjects;
 
@@ -52,6 +57,10 @@ public class Player extends GameChar
 
 	}
 
+	/**
+	 * Player controls, check for input and implements the gameplay behaviour
+	 * 
+	 */
 
 	private void PlayerControls()
 	{

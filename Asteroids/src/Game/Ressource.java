@@ -1,4 +1,6 @@
 /**
+ * @author Vincent Petrella
+ * 
  * Ressource:
  * 		Defines what a ressource is:
  * 			It has a name,

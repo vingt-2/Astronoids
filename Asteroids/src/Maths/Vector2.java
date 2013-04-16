@@ -1,6 +1,8 @@
 /**
+ * @author Vincent Petrella
  * Vector2:
  * 		A Vector2 Class that implements Vector 2D stuff
+ * 		Methods signatures stand also for Vector3
  *
  */
 
@@ -34,27 +36,16 @@ public class Vector2
 		{
 			return (float)Math.sqrt((this.x*this.x)+(this.y*this.y));
 		}
-
-		public void Rotate(double argument)
-		{
-			float a=x;
-			float b=y;
-			this.x= (float) (a*Math.cos(argument) + b*Math.sin(argument));
-			this.y= (float) ((-1)*a*Math.sin(argument) + b*Math.cos(argument));
-		}
-		
-		public Vector2 Rotationned(double argument)
-		{
-			float a=x;
-			float b=y;
-			float newX = (float) (a*Math.cos(argument) + b*Math.sin(argument));
-			float newY = (float) ((-1)*a*Math.sin(argument) + b*Math.cos(argument));
-			return new Vector2(newX,newY);
-		}
 		
 		public String toString(){
 			return "("+x+","+y+",length: "+this.GetLength()+")";
 		}
+		
+		/**
+		 * Normalizes the vector.
+		 * 
+		 * @return normalizedVector
+		 */
 		
 		public Vector2 Normalized()
 		{
@@ -63,30 +54,69 @@ public class Vector2
 			float newY =  y / length;
 			
 			return new Vector2(newX,newY);
-		} 
+		}
+		
+		/**
+		 * Scales a vector by a "scalar".
+		 * Returns a different instance (i.e a new object).
+		 * 
+		 * @param scalar
+		 * @returnS scaledVector
+		 */
 		
 		public Vector2 Scaled(float scalar)
 		{
 			return new Vector2(scalar * x, scalar * y);
 		}
 	
-		public boolean Normalize()
+		/**
+		 * 
+		 * Normalizes the vector.
+		 * Destroys the current one !
+		 * 
+		 */
+		
+		public void Normalize()
 		{
 			float length = this.GetLength();
 			this.x = this.x/length;
 			this.y = this.y/length;
-			return true;
 		}
+		
+		/**
+		 * Negates a vector.
+		 * Returns a different instance (i.e a new object).
+		 * 
+		 * @return negatedVector
+		 */
 		
 		public Vector2 negate()
 		{
 			return new Vector2(-x,-y);
 		}
 		
+		
+		/**
+		 * 
+		 * YOU KNOW WHAT IT DOES COME ON !
+		 * 
+		 * @param vec1
+		 * @param vec2
+		 * @return vec1+vec2
+		 */
 		public static Vector2 Add(Vector2 vec1, Vector2 vec2)
 		{
 			return new Vector2(vec1.x+vec2.x,vec1.y+vec2.y);
 		}
+		
+		/**
+		 * 
+		 * Returns the dot product of "vec1"."vec2"
+		 * 
+		 * @param vec1
+		 * @param vec2
+		 * @return vec1.vec2
+		 */
 		
 		public static float Dot(Vector2 vec1, Vector2 vec2)
 		{

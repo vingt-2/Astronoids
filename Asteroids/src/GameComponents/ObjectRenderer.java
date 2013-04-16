@@ -1,4 +1,6 @@
 /**
+ * @author Vincent Petrella
+ * 
  * ObjectRenderer:
  * 		An Object component that holds all the infos related to Drawing the object.
  * 		It is linked to it's parent. so that It can access the transform information to draw at the right spot.

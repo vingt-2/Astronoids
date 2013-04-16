@@ -80,6 +80,10 @@ public class GameChar extends GameObject
 		}
 	}
 	
+	/**
+	 * Assigns null pointer to all components to help Java's Garbage collector do it's stuff
+	 */
+	
 	@Override
 	public void Delete()
 	{

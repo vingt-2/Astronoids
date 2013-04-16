@@ -1,3 +1,13 @@
+/**
+ * @author Vincent Petrella
+ * 
+ * Renderer Class Handles creating a Render object that's going to create an awt Frame window,
+ * and assign it a new OpenGL context to draw stuff on.
+ * THE GAME LOOP ACTUALLY HAPPENS HERE. 
+ * The GLEeventListener is the game thread, and will call init at it's first frame,
+ * then display every frame.
+ * 
+ */
 package Renderer;
 
 //Graphics specific imports
@@ -66,9 +76,16 @@ public class Renderer implements GLEventListener
 		this.windowName = windowName;
 	}
 
-
-  
-	  public Frame CreateWindow(Vector2 size, Controls controls)
+	
+	/**
+	 * Creates a Window Frame and opens a GL Context
+	 * 
+	 * 
+	 * @param size
+	 * @param controls
+	 * @return
+	 */
+	public Frame CreateWindow(Vector2 size, Controls controls)
 	{
 		Frame frame = new Frame(windowName);
 		GLProfile glp = GLProfile.get(GLProfile.GL2);
@@ -103,7 +120,10 @@ public class Renderer implements GLEventListener
 		return frame;
 	}
 
-
+	/**
+	 * Executed every frame by the animator.
+	 */
+	
 	@Override
 	public void display(GLAutoDrawable drawable) 
 	{
@@ -112,11 +132,19 @@ public class Renderer implements GLEventListener
 		Update(drawable);
 	}
 
+	/**
+	 *  Has to be there  to Implement GLEventListner but not used.
+	 */
+	
 	@Override
 	public void dispose(GLAutoDrawable drawable) 
 	{
 	}
 
+	/**
+	 * Initiate the GL context.
+	 */
+	
 	@Override
 	public void init(GLAutoDrawable drawable) 
 	{
@@ -139,6 +167,10 @@ public class Renderer implements GLEventListener
 		mainGame.init(gl);
 	}
 
+	/**
+	 * Has to be there to implement GLEventListener, but we don't resize window anyway.
+	 */
+	
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int w, int h) 
 	{
@@ -150,6 +182,12 @@ public class Renderer implements GLEventListener
 		this.UpdateTime();
 		mainGame.Update(gl);
 	}
+	
+	/**
+	 * Go through all objects in the render Vector and call their Draw() methods.
+	 * 
+	 * @param drawable
+	 */
 
 	private void render(GLAutoDrawable drawable) 
 	{
@@ -164,6 +202,12 @@ public class Renderer implements GLEventListener
 
 	}
 	
+	/**
+	 * Keeps track of the DeltaTime between to game frames 
+	 * (unifies the physics if the OS override the 60 fps to a 120
+	 *  Or if the computer lags under 60 FPS ).
+	 */
+	
 	public void UpdateTime()
 	{
 		long time = System.currentTimeMillis();
@@ -172,10 +216,24 @@ public class Renderer implements GLEventListener
 		lastTime = time;
 	}
 	
+	/**
+	 * What's the framerate ? 1/DeltaTime of course !
+	 * 
+	 * @return FPS
+	 */
+	
 	public int GetFPS()
 	{
 		return (int) (1.f/deltaTime);
 	}
+	
+	/**
+	 * Gently asks the graphic drivers to load some texture in memory,
+	 * returns an integer textureID. This method should be called from SharedRessources.
+	 * 
+	 * @param filePath
+	 * @return textureID
+	 */
 	
 	public int CreateTexture(String filePath)
 	{
@@ -255,6 +313,16 @@ public class Renderer implements GLEventListener
 		
 	}
 	
+	/**
+	 * Draws some text on top of the frame buffer using the class TextRenderer and Font.
+	 * Draws "text" at "Position" in the color "color" and opacity "opacity"
+	 * 
+	 * @param text
+	 * @param position
+	 * @param color
+	 * @param opacity
+	 */
+	
 	public void DrawText(String text,Vector2 position, Color color, float opacity)
 	{
 		Vector2 context = new Vector2(externDrawable.getWidth(),externDrawable.getHeight());
@@ -265,7 +333,10 @@ public class Renderer implements GLEventListener
 		textRenderer.endRendering();
 	}
 	
-	// Call this whenever the game is suspected to lag, to avoid physics bumping all over the place
+	/**
+	 *  Call this whenever the game is suspected to lag, like after loading stuff
+	 *  To avoid physics bumping all over the place
+	 */
 	
 	public void CheatTime()
 	{
