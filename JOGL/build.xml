@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. -->
+
+<!-- Please discard me, and don't touch me, I'll be summoned by build.xml the great -->
+
 <project basedir="." default="build" name="JOGL">
     <property environment="env"/>
     <property name="Asteroids.location" value="../Asteroids"/>
