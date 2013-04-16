@@ -1,4 +1,6 @@
 /**
+ * @author Vincent Petrella, Damien Girard (collisions)
+ * 
  * RigidBody:
  * 		An Object component that holds the physic state of an Object.
  * 		A RigidBody keeps is linked to a it's parent and access and modify it's transform
@@ -413,7 +415,8 @@ return box;
 		return false;
 	}
 	
-	private void debugIt(Vector2[] shape){
+	private void debugIt(Vector2[] shape)
+	{
 		
 		for (int i =0; i<shape.length; i++){
 		

@@ -16,8 +16,12 @@ import java.awt.event.KeyListener;
 
 public class Controls implements KeyListener
 {
-
+	// that's an array of Bools, the index in the array is the keyCode. Funny Hmm ?
 	boolean[] keyPressed = new boolean[KeyEvent.KEY_LAST];
+	
+	// To record a string from the keyboard, pass the flag recordKey to True,
+	// It's latch all valid keyboard inputs (A-Z, 0-9) in recordString.
+	// Backspace input removes last Char. Cool huh ?
 	boolean recordKey = false;
 	String recordString = "";
 	

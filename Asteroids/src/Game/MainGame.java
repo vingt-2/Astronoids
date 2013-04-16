@@ -9,10 +9,10 @@
  *    The static Singletons that can be accessed everywhere in the program are:
  *      sharedRessources -> The lookup table of ressources
  *      render  -> The One and only Renderer object of the program, holds info concerning the gl Context.
- *      controls -> A key listener thread. One can know if a key is pressed using isPressed(int key)+ *      
+ *      controls -> A key listener thread. One can know if a key is pressed using isPressed(int key)     
  *      debug  -> a debug object that can be summoned to do cool debug stuff for us. 
  *
- *     Careful! The Main Game Loop is not explicitly here (even though it LOGICALLY IS HERE),
+ *     Careful! The Main Game Loop is not explicitly here (even though it LOGICALLY is here):
  *     JOGL GLEventListener thread calls display() in the render Singleton Object, which then call's this Update() function (where the game loop actually happens).
  *
  */

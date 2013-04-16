@@ -1,4 +1,6 @@
 /**
+ * @author Vincent Petrella
+ * 
  * GameChar:
  * 		A special type of GameObject that holds:
  * 		 - a Transform: To keep track of space coordinates matters.
