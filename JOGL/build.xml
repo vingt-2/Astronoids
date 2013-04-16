@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<!-- Please discard me, and don't touch me, I'll be summoned by build.xml the great -->
+<!-- Please discard me, and don't touch me, I'll be summoned by build.xml the great, I mean, the one in Asteroids parent directory -->-->
 
 <project basedir="." default="build" name="JOGL">
     <property environment="env"/>
