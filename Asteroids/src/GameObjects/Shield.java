@@ -1,9 +1,17 @@
 package GameObjects;
 
 import Game.GameLogic;
+
 import Game.MainGame;
 import Helpers.SoundEffect;
 import Maths.Vector2;
+
+/** 
+ * Shield PickUp class, toggles isShieldOn flag in player on pickUp
+ *  
+ * @author Damien Doucet-Girard
+ *
+ */
 
 public class Shield extends PickUp {
 	

@@ -10,7 +10,7 @@ import Maths.Vector2;
 /**
  * Asteroid specific GameChar, with isbroken boolean
  * to check if the Asteroid has been destroyed
- * as well as the ASteroid texture
+ * as well as the Asteroid texture
  *  
  * @author Damien Doucet-Girard
  *

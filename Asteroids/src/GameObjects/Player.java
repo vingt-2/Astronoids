@@ -10,7 +10,12 @@ import GameComponents.RigidBody.ForceMode;
 import Helpers.SoundEffect;
 import Maths.Vector2;
 
-
+/** 
+ * Player Class, handles all player properties, behaviors and effects
+ * @author Vincent Petrella 
+ * @author Damien Doucet-Girard
+ * @author Chi Wing Sit
+ */
 public class Player extends GameChar 
 {
 
@@ -25,9 +30,14 @@ public class Player extends GameChar
 	private GameChar shield;
 	private long birthTime;
 	private long birthTime2;
-	public long shootTimeThreshold = 200; // wait 200ms between two shots.
+	/**
+	 * determines the amount of time between shots
+	 */
+	public long shootTimeThreshold = 200; 
 
-
+	/**
+	 * COnstructor instantiate player ship texture and number of lives
+	 */
 	public Player()
 	{
 		super();
@@ -36,7 +46,9 @@ public class Player extends GameChar
 		this.lives = 3;
 	}
 
-	
+	/**
+	 * Updates render, particle effects, shield, Shoot object, rapidFire and controls
+	 */
 	public void Update()
 	{
 		super.Update();
@@ -52,7 +64,11 @@ public class Player extends GameChar
 
 	}
 
-
+	/**
+	 * Dictates behavior according to key inputs. 
+	 * Pattern currently is up, down, left, right for respective directions
+	 * and x to shoot
+	 */
 	private void PlayerControls()
 	{
 		if(MainGame.controls.isPressed(KeyEvent.VK_RIGHT))
@@ -63,6 +79,8 @@ public class Player extends GameChar
 		{
 			rigidBody.PushTorque(-15,ForceMode.Impulse);
 		}
+		
+		//up pushes the ship forward and activates afterburn particle effects simultaneously
 		if(MainGame.controls.isPressed(KeyEvent.VK_UP))
 		{
 
@@ -73,7 +91,8 @@ public class Player extends GameChar
 				lastPlayerTime = time;
 			}
 
-
+			//player impulse determined by rigidbody
+			//so all predetermined physical properties apply to its movement
 			Vector2 objectFrontInWorldCoordinates = transform.LocalDirectionToWorld(new Vector2(0,1));
 			rigidBody.PushForce(Vector2.Scale(800, objectFrontInWorldCoordinates),ForceMode.Impulse);
 			effect.TurnOn();
@@ -83,7 +102,9 @@ public class Player extends GameChar
 			effect.TurnOff();
 		}
 
-
+		//shoot activates the player's Shoot object effect, allowing for
+		//the creation of laser objects in the shoot class. 
+		
 		if(MainGame.controls.isPressed(KeyEvent.VK_X))
 		{
 			shooter.TurnOff();
@@ -103,7 +124,9 @@ public class Player extends GameChar
 
 	}
 
-
+	/**
+	 * creates and renders a shield when the isShieldOn flag is toggled
+	 */
 	public void shieldOn(){
 
 
@@ -121,10 +144,11 @@ public class Player extends GameChar
 
 
 			else{
+				//Allows the shield's opacity to oscillate, giving a cool glowing animation 
 				shield.objectRenderer.opacity = (float)((Math.cos(System.currentTimeMillis()/100)+1)/2);
 			}
 
-
+			//Shield Is deleted after 3 seconds
 			if(System.currentTimeMillis()-birthTime>3000){
 				isShieldOn = false;
 				shield.Delete();
@@ -136,6 +160,7 @@ public class Player extends GameChar
 
 		}
 		else{
+			//if our shield is not on, but the object is not null, it must be deleted
 			if (shield != null){
 				shield.Delete();
 			}
@@ -143,6 +168,9 @@ public class Player extends GameChar
 	}
 
 
+	/**
+	 * Changes the ShootTimeThreshold when the rapidFireOn flag is triggered
+	 */
 	public void rapidFireOn(){
 
 
@@ -154,12 +182,15 @@ public class Player extends GameChar
 
 
 		if(System.currentTimeMillis()-birthTime2 > 3000){
-			shootTimeThreshold = 2;
+			shootTimeThreshold = 200;
 		}
 
 
 	}
 	
+	/**
+	 * Deletes the ship and its particle trail
+	 */
 	@Override
 	public void Delete()
 	{

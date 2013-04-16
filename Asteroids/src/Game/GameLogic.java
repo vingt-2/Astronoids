@@ -27,12 +27,17 @@ import Maths.Vector2;
 
 /**
  * Controls all the game logic
- * @author Chi-Wing Sit
- * @author Damien Doucet-Girard
  *
+ * @author Damien Doucet-Girard
+ * @author Chi-Wing Sit
  */
 public class GameLogic
 {
+	/**
+	 * Declares all game logic objects
+	 * inializes secondary objects(that don't need to be included in the constructor
+	 * 
+	 */
 	public Player player;
 	public Alien alien;
 	public Alien alien2;
@@ -69,6 +74,7 @@ public class GameLogic
 
 	/**
 	 * GameLogic constructor
+	 * initializes player, HUD, difficulty and asterodiField
 	 */
 	public GameLogic()
 	{
@@ -146,12 +152,23 @@ public class GameLogic
 				Menu.inLevelMenu = false;
 			}
 		}
+		/**
+		 * updates all objects on the scene
+		 * 
+		 */
 		UpdateSceneObjects();
 	}
 
+	/**
+	 * execute the game's general logic including collision, powerups, lives, etc.
+	 * 
+	 */
 	private void ExecuteLogic()
 	{
 
+		/**
+		 * initializing random variables to be used in the generation of the alien
+		 */
 		Random rand = new Random();
 		int randPosX;
 		int randPosY;
@@ -164,7 +181,7 @@ public class GameLogic
 
 		lasers = player.shooter.GetLaserArray();
 		
-		/*
+		/**
 		 * Computations on each asteroids 
 		 */
 
@@ -175,7 +192,9 @@ public class GameLogic
 			collateral.isShrapnel =true;
 			shrapnel.add(collateral);
 
-			// PLAYER COLLISION WITH ASTEROID
+			/**
+			 *  PLAYER COLLISION WITH ASTEROID
+			 */
 			if (!player.isDeleted) 
 			{
 				if (player.rigidBody.isColliding(currentAsteroid) && !immunity)
@@ -210,9 +229,9 @@ public class GameLogic
 					immunity = false;
 				}
 
-				// Check for player lasers collision
-
-				// ASTEROID LASER/COLISION
+				/**
+				 *  ASTEROID LASER/COLISION
+				 */
 
 				for (int j = 0; j < lasers.size(); j++) 
 				{
@@ -249,6 +268,9 @@ public class GameLogic
 
 						}
 
+						/**
+						 * Player laser to alien collision
+						 */
 						if (alien != null) {
 							if (!alien.isDeleted) {
 								if(j<lasers.size()){
@@ -282,7 +304,9 @@ public class GameLogic
 			}
 		}
 
-		// Generates an alien on specific stages and after 10 asteroids are destroyed
+		/**
+		 *  Generates an alien on specific stages and after 10 asteroids are destroyed
+		 */
 		if(numberOfAsteroidsDestroyed  > 10 &&(stageCounter ==2 ||stageCounter ==4||stageCounter ==5)){
 			if( alien == null){
 
@@ -293,11 +317,13 @@ public class GameLogic
 
 			}
 			else{
-				if(!alien.isDeleted)
+				if(!alien.isDeleted && !player.isDeleted)
 					alien.Update();
 			}
 			
-			// Generates an alien2 on specific stages and after 15 asteroids are destroyed
+			/**
+			 *  Generates an alien2 on specific stages and after 15 asteroids are destroyed
+			 */
 			if(numberOfAsteroidsDestroyed  > 15 &&(stageCounter == 3 ||stageCounter ==5 || stageCounter == 2)){
 
 				if(alien2 == null){
@@ -310,49 +336,84 @@ public class GameLogic
 
 				}
 				else
-					if (!alien2.isDeleted){
+					if (!alien2.isDeleted && !player.isDeleted){
 						alien2.Update();}
 			}
 		}
 
 		lasers = player.shooter.GetLaserArray();
 
-		// Collision detection with alien
+		/**
+		 * Player collision with Alien's lasers
+		 */
 		if(alien!= null ){
 			alienLaser1 = alien.alienCannon1.GetLaserArray();
 			for(int i = 0; i <alienLaser1.size(); i++){
 				if (!player.isDeleted) {
-					if (player.rigidBody.isColliding(alienLaser1.get(i))) {
+					if (player.rigidBody.isColliding(alienLaser1.get(i))&& !immunity) {
+						
 						player.lives--;
 
 						if (player.lives == 0) {
 							SoundEffect.CRASH.play();
 							GameFail = true;
 							player.Delete();
-
+							
 							SoundEffect.GAMEOVER.play();
 						}
+						else 
+						{
+							immunity = true;
+							immunityTimer = System.currentTimeMillis();
+							//System.out.println("TRUE");
+							player.isShieldOn = true;
+							lostLife = true;
+
+						}
+						if ((System.currentTimeMillis() - immunityTimer) > 3000
+								&& immunity) {
+
+							immunity = false;
+						}
+
 
 					}
 				}
 			}
 		}
 
-		// Collision detection with alien2
+		/**
+		 *  Collision detection with alien2
+		 */
 		if(alien2 != null){
 			alienLaser2 = alien2.alienCannon2.GetLaserArray();
 			for(int i = 0; i <alienLaser2.size(); i++){
 				if(alienLaser2 != null){
 					
 					if (!player.isDeleted) {
-						if (player.rigidBody.isColliding(alienLaser2.get(i))) {
+						if (player.rigidBody.isColliding(alienLaser2.get(i))&& !immunity) {
 							player.lives--;
+
 							if (player.lives == 0) {
 								SoundEffect.CRASH.play();
 								GameFail = true;
 								player.Delete();
-
+								
 								SoundEffect.GAMEOVER.play();
+							}
+							else 
+							{
+								immunity = true;
+								immunityTimer = System.currentTimeMillis();
+								//System.out.println("TRUE");
+								player.isShieldOn = true;
+								lostLife = true;
+
+							}
+							if ((System.currentTimeMillis() - immunityTimer) > 3000
+									&& immunity) {
+
+								immunity = false;
 							}
 
 						}
@@ -373,6 +434,10 @@ public class GameLogic
 			GameWin = true;
 		}
 
+		/**
+		 * Collision with power ups on map
+		 * 
+		 */
 
 		for(int j =0; j<PickUpList.size(); j++){
 			if(!(PickUpList.get(j).isDeleted) && !(player.isDeleted)){
@@ -405,10 +470,14 @@ public class GameLogic
 
 			GameOver = true;
 		}
-		// Destroyed all the asteroids on the screen
+		/**
+		 *  Destroyed all the asteroids on the screen
+		 */
 		else if (GameWin) 
 		{
-			//stage progression until end of game
+			/**
+			 * stage progression until end of game
+			 */
 			if(stageCounter ==2){
 				stage2();
 			}
@@ -435,7 +504,9 @@ public class GameLogic
 			}
 		}
 
-		// if in one player mode update highscores and statistics
+		/**
+		 *  if in one player mode update highscores and statistics
+		 */
 		if(GameOver && !MainGame.playerOne && !MainGame.playerTwo)
 			try {
 				Statistics.updateStats(MainGame.currentUser, HUD.points, 0);
@@ -590,7 +661,7 @@ public class GameLogic
 	}
 
 	/**
-	 * Generates asteroids for stage 3
+	 * Generates stage 3
 	 */
 	private void stage3(){
 		// Removes previous pickups
@@ -630,7 +701,7 @@ public class GameLogic
 
 
 	/**
-	 * Generates asteroids for stage 4
+	 * Generates stage 4
 	 */
 	private void stage4(){
 		
@@ -672,7 +743,7 @@ public class GameLogic
 	}
 
 	/**
-	 * Generates asteroids for stage 5
+	 * Generates stage 5
 	 */
 	private void stage5(){
 		// Removes previous pickups

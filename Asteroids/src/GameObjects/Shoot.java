@@ -10,12 +10,24 @@ import GameComponents.ObjectRenderer.Shape;
 import GameComponents.RigidBody.ForceMode;
 import Maths.Vector2;
 
+/**
+ * Handles the generation and destruction of lasers in accordance to a general boolean flag isTurnedOn
+ *
+ * @author Damien Doucet-Girard
+ * @author Chi-Wing Sit
+ * @author Vincent Petrella
+ */
 public class Shoot extends GameObject
 {
+	/**
+	 * Declaring and initializing booleans and other various class variables
+	 * lasers is our array of Laser objects at the core of our shoot class
+	 */
 	public float deltaTime = MainGame.render.deltaTime;
 
 	public Transform transform;
 	public int i = 0;
+	
 	private ArrayList<Laser> lasers;	
 	public boolean isTurnedOn = false;
 	public static int counter = 0;
@@ -34,6 +46,11 @@ public class Shoot extends GameObject
 	}
 
 	public void Update(){
+		/**
+		 * verifies time to avoid over iteration of update loop
+		 * also verifies if isTurnedOn isTurnedOn
+		 * ( effect triggered by the keyListener when shoot key is pressed)
+		 */
 		if(System.currentTimeMillis()-watchmen>deltaTime)
 		{
 			
@@ -43,21 +60,22 @@ public class Shoot extends GameObject
 
 			//temp fix for Texture rendering in middle of screen
 			Laser laser1 = new Laser(new Vector2 (1000000f,10000000f), shootTrans, (float) Math.PI/2);
+			//alien lasers differ in mass and lifetime
 			if(isAlien1) {
-				laser1.rigidBody.mass = 100f;
+				laser1.rigidBody.mass = 0.001f;
 				laser1.lifeTime = 500;
 			}
 			if(isAlien2) {
-				laser1.rigidBody.mass = 0.0005f;
+				laser1.rigidBody.mass = 100f;
 				laser1.lifeTime = 500;
 			}
+			//creates lasers to add to arrayList
 			lasers.add(laser1);
 			int l1Index = lasers.indexOf(laser1);
 			lasers.get(l1Index).objectRenderer.shape= Shape.Square;
-			if(shootTrans.equals(MainGame.gameLogic.player.transform))
-				lasers.get(l1Index).objectRenderer.SetTexture("redLaser");
-			else
-				lasers.get(l1Index).objectRenderer.SetTexture("greenLaser");
+			
+			lasers.get(l1Index).objectRenderer.SetTexture("redLaser");
+			
 			lasers.get(l1Index).transform.size= new Vector2(0.75f,0.75f);
 
 
@@ -68,6 +86,9 @@ public class Shoot extends GameObject
 				counter++;
 			}
 
+		/**
+		 * Destroys lasers when they have reached the end of their lifetime
+		 */
 			for (int j = 0; j<lasers.size(); j++)
 			{
 	
@@ -93,6 +114,9 @@ public class Shoot extends GameObject
 
 	}
 
+	/**
+	 * Turns on the shoot effect so laser objects can be created
+	 */
 	public void TurnOn()
 	{
 		if( !isTurnedOn )
@@ -101,6 +125,9 @@ public class Shoot extends GameObject
 		}
 	}
 
+	/**
+	 * Turns off shoot effect
+	 */
 	public void TurnOff()
 	{
 		if( isTurnedOn )
@@ -109,6 +136,10 @@ public class Shoot extends GameObject
 		}
 	}
 
+	/**
+	 * 
+	 * returns array of lasers
+	 */
 	public ArrayList<Laser> GetLaserArray() {
 		// TODO Auto-generated method stub
 		return lasers;

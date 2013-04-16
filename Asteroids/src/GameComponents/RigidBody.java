@@ -384,11 +384,11 @@ public boolean isColliding(GameChar char1)
 				vertexFormula(char1,  -8,  10),
 									
 				};
-return box;
+		return box;
 		
 	}
 	
-	private Vector2 vertexFormula(GameChar char1, int y, int x){
+	public Vector2 vertexFormula(GameChar char1, int y, int x){
 		
 		Vector2 position1 = char1.transform.position;
 		Vector2 size1 = char1.transform.size;

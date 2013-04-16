@@ -4,6 +4,13 @@ import Game.MainGame;
 import Helpers.SoundEffect;
 import Maths.Vector2;
 
+/** 
+ * Life PickUp class, gives player an extra life upon pickUp 
+ *  
+ * @author Damien Doucet-Girard
+ *
+ */
+
 public class Life extends PickUp {
 
 	public Life(Vector2 pos) {

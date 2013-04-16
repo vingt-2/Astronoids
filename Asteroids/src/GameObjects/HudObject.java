@@ -40,7 +40,10 @@ public class HudObject  extends GameChar{
 	
 	}
 	
-	//Time to die set to 1000ms in this case. Same function used in Particles.java
+	/**
+	 * Time to die set to 1000ms in this case. Same function used in Particles.java
+	 * @return
+	 */
 	public boolean TimeToDie()
 	{
 		long currentTime = System.currentTimeMillis();

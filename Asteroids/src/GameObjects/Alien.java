@@ -38,7 +38,7 @@ public class Alien extends GameChar{
 				objectRenderer.SetTexture("Alien2");
 				alienCannon2 = new Shoot(transform);
 				
-				alienCannon2.isAlien1 =true;
+				alienCannon2.isAlien2 =true;
 			}
 			
 			
@@ -78,7 +78,7 @@ public class Alien extends GameChar{
 			float alignment = Vector2.Dot(forward, direction.Normalized());
 		
 			if(alienCannon1 == null){
-				alienCannon1 = new Shoot(transform);
+				alienCannon1 = new Shoot(this.transform);
 				
 				alienCannon1.isAlien1 =true;
 				}
@@ -141,7 +141,7 @@ public class Alien extends GameChar{
 private void AlienAI2(){
 			
 		if(alienCannon2 == null){
-			alienCannon2 = new Shoot(transform);
+			alienCannon2 = new Shoot(this.transform);
 			alienCannon2.isAlien2 =true;
 			
 			

@@ -3,7 +3,13 @@ package GameObjects;
 import Game.MainGame;
 import Helpers.SoundEffect;
 import Maths.Vector2;
-
+/** 
+ * RapidFire PickUp class, toggles rapidFire flag in Player upon pickUp
+ *  
+ *  
+ * @author Damien Doucet-Girard
+ *
+ */
 public class RapidFire extends PickUp {
 
 	public RapidFire(Vector2 pos) {
