@@ -595,7 +595,7 @@ public class GameLogic
 		PickUpList.clear();
 		
 		// Deletes the aliens and their bullets if any
-		if(alien != null)
+		if(alien != null){
 			alien.Delete();
 			if(alien.alienCannon1!=null){
 				for (Laser object : alien.alienCannon1.GetLaserArray()){
@@ -603,13 +603,15 @@ public class GameLogic
 						object.Delete();
 				}
 			}
-		if(alien2 != null)
+		}
+		if(alien2 != null){
 			alien2.Delete();
 		if(alien2.alienCannon2!=null){
 			for (Laser object : alien2.alienCannon2.GetLaserArray()){
 				if(object != null)
 					object.Delete();
 			}
+		}
 		}
 	}
 

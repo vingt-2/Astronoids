@@ -76,7 +76,7 @@ public class Shoot extends GameObject
 			
 			lasers.get(l1Index).objectRenderer.SetTexture("redLaser");
 			
-			lasers.get(l1Index).transform.size= new Vector2(0.75f,0.75f);
+			lasers.get(l1Index).transform.size= new Vector2(1.3f,1.3f);
 
 
 
