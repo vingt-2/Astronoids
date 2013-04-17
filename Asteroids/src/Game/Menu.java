@@ -564,7 +564,7 @@ public class Menu {
 				usernameAvailable++;
 			}
 		} else {
-			System.out.println("Not possible");
+			//System.out.println("Not possible");
 		}
 	}
 

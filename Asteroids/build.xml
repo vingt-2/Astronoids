@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- To build and play, 
 
-              first call run the build target ("ant build"), 
-              then run the MainGame target ("ant MainGame").
-              Enjoy!  -->
+	first call run the build target ("ant build"), 
+	then run the MainGame target ("ant MainGame").
+	Enjoy-->
 <project basedir="." default="build" name="Asteroids">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../../../../../Applications/eclipse"/>
@@ -15,15 +15,12 @@
         <pathelement location="${JOGL.location}/gluegen-rt.jar"/>
         <pathelement location="${JOGL.location}/jogl-all.jar"/>
     </path>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.junit_4.10.0.v4_10_0_v20120426-0900/junit.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
-    </path>
     <path id="Asteroids.classpath">
         <pathelement location="bin"/>
         <pathelement location="lib/opencsv-2.3.jar"/>
         <path refid="JOGL.classpath"/>
-        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
+        <pathelement location="lib/junit-4.11.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
